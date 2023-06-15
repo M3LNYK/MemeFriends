@@ -7,9 +7,12 @@
     tools:context=".FriendsList">
 
     <ListView
+        android:id="@+id/friends_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/friends_listview"/>
+        tools:layout_editor_absoluteX="45dp"
+        tools:layout_editor_absoluteY="-140dp"
+        tools:listitem="@layout/list_item_friends" />
 
-    
+
 </androidx.constraintlayout.widget.ConstraintLayout>
