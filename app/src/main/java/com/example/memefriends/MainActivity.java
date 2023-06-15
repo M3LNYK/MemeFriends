@@ -20,8 +20,6 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String name = "vik";
-
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
 
