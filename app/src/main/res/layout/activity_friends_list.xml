@@ -6,15 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".FriendsList">
 
+    <!--    Main FAB button-->
     <ListView
         android:id="@+id/friends_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="-151dp"
-        tools:layout_editor_absoluteY="-111dp"
+        tools:layout_editor_absoluteX="-20dp"
+        tools:layout_editor_absoluteY="16dp"
         tools:listitem="@layout/list_item_friends" />
 
-    <!--    Main FAB button-->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_add"
         android:layout_width="wrap_content"
@@ -59,7 +59,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="invisible"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="16dp"
         app:fabSize="mini"
         app:layout_constraintBottom_toTopOf="@+id/add_reaction_fab"
         app:layout_constraintEnd_toEndOf="@+id/add_reaction_fab"
@@ -68,7 +68,7 @@
 
     <!-- Action name text for the add friend button -->
     <TextView
-        android:id="@+id/add_person_action_text"
+        android:id="@+id/add_person_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"

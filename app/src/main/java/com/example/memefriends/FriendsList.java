@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -21,6 +22,7 @@ public class FriendsList extends AppCompatActivity {
     private Boolean clicked = false;
 
     private FloatingActionButton fabAdd, fabReaction, fabFriend;
+    private TextView textReaction, textFriend;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,9 @@ public class FriendsList extends AppCompatActivity {
         rotateClose = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_close_animation);
         fromBottom = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.from_bottom_anim);
         toBottom = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.to_bottom_anim);
+
+        textFriend = findViewById(R.id.add_person_text);
+        textReaction = findViewById(R.id.add_reaction_text);
 
 
         fabAdd.setOnClickListener(new View.OnClickListener() {
@@ -72,10 +77,14 @@ public class FriendsList extends AppCompatActivity {
         if (!clicked) {
             fabReaction.startAnimation(fromBottom);
             fabFriend.startAnimation(fromBottom);
+            textReaction.startAnimation(fromBottom);
+            textFriend.startAnimation(fromBottom);
             fabAdd.startAnimation(rotateOpen);
         } else {
             fabReaction.startAnimation(toBottom);
             fabFriend.startAnimation(toBottom);
+            textReaction.startAnimation(toBottom);
+            textFriend.startAnimation(toBottom);
             fabAdd.startAnimation(rotateClose);
         }
 
@@ -85,9 +94,13 @@ public class FriendsList extends AppCompatActivity {
         if (!clicked) {
             fabReaction.setVisibility(View.VISIBLE);
             fabFriend.setVisibility(View.VISIBLE);
+            textReaction.setVisibility(View.VISIBLE);
+            textFriend.setVisibility(View.VISIBLE);
         } else {
             fabReaction.setVisibility(View.INVISIBLE);
             fabFriend.setVisibility(View.INVISIBLE);
+            textReaction.setVisibility(View.INVISIBLE);
+            textFriend.setVisibility(View.INVISIBLE);
         }
     }
 
