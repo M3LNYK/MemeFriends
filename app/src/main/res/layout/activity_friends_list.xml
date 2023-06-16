@@ -4,80 +4,79 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FriendsList"
-    >
+    tools:context=".FriendsList">
 
     <ListView
         android:id="@+id/friends_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="45dp"
-        tools:layout_editor_absoluteY="-140dp"
+        tools:layout_editor_absoluteX="-151dp"
+        tools:layout_editor_absoluteY="-111dp"
         tools:listitem="@layout/list_item_friends" />
 
+    <!--    Main FAB button-->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-        android:layout_marginBottom="32dp"
         android:layout_marginRight="16dp"
-        android:src="@drawable/fab_add_dark"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/baseline_add_fab"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_alarm_fab"
+        android:id="@+id/add_reaction_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="invisible"
         android:layout_marginBottom="24dp"
-        app:fabSize="normal"
+        app:fabSize="mini"
         app:layout_constraintBottom_toTopOf="@+id/fab_add"
         app:layout_constraintEnd_toEndOf="@+id/fab_add"
         app:layout_constraintStart_toStartOf="@+id/fab_add"
         app:srcCompat="@drawable/baseline_add_reaction_24" />
 
-    <!-- Action name text for the add alarm button -->
-    <!-- Make sure that you are constraining this Text to
-         the add Alarm FAB button -->
+    <!-- Action name text for the add reaction button -->
     <TextView
-        android:id="@+id/add_alarm_action_text"
+        android:id="@+id/add_reaction_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="invisible"
         android:layout_marginEnd="8dp"
-        android:text="Add Reaction"
-        app:layout_constraintBottom_toBottomOf="@+id/add_alarm_fab"
-        app:layout_constraintEnd_toStartOf="@+id/add_alarm_fab"
-        app:layout_constraintTop_toTopOf="@+id/add_alarm_fab" />
-
+        android:text="@string/add_reaction"
+        app:layout_constraintBottom_toBottomOf="@+id/add_reaction_fab"
+        app:layout_constraintEnd_toStartOf="@+id/add_reaction_fab"
+        app:layout_constraintTop_toTopOf="@+id/add_reaction_fab" />
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_person_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="invisible"
         android:layout_marginBottom="24dp"
-        app:fabSize="normal"
-        app:layout_constraintBottom_toTopOf="@+id/add_alarm_fab"
-        app:layout_constraintEnd_toEndOf="@+id/add_alarm_fab"
-        app:layout_constraintStart_toStartOf="@+id/add_alarm_fab"
+        app:fabSize="mini"
+        app:layout_constraintBottom_toTopOf="@+id/add_reaction_fab"
+        app:layout_constraintEnd_toEndOf="@+id/add_reaction_fab"
+        app:layout_constraintStart_toStartOf="@+id/add_reaction_fab"
         app:srcCompat="@drawable/baseline_person_add_24" />
 
-    <!-- Action name text for the add person button -->
-    <!-- Make sure that you are constraining this Text
-         to the add Person FAB button -->
+    <!-- Action name text for the add friend button -->
     <TextView
         android:id="@+id/add_person_action_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:text="Add Friend"
+        android:text="@string/add_friend"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/add_person_fab"
         app:layout_constraintEnd_toStartOf="@+id/add_person_fab"
         app:layout_constraintTop_toTopOf="@+id/add_person_fab" />
-
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
