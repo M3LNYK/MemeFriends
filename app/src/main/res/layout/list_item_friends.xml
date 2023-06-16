@@ -19,6 +19,7 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
+                    android:id="@+id/imageView_friend_avatar"
                     android:layout_width="128px"
                     android:layout_height="128px"
                     android:layout_marginStart="16dp"
