@@ -1,6 +1,11 @@
 package com.example.memefriends;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +42,22 @@ public class ListAdapterFriends extends ArrayAdapter<Friend> {
 
         friendName.setText(friend.name);
 
-        return super.getView(position, convertView, parent);
+        //Creating and setting avatar
+        Bitmap bm = Bitmap.createBitmap(128,  128,Bitmap.Config.ARGB_8888);
+
+        Canvas cv = new Canvas(bm);
+        Paint paint = new Paint();
+        paint.setColor(Color.BLUE);
+        paint.setStyle(Paint.Style.FILL);
+        cv.drawPaint(paint);
+        paint.setColor(Color.YELLOW);
+        paint.setTextSize(100);
+        cv.drawText(String.valueOf(friend.name.charAt(0)), 30, 100, paint);
+
+        imageView.setImageBitmap(bm);
+
+
+
+        return convertView;
     }
 }

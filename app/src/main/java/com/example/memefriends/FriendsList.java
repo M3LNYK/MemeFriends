@@ -6,10 +6,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.memefriends.databinding.ActivityMainBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
 
 
 public class FriendsList extends AppCompatActivity {
@@ -24,9 +29,12 @@ public class FriendsList extends AppCompatActivity {
     private FloatingActionButton fabAdd, fabReaction, fabFriend;
     private TextView textReaction, textFriend;
 
+    ListView listView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_friends_list);
         fabAdd = findViewById(R.id.fab_add);
         fabReaction = findViewById(R.id.add_reaction_fab);
@@ -62,6 +70,60 @@ public class FriendsList extends AppCompatActivity {
                 Toast.makeText(FriendsList.this, "new Friend clicked", Toast.LENGTH_SHORT).show();
             }
         });
+
+
+        String[] name = {"Abraham", "Cristian", "Boomer", "Mazda", "Joker", "Nissan", "Ferrari",
+                "Fiat",
+                "Fisker",
+                "Ford",
+                "Honda",
+                "Hummer",
+                "Hyundai",
+                "Infiniti",
+                "Iveco",
+                "Jaguar",
+                "Jeep",
+                "Kia",
+                "KTM",
+                "Lada",
+                "Lamborghini",
+                "Lancia",
+                "Land Rover",
+                "Landwind",
+                "Lexus",
+                "Lotus",
+                "Maserati",
+                "Maybach",
+                "Mazda",
+                "McLaren",
+                "Mercedes-Benz",
+                "MG",
+                "Mini",
+                "Mitsubishi",
+                "Morgan",
+                "Nissan",
+                "Opel",
+                "Peugeot",
+                "Porsche",
+                "Renault",};
+
+        ArrayList<Friend> friendArrayList = new ArrayList<>();
+
+        for (int i = 0; i < name.length; i++) {
+            Friend friend = new Friend(name[i]);
+            friendArrayList.add(friend);
+        }
+
+        ListAdapterFriends listAdapterFriends = new ListAdapterFriends(getApplicationContext(), friendArrayList);
+        listView = findViewById(R.id.friends_listview);
+        listView.setAdapter(listAdapterFriends);
+//        listView.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
 
     }
 
