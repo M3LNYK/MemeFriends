@@ -323,7 +323,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="file:/D:/Apps/Android_SDK/icons/material/materialicons/add/baseline_add_24.xml" />
+                                      <entry key="url" value="file:/D:/Apps/Android_SDK/icons/material/materialicons/account_box/baseline_account_box_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -333,8 +333,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="baseline_fab_add_white" />
+                            <entry key="outputName" value="baseline_account_box_24" />
                             <entry key="sourceFile" value="E:\SomeCode\MemeFriends" />
                           </map>
                         </option>

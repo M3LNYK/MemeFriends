@@ -8,6 +8,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +30,10 @@ public class FriendsList extends AppCompatActivity {
     private FloatingActionButton fabAdd, fabReaction, fabFriend;
     private TextView textReaction, textFriend;
 
+    private RelativeLayout emptyLayout;
+
+    private TextView friendTextView;
+
     ListView listView;
 
     @Override
@@ -48,6 +53,8 @@ public class FriendsList extends AppCompatActivity {
         textFriend = findViewById(R.id.add_person_text);
         textReaction = findViewById(R.id.add_reaction_text);
 
+        emptyLayout = findViewById(R.id.emptyList_layout);
+        friendTextView = findViewById(R.id.textView_friends);
 
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,40 +79,42 @@ public class FriendsList extends AppCompatActivity {
         });
 
 
-        String[] name = {"Abraham", "Cristian", "Boomer", "Mazda", "Joker", "Nissan", "Ferrari",
-                "Fiat",
-                "Fisker",
-                "Ford",
-                "Honda",
-                "Hummer",
-                "Hyundai",
-                "Infiniti",
-                "Iveco",
-                "Jaguar",
-                "Jeep",
-                "Kia",
-                "KTM",
-                "Lada",
-                "Lamborghini",
-                "Lancia",
-                "Land Rover",
-                "Landwind",
-                "Lexus",
-                "Lotus",
-                "Maserati",
-                "Maybach",
-                "Mazda",
-                "McLaren",
-                "Mercedes-Benz",
-                "MG",
-                "Mini",
-                "Mitsubishi",
-                "Morgan",
-                "Nissan",
-                "Opel",
-                "Peugeot",
-                "Porsche",
-                "Renault",};
+//        String[] name = {"Abraham", "Cristian", "Boomer", "Mazda", "Joker", "Nissan", "Ferrari",
+//                "Fiat",
+//                "Fisker",
+//                "Ford",
+//                "Honda",
+//                "Hummer",
+//                "Hyundai",
+//                "Infiniti",
+//                "Iveco",
+//                "Jaguar",
+//                "Jeep",
+//                "Kia",
+//                "KTM",
+//                "Lada",
+//                "Lamborghini",
+//                "Lancia",
+//                "Land Rover",
+//                "Landwind",
+//                "Lexus",
+//                "Lotus",
+//                "Maserati",
+//                "Maybach",
+//                "Mazda",
+//                "McLaren",
+//                "Mercedes-Benz",
+//                "MG",
+//                "Mini",
+//                "Mitsubishi",
+//                "Morgan",
+//                "Nissan",
+//                "Opel",
+//                "Peugeot",
+//                "Porsche",
+//                "Renault",};
+
+        String[] name = {};
 
         ArrayList<Friend> friendArrayList = new ArrayList<>();
 
@@ -114,9 +123,15 @@ public class FriendsList extends AppCompatActivity {
             friendArrayList.add(friend);
         }
 
-        ListAdapterFriends listAdapterFriends = new ListAdapterFriends(getApplicationContext(), friendArrayList);
-        listView = findViewById(R.id.friends_listview);
-        listView.setAdapter(listAdapterFriends);
+        if (!friendArrayList.isEmpty()) {
+            ListAdapterFriends listAdapterFriends = new ListAdapterFriends(getApplicationContext(), friendArrayList);
+            listView = findViewById(R.id.friends_listview);
+            listView.setAdapter(listAdapterFriends);
+        } else {
+            emptyLayout.setVisibility(View.VISIBLE);
+            friendTextView.setVisibility(View.INVISIBLE);
+        }
+
 //        listView.setOnClickListener(new View.OnClickListener() {
 //
 //            @Override

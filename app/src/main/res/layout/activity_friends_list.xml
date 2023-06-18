@@ -17,8 +17,35 @@
         android:text="Your friends:"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <RelativeLayout
+        android:id="@+id/emptyList_layout"
+        android:layout_width="wrap_content"
+        android:visibility="invisible"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/friends_listview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/friends_listview"
+        app:layout_constraintTop_toBottomOf="@+id/textView_friends">
 
-    <!--    Main FAB button-->
+        <TextView
+            android:id="@+id/text_emptyList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your friends list is empty"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:visibility="visible" />
+
+        <ImageView
+            android:layout_width="256px"
+            android:layout_height="256px"
+            android:layout_below="@+id/text_emptyList"
+            android:layout_marginTop="12dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/baseline_account_box_24"
+            />
+
+    </RelativeLayout>
 
     <ListView
         android:id="@+id/friends_listview"
@@ -28,6 +55,7 @@
         tools:layout_editor_absoluteX="0dp"
         tools:listitem="@layout/list_item_friends" />
 
+    <!--    Main FAB button-->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_add"
         android:layout_width="wrap_content"
