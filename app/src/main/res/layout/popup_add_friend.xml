@@ -27,7 +27,8 @@
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="24dp"
         android:hint="Name"
-        app:layout_constraintTop_toBottomOf="@+id/textView_add_friend">
+        app:layout_constraintTop_toBottomOf="@+id/textView_add_friend"
+        app:endIconMode="clear_text">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/popup_friend_name"
@@ -37,10 +38,12 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_add_friend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:text="Add"
+        android:onClick="saveFriend"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/outlinedTextField_friend_name" />

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -19,23 +20,20 @@ import java.util.ArrayList;
 
 public class FriendsList extends AppCompatActivity {
 
-    //    can replace this, with -> getApplicationContext()
     private Animation rotateOpen;
     private Animation rotateClose;
     private Animation fromBottom;
     private Animation toBottom;
     private Boolean clicked = false;
-
     private FloatingActionButton fabAdd, fabReaction, fabFriend;
     private TextView textReaction, textFriend;
-
     private RelativeLayout emptyLayout;
-
     private TextView friendTextView;
-
     private ListView listView;
-
     private AlertDialog newFriendDialog;
+    private Friend selectedFriend;
+    private EditText editTextFriendName;
+    private ArrayList<Friend> friendArrayList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +55,9 @@ public class FriendsList extends AppCompatActivity {
 
         emptyLayout = findViewById(R.id.emptyList_layout);
         friendTextView = findViewById(R.id.textView_friends);
+
+        setFriendAdapter();
+        emptyListCheck();
 
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,75 +83,17 @@ public class FriendsList extends AppCompatActivity {
         });
 
 
-//        String[] name = {"Abraham", "Cristian", "Boomer", "Mazda", "Joker", "Nissan", "Ferrari",
-//                "Fiat",
-//                "Fisker",
-//                "Ford",
-//                "Honda",
-//                "Hummer",
-//                "Hyundai",
-//                "Infiniti",
-//                "Iveco",
-//                "Jaguar",
-//                "Jeep",
-//                "Kia",
-//                "KTM",
-//                "Lada",
-//                "Lamborghini",
-//                "Lancia",
-//                "Land Rover",
-//                "Landwind",
-//                "Lexus",
-//                "Lotus",
-//                "Maserati",
-//                "Maybach",
-//                "Mazda",
-//                "McLaren",
-//                "Mercedes-Benz",
-//                "MG",
-//                "Mini",
-//                "Mitsubishi",
-//                "Morgan",
-//                "Nissan",
-//                "Opel",
-//                "Peugeot",
-//                "Porsche",
-//                "Renault",};
-
-        String[] name = {};
-
-        ArrayList<Friend> friendArrayList = new ArrayList<>();
-
-        for (int i = 0; i < name.length; i++) {
-            Friend friend = new Friend(name[i]);
-            friendArrayList.add(friend);
-        }
-
-        if (!friendArrayList.isEmpty()) {
-            ListAdapterFriends listAdapterFriends = new ListAdapterFriends(getApplicationContext(), friendArrayList);
-            listView = findViewById(R.id.friends_listview);
-            listView.setAdapter(listAdapterFriends);
-        } else {
-            emptyLayout.setVisibility(View.VISIBLE);
-            friendTextView.setVisibility(View.INVISIBLE);
-        }
-
-//        listView.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View view) {
-//
-//            }
-//        });
-
     }
 
 
     private void onAddButtonClicked() {
         setVisibility(clicked);
         setAnimation(clicked);
-        if (!clicked) clicked = true;
-        else clicked = false;
+        if (!clicked) {
+            clicked = true;
+        } else {
+            clicked = false;
+        }
     }
 
     private void setAnimation(Boolean clicked) {
@@ -191,6 +134,69 @@ public class FriendsList extends AppCompatActivity {
         myDialogBuilder.setView(addFriendPopupView);
         newFriendDialog = myDialogBuilder.create();
         newFriendDialog.show();
+
+        editTextFriendName = newFriendDialog.findViewById(R.id.popup_friend_name);
+        onAddButtonClicked();
+    }
+
+    public void saveFriend(View view) {
+
+        String name = String.valueOf(editTextFriendName.getText());
+
+//        Create better way to store and add friends
+        selectedFriend = new Friend(name);
+        friendArrayList.add(selectedFriend);
+        setFriendAdapter();
+        close_popup();
+    }
+
+    //For db
+    private void setFriendAdapter() {
+
+//        Test data
+        //        String[] name = {"Abraham", "Cristian", "Boomer", "Joker", "Nissan",
+        //        "Ferrari", "Fiat", "Fisker", "Ford", "Honda","Hummer","Hyundai",
+        //        "Infiniti", "Iveco", "Jaguar", "Jeep", "Kia", "KTM",
+        //        "Lamborghini", "Lancia", "Land Rover", "Lexus", "Lotus",
+        //        "Maserati", "Maybach", "Mazda","McLaren","Mercedes-Benz","MG","Mini","Mitsubishi",
+        //        "Morgan","Opel","Peugeot","Porsche","Renault",};
+
+        String[] name = {};
+
+        for (int i = 0; i < name.length; i++) {
+            Friend friend = new Friend(name[i]);
+            friendArrayList.add(friend);
+        }
+
+//        listView.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
+        emptyListCheck();
+
+    }
+
+    public void emptyListCheck() {
+        if (!friendArrayList.isEmpty()) {
+            ListAdapterFriends listAdapterFriends = new ListAdapterFriends(getApplicationContext(), friendArrayList);
+            listView = findViewById(R.id.friends_listview);
+            listView.setAdapter(listAdapterFriends);
+            emptyLayout.setVisibility(View.INVISIBLE);
+            friendTextView.setVisibility(View.VISIBLE);
+        } else {
+            emptyLayout.setVisibility(View.VISIBLE);
+            friendTextView.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    //For popups
+    public void close_popup() {
+        if (newFriendDialog != null) {
+            newFriendDialog.hide();
+        }
     }
 
 }
