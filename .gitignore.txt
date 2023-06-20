@@ -35,3 +35,6 @@ output.json
 #NDK
 obj/
 .externalNativeBuild
+
+#Personal files
+app/src/main/res/layout/test_layout.xml
