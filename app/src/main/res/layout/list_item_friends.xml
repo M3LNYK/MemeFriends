@@ -20,18 +20,17 @@
             android:id="@+id/imageView_friend_avatar"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:background="@color/black"
             android:contentDescription="Avatar" />
 
         <TextView
-            android:id="@+id/avatar_text"
+            android:id="@+id/textView_friend_avatar_text"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:fontFamily="sans-serif"
             android:gravity="center_vertical|center_horizontal"
             android:maxLines="1"
             android:text="AV"
-            android:textColor="@color/white_dark"
+            android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="bold" />
 

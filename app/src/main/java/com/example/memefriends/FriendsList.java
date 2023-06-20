@@ -58,9 +58,6 @@ public class FriendsList extends AppCompatActivity {
         emptyListCheck();
 
 
-        //  For item in List
-
-
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -167,14 +164,14 @@ public class FriendsList extends AppCompatActivity {
     private void setFriendAdapter() {
 
 //        Test data
-        //        String[] name = {"Abraham", "Cristian", "Boomer", "Joker", "Nissan",
-        //        "Ferrari", "Fiat", "Fisker", "Ford", "Honda","Hummer","Hyundai",
-        //        "Infiniti", "Iveco", "Jaguar", "Jeep", "Kia", "KTM",
-        //        "Lamborghini", "Lancia", "Land Rover", "Lexus", "Lotus",
-        //        "Maserati", "Maybach", "Mazda","McLaren","Mercedes-Benz","MG","Mini","Mitsubishi",
-        //        "Morgan","Opel","Peugeot","Porsche","Renault",};
+        String[] name = {"Abraham", "Cristian", "Boomer", "Joker", "Nissan",
+                "Ferrari", "Fiat", "Fisker", "Ford", "Honda", "Hummer", "Hyundai",
+                "Infiniti", "Iveco", "Jaguar", "Jeep", "Kia", "KTM",
+                "Lamborghini", "Lancia", "Land Rover", "Lexus", "Lotus",
+                "Maserati", "Maybach", "Mazda", "McLaren", "Mercedes-Benz", "MG", "Mini", "Mitsubishi",
+                "Morgan", "Opel", "Peugeot", "Porsche", "Renault",};
 
-        String[] name = {};
+//        String[] name = {};
 
         for (int i = 0; i < name.length; i++) {
             Friend friend = new Friend(name[i]);

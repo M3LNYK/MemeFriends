@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,8 +18,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class ListAdapterFriends extends ArrayAdapter<Friend> {
+
+    private Random ran = new Random();
 
     public ListAdapterFriends(Context context, ArrayList<Friend> friendArrayList) {
         super(context, R.layout.list_item_friends, friendArrayList);
@@ -38,23 +42,26 @@ public class ListAdapterFriends extends ArrayAdapter<Friend> {
 
         ImageView imageView = convertView.findViewById(R.id.imageView_friend_avatar);
         TextView friendName = convertView.findViewById(R.id.list_item_friend_name);
+        TextView avatarName = convertView.findViewById(R.id.textView_friend_avatar_text);
         //Maybe more items will be added later
 
         friendName.setText(friend.name);
+        avatarName.setText(String.valueOf(friend.name.charAt(0)).toUpperCase());
+//        imageView.setColorFilter(imageView.getContext().getResources().getColor(R.color.green_500), PorterDuff.Mode.SRC);
 
+        imageView.setBackgroundColor(Color.rgb(ran.nextInt(255), ran.nextInt(255), ran.nextInt(255)));
         //Creating and setting avatar
-        Bitmap bm = Bitmap.createBitmap(128,  128,Bitmap.Config.ARGB_8888);
-
-        Canvas cv = new Canvas(bm);
-        Paint paint = new Paint();
-        paint.setColor(Color.BLUE);
-        paint.setStyle(Paint.Style.FILL);
-        cv.drawPaint(paint);
-        paint.setColor(Color.YELLOW);
-        paint.setTextSize(100);
-        cv.drawText(String.valueOf(friend.name.charAt(0)), 30, 100, paint);
-
-        imageView.setImageBitmap(bm);
+//        Bitmap bm = Bitmap.createBitmap(128,  128,Bitmap.Config.ARGB_8888);
+//
+//        Canvas cv = new Canvas(bm);
+//        Paint paint = new Paint();
+//        paint.setColor(Color.BLUE);
+//        paint.setStyle(Paint.Style.FILL);
+//        cv.drawPaint(paint);
+//        paint.setColor(Color.YELLOW);
+//        paint.setTextSize(100);
+//
+//        imageView.setImageBitmap(bm);
 
 
 
