@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -14,21 +15,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
 
 public class FriendsList extends AppCompatActivity {
 
-    private Animation rotateOpen;
-    private Animation rotateClose;
-    private Animation fromBottom;
-    private Animation toBottom;
+    private Animation rotateOpen, rotateClose, fromBottom, toBottom;
     private Boolean clicked = false;
     private FloatingActionButton fabAdd, fabReaction, fabFriend;
-    private TextView textReaction, textFriend;
+    private TextView textReaction, textFriend, friendTextView;
     private RelativeLayout emptyLayout;
-    private TextView friendTextView;
     private ListView listView;
     private AlertDialog newFriendDialog;
     private Friend selectedFriend;
@@ -59,6 +57,10 @@ public class FriendsList extends AppCompatActivity {
         setFriendAdapter();
         emptyListCheck();
 
+
+        //  For item in List
+
+
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,6 +85,17 @@ public class FriendsList extends AppCompatActivity {
         });
 
 
+    }
+
+    private void setOnClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Friend selectedFriend = (Friend) listView.getItemAtPosition(position);
+                Snackbar.make(view, selectedFriend.name, Snackbar.LENGTH_LONG)
+                        .setAction("No action", null).show();
+            }
+        });
     }
 
 
@@ -168,15 +181,7 @@ public class FriendsList extends AppCompatActivity {
             friendArrayList.add(friend);
         }
 
-//        listView.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View view) {
-//
-//            }
-//        });
         emptyListCheck();
-
     }
 
     public void emptyListCheck() {
@@ -186,6 +191,7 @@ public class FriendsList extends AppCompatActivity {
             listView.setAdapter(listAdapterFriends);
             emptyLayout.setVisibility(View.INVISIBLE);
             friendTextView.setVisibility(View.VISIBLE);
+            setOnClickListener();   // Enables clicking on item in list
         } else {
             emptyLayout.setVisibility(View.VISIBLE);
             friendTextView.setVisibility(View.INVISIBLE);
