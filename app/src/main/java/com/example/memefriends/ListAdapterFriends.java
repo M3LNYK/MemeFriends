@@ -44,8 +44,8 @@ public class ListAdapterFriends extends ArrayAdapter<Friend> {
         TextView friendName = convertView.findViewById(R.id.list_item_friend_name);
         TextView avatarName = convertView.findViewById(R.id.textView_friend_avatar_text);
 
-        friendName.setText(friend.name);
-        avatarName.setText(String.valueOf(friend.name.charAt(0)).toUpperCase());
+        friendName.setText(friend.getName());
+        avatarName.setText(String.valueOf(friend.getName().charAt(0)).toUpperCase());
         imageView.setBackgroundColor(Color.rgb(ran.nextInt(255), ran.nextInt(255), ran.nextInt(255)));
 
 

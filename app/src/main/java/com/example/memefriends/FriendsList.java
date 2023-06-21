@@ -89,7 +89,7 @@ public class FriendsList extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Friend selectedFriend = (Friend) listView.getItemAtPosition(position);
-                Snackbar.make(view, selectedFriend.name, Snackbar.LENGTH_LONG)
+                Snackbar.make(view, selectedFriend.getName(), Snackbar.LENGTH_LONG)
                         .setAction("No action", null).show();
             }
         });
