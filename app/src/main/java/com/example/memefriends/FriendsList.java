@@ -2,6 +2,8 @@ package com.example.memefriends;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
@@ -21,6 +23,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class FriendsList extends AppCompatActivity {
@@ -44,8 +47,13 @@ public class FriendsList extends AppCompatActivity {
 
         setContentView(R.layout.activity_friends_list);
 
-        friendViewModel = ViewModelProviders.of(this).get(FriendViewModel.class);
-        friendViewModel.getAllFriends();
+        friendViewModel = new ViewModelProvider(this).get(FriendViewModel.class);
+        friendViewModel.getAllFriends().observe(this, new Observer<List<Friend>>() {
+            @Override
+            public void onChanged(List<Friend> friends) {
+                // Update View
+            }
+        });
 
         fabAdd = findViewById(R.id.fab_add);
         fabReaction = findViewById(R.id.add_reaction_fab);
