@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
@@ -65,8 +66,11 @@ public class FriendsList extends AppCompatActivity {
         friendTextView = findViewById(R.id.textView_friends);
 
 
-        FriendAdapter listAdapterFriends = new FriendAdapter();
         recyclerView = findViewById(R.id.friends_listview);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setHasFixedSize(true);
+
+        FriendAdapter listAdapterFriends = new FriendAdapter();
         recyclerView.setAdapter(listAdapterFriends);
 
         friendViewModel = new ViewModelProvider(this).get(FriendViewModel.class);
@@ -74,7 +78,7 @@ public class FriendsList extends AppCompatActivity {
             @Override
             public void onChanged(List<Friend> friends) {
                 // Update View
-                friendArrayList = friends;
+//                friendArrayList = friends;
                 listAdapterFriends.setFriends(friends);
             }
         });
