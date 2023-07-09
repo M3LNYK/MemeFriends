@@ -11,4 +11,6 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="add_reaction">Add Reaction</string>
     <string name="add_friend">Add Friend</string>
+    <string name="your_friends">Your friends:</string>
+    <string name="your_friends_list_is_empty">Your friends list is empty</string>
 </resources>

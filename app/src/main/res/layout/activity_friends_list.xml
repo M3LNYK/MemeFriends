@@ -10,11 +10,11 @@
         android:id="@+id/textView_friends"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginBottom="16dp"
         android:textSize="14sp"
         android:textColor="@color/black"
-        android:text="Your friends:"
+        android:text="@string/your_friends"
         app:layout_constraintTop_toTopOf="parent" />
 
     <RelativeLayout
@@ -31,7 +31,7 @@
             android:id="@+id/text_emptyList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Your friends list is empty"
+            android:text="@string/your_friends_list_is_empty"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:visibility="visible" />
@@ -47,7 +47,7 @@
 
     </RelativeLayout>
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/friends_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
@@ -18,6 +19,8 @@ import android.widget.Toast;
 
 import com.example.memefriends.roomDb.Friend;
 import com.example.memefriends.roomDb.FriendViewModel;
+import com.example.memefriends.roomDb.ListAdapterFriends;
+import com.example.memefriends.roomDb.FriendAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -32,11 +35,11 @@ public class FriendsList extends AppCompatActivity {
     private FloatingActionButton fabAdd, fabReaction, fabFriend;
     private TextView textReaction, textFriend, friendTextView;
     private RelativeLayout emptyLayout;
-    private ListView listView;
+    private RecyclerView recyclerView;
     private AlertDialog newFriendDialog;
     private Friend selectedFriend;
     private EditText editTextFriendName;
-    private ArrayList<Friend> friendArrayList = new ArrayList<>();
+    private List<Friend> friendArrayList = new ArrayList<>();
 
     private FriendViewModel friendViewModel;
 
@@ -45,14 +48,6 @@ public class FriendsList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_friends_list);
-
-        friendViewModel = new ViewModelProvider(this).get(FriendViewModel.class);
-        friendViewModel.getAllFriends().observe(this, new Observer<List<Friend>>() {
-            @Override
-            public void onChanged(List<Friend> friends) {
-                // Update View
-            }
-        });
 
         fabAdd = findViewById(R.id.fab_add);
         fabReaction = findViewById(R.id.add_reaction_fab);
@@ -70,10 +65,24 @@ public class FriendsList extends AppCompatActivity {
         friendTextView = findViewById(R.id.textView_friends);
 
 
+        FriendAdapter listAdapterFriends = new FriendAdapter();
+        recyclerView = findViewById(R.id.friends_listview);
+        recyclerView.setAdapter(listAdapterFriends);
 
+        friendViewModel = new ViewModelProvider(this).get(FriendViewModel.class);
+        friendViewModel.getAllFriends().observe(this, new Observer<List<Friend>>() {
+            @Override
+            public void onChanged(List<Friend> friends) {
+                // Update View
+                friendArrayList = friends;
+                listAdapterFriends.setFriends(friends);
+            }
+        });
 
-        setFriendAdapter();
-        emptyListCheck();
+        emptyLayout.setVisibility(View.INVISIBLE);
+        friendTextView.setVisibility(View.VISIBLE);
+
+//        emptyListCheck();
 
 
         fabAdd.setOnClickListener(new View.OnClickListener() {
@@ -101,14 +110,7 @@ public class FriendsList extends AppCompatActivity {
     }
 
     private void setOnClickListener() {
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Friend selectedFriend = (Friend) listView.getItemAtPosition(position);
-                Snackbar.make(view, selectedFriend.getName(), Snackbar.LENGTH_LONG)
-                        .setAction("No action", null).show();
-            }
-        });
+
     }
 
 
@@ -179,36 +181,24 @@ public class FriendsList extends AppCompatActivity {
     //For db
     private void setFriendAdapter() {
 
-//        Test data
-        String[] name = {"Abrahamaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "Cristian", "Boomer", "Joker", "Nissan",
-                "Ferrari", "Fiat", "Fisker", "Ford", "Honda", "Hummer", "Hyundai",
-                "Infiniti", "Iveco", "Jaguar", "Jeep", "Kia", "KTM",
-                "Lamborghini", "Lancia", "Land Rover", "Lexus", "Lotus",
-                "Maserati", "Maybach", "Mazda", "McLaren", "Mercedes-Benz", "MG", "Mini", "Mitsubishi",
-                "Morgan", "Opel", "Peugeot", "Porsche", "Renault",};
-
-//        String[] name = {};
-
-        for (int i = 0; i < name.length; i++) {
-            Friend friend = new Friend(name[i]);
-            friendArrayList.add(friend);
-        }
 
         emptyListCheck();
     }
 
     public void emptyListCheck() {
-        if (!friendArrayList.isEmpty()) {
-            ListAdapterFriends listAdapterFriends = new ListAdapterFriends(getApplicationContext(), friendArrayList);
-            listView = findViewById(R.id.friends_listview);
-            listView.setAdapter(listAdapterFriends);
-            emptyLayout.setVisibility(View.INVISIBLE);
-            friendTextView.setVisibility(View.VISIBLE);
-            setOnClickListener();   // Enables clicking on item in list
-        } else {
-            emptyLayout.setVisibility(View.VISIBLE);
-            friendTextView.setVisibility(View.INVISIBLE);
-        }
+//        if (!friendArrayList.isEmpty()) {
+//            ListAdapterFriends listAdapterFriends = new ListAdapterFriends(getApplicationContext());
+//            listView = findViewById(R.id.friends_listview);
+//            listView.setAdapter(listAdapterFriends);
+//            emptyLayout.setVisibility(View.INVISIBLE);
+//            friendTextView.setVisibility(View.VISIBLE);
+//            setOnClickListener();   // Enables clicking on item in list
+//        } else {
+//            emptyLayout.setVisibility(View.VISIBLE);
+//            friendTextView.setVisibility(View.INVISIBLE);
+//        }
+        emptyLayout.setVisibility(View.INVISIBLE);
+        friendTextView.setVisibility(View.VISIBLE);
     }
 
     //For popups
