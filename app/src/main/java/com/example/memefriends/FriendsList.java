@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -181,7 +180,7 @@ public class FriendsList extends AppCompatActivity {
     private void setFriendAdapter() {
 
 //        Test data
-        String[] name = {"Abraham", "Cristian", "Boomer", "Joker", "Nissan",
+        String[] name = {"Abrahamaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "Cristian", "Boomer", "Joker", "Nissan",
                 "Ferrari", "Fiat", "Fisker", "Ford", "Honda", "Hummer", "Hyundai",
                 "Infiniti", "Iveco", "Jaguar", "Jeep", "Kia", "KTM",
                 "Lamborghini", "Lancia", "Land Rover", "Lexus", "Lotus",
