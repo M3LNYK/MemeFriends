@@ -3,6 +3,7 @@ package com.example.memefriends;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -43,6 +44,9 @@ public class FriendsList extends AppCompatActivity {
 
         setContentView(R.layout.activity_friends_list);
 
+        friendViewModel = ViewModelProviders.of(this).get(FriendViewModel.class);
+        friendViewModel.getAllFriends();
+
         fabAdd = findViewById(R.id.fab_add);
         fabReaction = findViewById(R.id.add_reaction_fab);
         fabFriend = findViewById(R.id.add_person_fab);
@@ -57,6 +61,9 @@ public class FriendsList extends AppCompatActivity {
 
         emptyLayout = findViewById(R.id.emptyList_layout);
         friendTextView = findViewById(R.id.textView_friends);
+
+
+
 
         setFriendAdapter();
         emptyListCheck();
