@@ -1,6 +1,7 @@
 package com.example.memefriends;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "friend-table")
@@ -11,6 +12,7 @@ public class Friend {
     private String name;
     private int totalMemes, funnyMemes, nfMemes;
 
+    @Ignore
     public Friend(String name) {
         this.name = name;
         this.totalMemes = 0;
