@@ -1,4 +1,4 @@
-package com.example.memefriends;
+package com.example.memefriends.roomDb;
 
 import android.app.Application;
 import android.os.AsyncTask;

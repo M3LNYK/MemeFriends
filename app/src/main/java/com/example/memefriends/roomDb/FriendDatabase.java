@@ -1,4 +1,4 @@
-package com.example.memefriends;
+package com.example.memefriends.roomDb;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -42,8 +42,8 @@ public abstract class FriendDatabase extends RoomDatabase {
         }
         @Override
         protected Void doInBackground(Void... voids){
-            friendDao.insert(new Friend("Test 1"));
-            friendDao.insert(new Friend("Test 2"));
+            friendDao.insert(new Friend("Test 1",2, 1, 1));
+            friendDao.insert(new Friend("Test 2", 0, 0, 0));
             friendDao.insert(new Friend("Test 3", 1, 1, 0));
             return null;
         }
