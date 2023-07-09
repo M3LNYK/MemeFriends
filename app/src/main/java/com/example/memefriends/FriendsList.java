@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.memefriends.roomDb.Friend;
+import com.example.memefriends.roomDb.FriendViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -33,6 +34,8 @@ public class FriendsList extends AppCompatActivity {
     private Friend selectedFriend;
     private EditText editTextFriendName;
     private ArrayList<Friend> friendArrayList = new ArrayList<>();
+
+    private FriendViewModel friendViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,8 +84,6 @@ public class FriendsList extends AppCompatActivity {
                 addNewFriendDialog();
             }
         });
-
-
     }
 
     private void setOnClickListener() {
