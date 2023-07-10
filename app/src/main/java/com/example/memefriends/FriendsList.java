@@ -169,16 +169,22 @@ public class FriendsList extends AppCompatActivity {
 
         editTextFriendName = newFriendDialog.findViewById(R.id.popup_friend_name);
         onAddButtonClicked();
+
     }
 
     public void saveFriend(View view) {
 
         String name = String.valueOf(editTextFriendName.getText());
 
-//        Create better way to store and add friends
-        selectedFriend = new Friend(name);
-        friendArrayList.add(selectedFriend);
-        setFriendAdapter();
+        if (name.trim().isEmpty()){
+            Toast.makeText(this, "Friend name can not be empty!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Friend tmpFriend = new Friend(name, 0, 0, 0);
+        friendViewModel.insert(tmpFriend);
+        Toast.makeText(this, "Friend added", Toast.LENGTH_SHORT).show();
+
         close_popup();
     }
 
