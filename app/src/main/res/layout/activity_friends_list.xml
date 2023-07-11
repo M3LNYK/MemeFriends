@@ -121,5 +121,17 @@
         app:layout_constraintEnd_toStartOf="@+id/add_person_fab"
         app:layout_constraintTop_toTopOf="@+id/add_person_fab" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/to_top_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:visibility="gone"
+        app:fabSize="mini"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/baseline_vertical_to_top_24" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

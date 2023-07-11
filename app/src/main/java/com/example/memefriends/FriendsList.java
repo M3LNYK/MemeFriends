@@ -36,7 +36,7 @@ public class FriendsList extends AppCompatActivity {
 
     private Animation rotateOpen, rotateClose, fromBottom, toBottom;
     private Boolean clicked = false;
-    private FloatingActionButton fabAdd, fabReaction, fabFriend;
+    private FloatingActionButton fabAdd, fabReaction, fabFriend, fabToTop;
     private TextView textReaction, textFriend, friendTextView;
     private RelativeLayout emptyLayout;
     private RecyclerView recyclerView;
@@ -47,6 +47,8 @@ public class FriendsList extends AppCompatActivity {
 
     private FriendViewModel friendViewModel;
     private FriendAdapter adapter;
+
+    private LinearLayoutManager linearLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,9 +71,11 @@ public class FriendsList extends AppCompatActivity {
         emptyLayout = findViewById(R.id.emptyList_layout);
         friendTextView = findViewById(R.id.textView_friends);
 
+        fabToTop = findViewById(R.id.to_top_fab);
 
         recyclerView = findViewById(R.id.friends_listview);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
         MaterialDividerItemDecoration divider = new MaterialDividerItemDecoration(recyclerView.getContext(),
                 LinearLayoutManager.VERTICAL);
 //      Divider inset should be calculated from device for pixel 5: dp * 3
@@ -118,6 +122,30 @@ public class FriendsList extends AppCompatActivity {
             }
         });
 
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                // Check if RecyclerView is scrolled from top
+                boolean isScrolledFromTop = linearLayoutManager.findFirstVisibleItemPosition() > 0;
+
+                // Update fabToTop button visibility
+                if (isScrolledFromTop) {
+                    fabToTop.setVisibility(View.VISIBLE);
+                } else {
+                    fabToTop.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        fabToTop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onTopButtonClicked();
+            }
+
+        });
 
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,6 +169,11 @@ public class FriendsList extends AppCompatActivity {
                 addNewFriendDialog();
             }
         });
+    }
+
+    private void onTopButtonClicked() {
+        recyclerView.smoothScrollToPosition(0);
+            fabToTop.setVisibility(View.GONE);
     }
 
     private void checkEmptyList(List<Friend> friends) {
