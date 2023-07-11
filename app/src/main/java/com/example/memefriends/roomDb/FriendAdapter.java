@@ -20,7 +20,6 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendHold
     private Random ran = new Random();
     private List<Friend> friends = new ArrayList<>();
 
-
     @NonNull
     @Override
     public FriendHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -45,6 +44,10 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendHold
         this.friends = friends;
         //To change
         notifyDataSetChanged();
+    }
+
+    public Friend getFriendAt(int position) {
+        return friends.get(position);
     }
 
     class FriendHolder extends RecyclerView.ViewHolder {
