@@ -14,17 +14,17 @@
         <activity
             android:name=".FriendsList"
             android:exported="true">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".FriendMemes"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.MemeFriends.NoActionBar">
-        </activity>
+            android:theme="@style/Theme.MemeFriends.NoActionBar"></activity>
     </application>
 
 </manifest>

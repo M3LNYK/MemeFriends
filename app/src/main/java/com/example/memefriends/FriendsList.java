@@ -114,6 +114,9 @@ public class FriendsList extends AppCompatActivity {
             public void onItemClick(Friend friend) {
 //                We clicked on friend
                 Intent intent = new Intent(FriendsList.this, FriendMemes.class);
+//                Implement passing extra values
+//                intent.putExtra("Name", "Test");
+                startActivity(intent);
             }
         });
 

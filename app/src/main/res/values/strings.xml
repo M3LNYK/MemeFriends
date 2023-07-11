@@ -13,4 +13,5 @@
     <string name="add_friend">Add Friend</string>
     <string name="your_friends">Your friends:</string>
     <string name="your_friends_list_is_empty">Your friends list is empty</string>
+    <string name="title_activity_friend_memes">FriendMemes</string>
 </resources>

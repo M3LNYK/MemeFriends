@@ -61,10 +61,14 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendHold
             imageView = itemView.findViewById(R.id.imageView_friend_avatar);
             friendName = itemView.findViewById(R.id.list_item_friend_name);
             avatarName = itemView.findViewById(R.id.textView_friend_avatar_text);
-            itemView.setOnClickListener(view -> {
-                int position = getAdapterPosition();
-                if (listener != null && position != RecyclerView.NO_POSITION) {
-                    listener.onItemClick(friends.get(position));
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    int position = getAdapterPosition();
+                    if (listener != null && position != RecyclerView.NO_POSITION) {
+                        listener.onItemClick(friends.get(position));
+                    }
                 }
             });
         }
