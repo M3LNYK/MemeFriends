@@ -17,20 +17,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.memefriends.roomDb.Friend;
 import com.example.memefriends.roomDb.FriendViewModel;
-import com.example.memefriends.roomDb.ListAdapterFriends;
 import com.example.memefriends.roomDb.FriendAdapter;
 import com.google.android.material.divider.MaterialDividerItemDecoration;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -120,10 +116,8 @@ public class FriendsList extends AppCompatActivity {
             }
         });
 
-        emptyLayout.setVisibility(View.INVISIBLE);
-        friendTextView.setVisibility(View.VISIBLE);
 
-//        emptyListCheck();
+        emptyListCheck();
 
 
         fabAdd.setOnClickListener(new View.OnClickListener() {
@@ -150,19 +144,10 @@ public class FriendsList extends AppCompatActivity {
         });
     }
 
-    private void setOnClickListener() {
-
-    }
-
-
     private void onAddButtonClicked() {
         setVisibility(clicked);
         setAnimation(clicked);
-        if (!clicked) {
-            clicked = true;
-        } else {
-            clicked = false;
-        }
+        clicked = !clicked;
     }
 
     private void setAnimation(Boolean clicked) {
@@ -225,12 +210,6 @@ public class FriendsList extends AppCompatActivity {
         close_popup();
     }
 
-    //For db
-    private void setFriendAdapter() {
-
-
-        emptyListCheck();
-    }
 
     public void emptyListCheck() {
 //        if (!friendArrayList.isEmpty()) {
@@ -244,8 +223,6 @@ public class FriendsList extends AppCompatActivity {
 //            emptyLayout.setVisibility(View.VISIBLE);
 //            friendTextView.setVisibility(View.INVISIBLE);
 //        }
-        emptyLayout.setVisibility(View.INVISIBLE);
-        friendTextView.setVisibility(View.VISIBLE);
     }
 
     //For popups
