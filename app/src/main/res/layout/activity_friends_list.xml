@@ -12,16 +12,16 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginBottom="16dp"
-        android:textSize="14sp"
-        android:textColor="@color/black"
         android:text="@string/your_friends"
+        android:textColor="@color/black"
+        android:textSize="16sp"
         app:layout_constraintTop_toTopOf="parent" />
 
     <RelativeLayout
         android:id="@+id/emptyList_layout"
         android:layout_width="wrap_content"
-        android:visibility="invisible"
         android:layout_height="wrap_content"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/friends_listview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/friends_listview"
@@ -40,18 +40,20 @@
             android:layout_width="256px"
             android:layout_height="256px"
             android:layout_below="@+id/text_emptyList"
-            android:layout_marginTop="12dp"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/baseline_account_box_24"
-            />
+            android:layout_marginTop="12dp"
+            android:src="@drawable/baseline_account_box_24" />
 
     </RelativeLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/friends_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="20dp"
+        android:scrollbars="vertical"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
         tools:layout_editor_absoluteX="0dp"
         tools:listitem="@layout/list_item_friends" />
 
@@ -74,8 +76,8 @@
         android:id="@+id/add_reaction_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="invisible"
         android:layout_marginBottom="24dp"
+        android:visibility="invisible"
         app:fabSize="mini"
         app:layout_constraintBottom_toTopOf="@+id/fab_add"
         app:layout_constraintEnd_toEndOf="@+id/fab_add"
@@ -87,9 +89,9 @@
         android:id="@+id/add_reaction_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="invisible"
         android:layout_marginEnd="8dp"
         android:text="@string/add_reaction"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/add_reaction_fab"
         app:layout_constraintEnd_toStartOf="@+id/add_reaction_fab"
         app:layout_constraintTop_toTopOf="@+id/add_reaction_fab" />
@@ -99,8 +101,8 @@
         android:id="@+id/add_person_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="invisible"
         android:layout_marginBottom="16dp"
+        android:visibility="invisible"
         app:fabSize="mini"
         app:layout_constraintBottom_toTopOf="@+id/add_reaction_fab"
         app:layout_constraintEnd_toEndOf="@+id/add_reaction_fab"

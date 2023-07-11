@@ -24,6 +24,6 @@ public interface FriendDao {
     @Query("DELETE FROM `friend-table`")
     void deleteAllFriends();
 
-    @Query("SELECT * FROM `friend-table` ORDER BY totalMemes DESC")
+    @Query("SELECT * FROM `friend-table` ORDER BY name ASC")
     LiveData<List<Friend>> getAllFriends();
 }
