@@ -22,6 +22,7 @@ import com.example.memefriends.roomDb.Friend;
 import com.example.memefriends.roomDb.FriendViewModel;
 import com.example.memefriends.roomDb.ListAdapterFriends;
 import com.example.memefriends.roomDb.FriendAdapter;
+import com.google.android.material.divider.MaterialDividerItemDecoration;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -68,6 +69,13 @@ public class FriendsList extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.friends_listview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        MaterialDividerItemDecoration divider = new MaterialDividerItemDecoration(recyclerView.getContext(),
+                LinearLayoutManager.VERTICAL);
+//      Divider inset should be calculated from device for pixel 5: dp * 3
+        divider.setDividerInsetStart(192);
+        divider.setDividerInsetEnd(48);
+        divider.setLastItemDecorated(false);
+        recyclerView.addItemDecoration(divider);
         recyclerView.setHasFixedSize(true);
 
         FriendAdapter listAdapterFriends = new FriendAdapter();
