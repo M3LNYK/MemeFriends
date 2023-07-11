@@ -10,6 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -198,7 +201,7 @@ public class FriendsList extends AppCompatActivity {
 
         String name = String.valueOf(editTextFriendName.getText());
 
-        if (name.trim().isEmpty()){
+        if (name.trim().isEmpty()) {
             Toast.makeText(this, "Friend name can not be empty!", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -240,4 +243,24 @@ public class FriendsList extends AppCompatActivity {
         }
     }
 
+    // Creates menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_friends_list, menu);
+        return true;
+    }
+
+    // Selector of menu items
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.delete_all_friends:
+                friendViewModel.deleteAllFriends();
+                Toast.makeText(this, "All friends deleted", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }
