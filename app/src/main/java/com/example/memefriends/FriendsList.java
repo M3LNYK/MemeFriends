@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -107,6 +108,14 @@ public class FriendsList extends AppCompatActivity {
                 Toast.makeText(FriendsList.this, "Friend deleted", Toast.LENGTH_SHORT).show();
             }
         }).attachToRecyclerView(recyclerView);
+
+        listAdapterFriends.setOnItemClickListener(new FriendAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Friend friend) {
+//                We clicked on friend
+                Intent intent = new Intent(FriendsList.this, FriendMemes.class);
+            }
+        });
 
         emptyLayout.setVisibility(View.INVISIBLE);
         friendTextView.setVisibility(View.VISIBLE);
