@@ -46,6 +46,7 @@ public class FriendsList extends AppCompatActivity {
     private List<Friend> friendArrayList = new ArrayList<>();
 
     private FriendViewModel friendViewModel;
+    private FriendAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,14 +81,15 @@ public class FriendsList extends AppCompatActivity {
         recyclerView.addItemDecoration(divider);
         recyclerView.setHasFixedSize(true);
 
-        FriendAdapter listAdapterFriends = new FriendAdapter();
-        recyclerView.setAdapter(listAdapterFriends);
+        adapter = new FriendAdapter();
+        recyclerView.setAdapter(adapter);
 
         friendViewModel = new ViewModelProvider(this).get(FriendViewModel.class);
         friendViewModel.getAllFriends().observe(this, new Observer<List<Friend>>() {
             @Override
             public void onChanged(List<Friend> friends) {
-                listAdapterFriends.setFriends(friends);
+                adapter.setFriends(friends);
+                checkEmptyList(friends);
             }
         });
 
@@ -100,12 +102,12 @@ public class FriendsList extends AppCompatActivity {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                friendViewModel.delete(listAdapterFriends.getFriendAt(viewHolder.getAdapterPosition()));
+                friendViewModel.delete(adapter.getFriendAt(viewHolder.getAdapterPosition()));
                 Toast.makeText(FriendsList.this, "Friend deleted", Toast.LENGTH_SHORT).show();
             }
         }).attachToRecyclerView(recyclerView);
 
-        listAdapterFriends.setOnItemClickListener(new FriendAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new FriendAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Friend friend) {
 //                We clicked on friend
@@ -115,9 +117,6 @@ public class FriendsList extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
-        emptyListCheck();
 
 
         fabAdd.setOnClickListener(new View.OnClickListener() {
@@ -142,6 +141,16 @@ public class FriendsList extends AppCompatActivity {
                 addNewFriendDialog();
             }
         });
+    }
+
+    private void checkEmptyList(List<Friend> friends) {
+        if (friends.isEmpty()) {
+            emptyLayout.setVisibility(View.VISIBLE);
+            friendTextView.setVisibility(View.INVISIBLE);
+        } else {
+            emptyLayout.setVisibility(View.INVISIBLE);
+            friendTextView.setVisibility(View.VISIBLE);
+        }
     }
 
     private void onAddButtonClicked() {
@@ -208,21 +217,6 @@ public class FriendsList extends AppCompatActivity {
         Toast.makeText(this, "Friend added", Toast.LENGTH_SHORT).show();
 
         close_popup();
-    }
-
-
-    public void emptyListCheck() {
-//        if (!friendArrayList.isEmpty()) {
-//            ListAdapterFriends listAdapterFriends = new ListAdapterFriends(getApplicationContext());
-//            listView = findViewById(R.id.friends_listview);
-//            listView.setAdapter(listAdapterFriends);
-//            emptyLayout.setVisibility(View.INVISIBLE);
-//            friendTextView.setVisibility(View.VISIBLE);
-//            setOnClickListener();   // Enables clicking on item in list
-//        } else {
-//            emptyLayout.setVisibility(View.VISIBLE);
-//            friendTextView.setVisibility(View.INVISIBLE);
-//        }
     }
 
     //For popups
