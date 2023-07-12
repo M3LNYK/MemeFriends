@@ -11,6 +11,7 @@ public class Friend {
     private int id;
     private String name;
     private int totalMemes, funnyMemes, nfMemes;
+    private int color;
 
     @Ignore
     public Friend(String name) {
