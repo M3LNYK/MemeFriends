@@ -27,14 +27,6 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private static final int VIEW_TYPE_HEADER = 0;
     private static final int VIEW_TYPE_ITEM = 1;
 
-    // Old onCreateViewHolder
-    //    @NonNull
-    //    @Override
-    //    public FriendViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-    //        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_friends, parent, false);
-    //        return new FriendViewHolder(itemView);
-    //    }
-
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -46,16 +38,6 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             return new FriendViewHolder(itemView);
         }
     }
-
-
-    // OLD BindViewHolder
-    //    @Override
-    //    public void onBindViewHolder(@NonNull FriendViewHolder holder, int position) {
-    //        Friend friend = friends.get(position);
-    //        holder.friendName.setText(friend.getName());
-    //        holder.avatarName.setText(String.valueOf(friend.getName().charAt(0)).toUpperCase());
-    //        holder.imageView.setBackgroundColor(Color.rgb(ran.nextInt(255), ran.nextInt(255), ran.nextInt(255)));
-    //    }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
@@ -87,11 +69,6 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-//    @Override
-//    public int getItemCount() {
-//        return groupedFriends.size();
-//    }
-
     @Override
     public int getItemCount() {
         int itemCount = 0;
@@ -122,7 +99,16 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     public Friend getFriendAt(int position) {
-        return friends.get(position);
+        int groupPosition = getGroupPosition(position);
+        int friendPosition = getFriendPosition(position);
+        if (groupPosition >= 0 && groupPosition < groupedFriends.size() && friendPosition >= 0) {
+            GroupedFriend groupedFriend = groupedFriends.get(groupPosition);
+            List<Friend> friends = groupedFriend.getFriends();
+            if (friendPosition < friends.size()) {
+                return friends.get(friendPosition);
+            }
+        }
+        return null; // Return null if position is not valid or friend is not found
     }
 
     class FriendViewHolder extends RecyclerView.ViewHolder {
@@ -138,10 +124,17 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
                     int position = getAdapterPosition();
                     if (listener != null && position != RecyclerView.NO_POSITION) {
-                        listener.onItemClick(friends.get(position));
+                        int groupPosition = getGroupPosition(position);
+                        int friendPosition = getFriendPosition(position);
+                        if (groupPosition >= 0 && groupPosition < groupedFriends.size() && friendPosition >= 0) {
+                            GroupedFriend groupedFriend = groupedFriends.get(groupPosition);
+                            List<Friend> friends = groupedFriend.getFriends();
+                            if (friendPosition < friends.size()) {
+                                listener.onItemClick(friends.get(friendPosition));
+                            }
+                        }
                     }
                 }
             });
