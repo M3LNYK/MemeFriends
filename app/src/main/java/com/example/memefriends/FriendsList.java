@@ -3,6 +3,7 @@ package com.example.memefriends;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.ColorUtils;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -249,9 +250,7 @@ public class FriendsList extends AppCompatActivity {
             return;
         }
 
-        int randomColor = Color.rgb(ran.nextInt(255), ran.nextInt(255), ran.nextInt(255));
-
-        Friend tmpFriend = new Friend(name, 0, 0, 0, randomColor);
+        Friend tmpFriend = new Friend(name, 0, 0, 0, getRandomColorWithSufficientContrast());
         friendViewModel.insert(tmpFriend);
         Toast.makeText(this, "Friend added", Toast.LENGTH_SHORT).show();
 
@@ -311,5 +310,19 @@ public class FriendsList extends AppCompatActivity {
         }
 
         return groupedFriends;
+    }
+
+    private int getRandomColorWithSufficientContrast() {
+        int color;
+        do {
+            color = Color.rgb(ran.nextInt(256), ran.nextInt(256), ran.nextInt(256));
+        } while (!hasSufficientContrast(color));
+        return color;
+    }
+
+    private boolean hasSufficientContrast(int color) {
+        double contrastRatio = ColorUtils.calculateContrast(color, Color.WHITE);
+        // Adjust the threshold as needed (e.g., 4.5 for WCAG AA, 7 for WCAG AAA)
+        return contrastRatio >= 3.2; //Standard should be 4.5
     }
 }
