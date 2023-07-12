@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Random;
 
 public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private Random ran = new Random();
     private List<Friend> friends = new ArrayList<>();
     private OnItemClickListener listener;
 
@@ -63,7 +62,7 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     friendViewHolder.friendName.setText(friend.getName());
                     // Set other views with friend data
                     friendViewHolder.avatarName.setText(String.valueOf(friend.getName().charAt(0)).toUpperCase());
-                    friendViewHolder.imageView.setBackgroundColor(Color.rgb(ran.nextInt(255), ran.nextInt(255), ran.nextInt(255)));
+                    friendViewHolder.imageView.setBackgroundColor(friend.getColor());
                 }
             }
         }

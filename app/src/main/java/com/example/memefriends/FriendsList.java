@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,6 +31,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 
 public class FriendsList extends AppCompatActivity {
@@ -49,6 +51,7 @@ public class FriendsList extends AppCompatActivity {
     private FriendAdapter adapter;
 
     private LinearLayoutManager linearLayoutManager;
+    private Random ran = new Random();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -246,7 +249,9 @@ public class FriendsList extends AppCompatActivity {
             return;
         }
 
-        Friend tmpFriend = new Friend(name, 0, 0, 0);
+        int randomColor = Color.rgb(ran.nextInt(255), ran.nextInt(255), ran.nextInt(255));
+
+        Friend tmpFriend = new Friend(name, 0, 0, 0, randomColor);
         friendViewModel.insert(tmpFriend);
         Toast.makeText(this, "Friend added", Toast.LENGTH_SHORT).show();
 

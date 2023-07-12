@@ -19,13 +19,15 @@ public class Friend {
         this.totalMemes = 0;
         this.funnyMemes = 0;
         this.nfMemes = 0;
+        this.color = 0;
     }
 
-    public Friend(String name, int totalMemes, int funnyMemes, int nfMemes) {
+    public Friend(String name, int totalMemes, int funnyMemes, int nfMemes, int color) {
         this.name = name;
         this.totalMemes = totalMemes;
         this.funnyMemes = funnyMemes;
         this.nfMemes = nfMemes;
+        this.color = color;
     }
 
     public void setId(int id) {
@@ -34,6 +36,10 @@ public class Friend {
 
     public int getId() {
         return id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getName() {
@@ -51,4 +57,7 @@ public class Friend {
     public int getNfMemes() {
         return nfMemes;
     }
+
+    public int getColor() { return color; }
+    public void setColor(int color) {this.color = color;}
 }

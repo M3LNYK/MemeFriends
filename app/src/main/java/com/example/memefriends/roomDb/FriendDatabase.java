@@ -9,7 +9,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {Friend.class}, version = 2)
+@Database(entities = {Friend.class}, version = 3)
 public abstract class FriendDatabase extends RoomDatabase {
 
     private static FriendDatabase instance;
@@ -42,9 +42,9 @@ public abstract class FriendDatabase extends RoomDatabase {
         }
         @Override
         protected Void doInBackground(Void... voids){
-            friendDao.insert(new Friend("Test 1",2, 1, 1));
-            friendDao.insert(new Friend("Test 2", 0, 0, 0));
-            friendDao.insert(new Friend("Test 3", 1, 1, 0));
+            friendDao.insert(new Friend("Test 1",2, 1, 1, 0));
+            friendDao.insert(new Friend("Test 2", 0, 0, 0, 1));
+            friendDao.insert(new Friend("Test 3", 1, 1, 0, 2));
             return null;
         }
     }
