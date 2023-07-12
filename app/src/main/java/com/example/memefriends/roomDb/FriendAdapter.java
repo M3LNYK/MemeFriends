@@ -47,10 +47,6 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendHold
         notifyDataSetChanged();
     }
 
-    public void someFunction(){
-//        Test comment
-    };
-
     public Friend getFriendAt(int position) {
         return friends.get(position);
     }
