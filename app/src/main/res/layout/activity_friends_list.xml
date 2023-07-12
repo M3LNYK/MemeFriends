@@ -57,6 +57,8 @@
         tools:layout_editor_absoluteX="0dp"
         tools:listitem="@layout/list_item_friends" />
 
+<!--    <include layout="@layout/item_friend_group_header" />-->
+
     <!--    Main FAB button-->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_add"
@@ -125,8 +127,8 @@
         android:id="@+id/to_top_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:visibility="gone"
+        android:layout_marginBottom="20dp"
+        android:visibility="invisible"
         app:fabSize="mini"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

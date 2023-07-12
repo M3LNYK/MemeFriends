@@ -92,7 +92,8 @@ public class FriendsList extends AppCompatActivity {
         friendViewModel.getAllFriends().observe(this, new Observer<List<Friend>>() {
             @Override
             public void onChanged(List<Friend> friends) {
-                adapter.setFriends(friends);
+                List<GroupedFriend> groupedFriends = groupFriendsByLetter(friends);
+                adapter.setFriends(groupedFriends);
                 checkEmptyList(friends);
             }
         });
@@ -278,5 +279,32 @@ public class FriendsList extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private List<GroupedFriend> groupFriendsByLetter(List<Friend> friends) {
+        List<GroupedFriend> groupedFriends = new ArrayList<>();
+
+        if (!friends.isEmpty()) {
+            char currentLetter = Character.toUpperCase(friends.get(0).getName().charAt(0));
+            List<Friend> currentGroup = new ArrayList<>();
+
+            for (Friend friend : friends) {
+                char firstLetter = Character.toUpperCase(friend.getName().charAt(0));
+
+                if (firstLetter != currentLetter) {
+                    // Start a new group
+                    groupedFriends.add(new GroupedFriend(currentLetter, currentGroup));
+                    currentGroup = new ArrayList<>();
+                    currentLetter = firstLetter;
+                }
+
+                currentGroup.add(friend);
+            }
+
+            // Add the last group
+            groupedFriends.add(new GroupedFriend(currentLetter, currentGroup));
+        }
+
+        return groupedFriends;
     }
 }
