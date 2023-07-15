@@ -10,6 +10,7 @@ public class FriendMemes extends AppCompatActivity {
 
     public static final String EXTRA_NAME = "com.memefriends.EXTRA_NAME";
     public static final String EXTRA_TOTAL_MEMES = "com.memefriends.EXTRA_TOTAL_MEMES";
+//    public static final int EXTRA_TOTAL_MEMES = 5;
     public static final String EXTRA_FUNNY_MEMES = "com.memefriends.EXTRA_FUNNY_MEMES";
     public static final String EXTRA_NOT_FUNNY_MEMES = "com.memefriends.EXTRA_NOT_FUNNY_MEMES";
 
@@ -29,14 +30,15 @@ public class FriendMemes extends AppCompatActivity {
         setTitle("Friend's memes stats");
 
         String receivedName = getIntent().getStringExtra(EXTRA_NAME);
-        String receivedTM = getIntent().getStringExtra(EXTRA_TOTAL_MEMES);
-        String receivedFM = getIntent().getStringExtra(EXTRA_FUNNY_MEMES);
-        String receivedNFM = getIntent().getStringExtra(EXTRA_NOT_FUNNY_MEMES);
+        int receivedTM = getIntent().getIntExtra(EXTRA_TOTAL_MEMES, -1);
+        int receivedFM = getIntent().getIntExtra(EXTRA_FUNNY_MEMES, -1);
+        int receivedNFM = getIntent().getIntExtra(EXTRA_NOT_FUNNY_MEMES, -1);
+
 
         friendNameView.setText(receivedName);
-        friendTMView.setText(receivedTM);
-        friendFMView.setText(receivedFM);
-        friendNFMView.setText(receivedNFM);
+        friendTMView.setText(String.valueOf(receivedTM));
+        friendFMView.setText(String.valueOf(receivedFM));
+        friendNFMView.setText(String.valueOf(receivedNFM));
 
 
     }
