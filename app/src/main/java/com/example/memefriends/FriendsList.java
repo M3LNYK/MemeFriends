@@ -54,6 +54,11 @@ public class FriendsList extends AppCompatActivity {
     private LinearLayoutManager linearLayoutManager;
     private Random ran = new Random();
 
+    public static final String EXTRA_NAME = "com.memefriends.EXTRA_NAME";
+    public static final String EXTRA_TOTAL_MEMES = "com.memefriends.EXTRA_TOTAL_MEMES";
+    public static final String EXTRA_FUNNY_MEMES = "com.memefriends.EXTRA_FUNNY_MEMES";
+    public static final String EXTRA_NOT_FUNNY_MEMES = "com.memefriends.EXTRA_NOT_FUNNY_MEMES";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,8 +126,11 @@ public class FriendsList extends AppCompatActivity {
             public void onItemClick(Friend friend) {
 //                We clicked on friend
                 Intent intent = new Intent(FriendsList.this, FriendMemes.class);
-//                Implement passing extra values
-//                intent.putExtra("Name", "Test");
+                intent.putExtra(EXTRA_NAME, friend.getName());
+                intent.putExtra(EXTRA_TOTAL_MEMES, friend.getTotalMemes());
+                intent.putExtra(EXTRA_FUNNY_MEMES, friend.getFunnyMemes());
+                intent.putExtra(EXTRA_NOT_FUNNY_MEMES, friend.getNfMemes());
+//                Passing data to FriendList activity
                 startActivity(intent);
             }
         });
