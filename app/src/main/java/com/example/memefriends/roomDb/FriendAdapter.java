@@ -110,6 +110,10 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         return null; // Return null if position is not valid or friend is not found
     }
 
+    public List<GroupedFriend> getGroupedFriends() {
+        return groupedFriends;
+    }
+
     class FriendViewHolder extends RecyclerView.ViewHolder {
         private ImageView imageView;
         private TextView friendName;
@@ -175,7 +179,7 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     // Helper method to get the position of the group (GroupedFriend object) in the groupedFriends list
-    private int getGroupPosition(int adapterPosition) {
+    public int getGroupPosition(int adapterPosition) {
         int count = 0;
         for (int i = 0; i < groupedFriends.size(); i++) {
             if (adapterPosition == count) {

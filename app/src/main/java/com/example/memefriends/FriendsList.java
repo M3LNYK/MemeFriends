@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.example.memefriends.roomDb.Friend;
 import com.example.memefriends.roomDb.FriendViewModel;
 import com.example.memefriends.roomDb.FriendAdapter;
+import com.google.android.material.chip.Chip;
 import com.google.android.material.divider.MaterialDividerItemDecoration;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -44,15 +45,14 @@ public class FriendsList extends AppCompatActivity {
     private RelativeLayout emptyLayout;
     private RecyclerView recyclerView;
     private AlertDialog newFriendDialog;
-    private Friend selectedFriend;
     private EditText editTextFriendName;
-    private List<Friend> friendArrayList = new ArrayList<>();
-
     private FriendViewModel friendViewModel;
     private FriendAdapter adapter;
-
     private LinearLayoutManager linearLayoutManager;
     private Random ran = new Random();
+    private Chip chipGroupLetter;
+    private char currentGroupLetter = '\0';
+
 
     public static final String EXTRA_NAME = "com.memefriends.EXTRA_NAME";
     public static final String EXTRA_TOTAL_MEMES = "com.memefriends.EXTRA_TOTAL_MEMES";
@@ -64,6 +64,7 @@ public class FriendsList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_friends_list);
+
 
         fabAdd = findViewById(R.id.fab_add);
         fabReaction = findViewById(R.id.add_reaction_fab);
@@ -97,6 +98,15 @@ public class FriendsList extends AppCompatActivity {
         adapter = new FriendAdapter();
         recyclerView.setAdapter(adapter);
 
+        chipGroupLetter = findViewById(R.id.chipGroupLetter);
+        chipGroupLetter.setText(String.valueOf(currentGroupLetter));
+        // Get the first group letter from the adapter and display it in the chip
+        if (adapter.getGroupedFriends() != null && !adapter.getGroupedFriends().isEmpty()) {
+            char firstGroupLetter = adapter.getGroupedFriends().get(0).getFirstLetter();
+            currentGroupLetter = firstGroupLetter;
+            chipGroupLetter.setText(String.valueOf(currentGroupLetter));
+        }
+
         friendViewModel = new ViewModelProvider(this).get(FriendViewModel.class);
         friendViewModel.getAllFriends().observe(this, new Observer<List<Friend>>() {
             @Override
@@ -104,6 +114,11 @@ public class FriendsList extends AppCompatActivity {
                 List<GroupedFriend> groupedFriends = groupFriendsByLetter(friends);
                 adapter.setFriends(groupedFriends);
                 checkEmptyList(friends);
+
+                StringBuilder groupLetters = new StringBuilder();
+                for (GroupedFriend groupedFriend : groupedFriends) {
+                    groupLetters.append(groupedFriend.getFirstLetter());
+                }
             }
         });
 
@@ -145,9 +160,14 @@ public class FriendsList extends AppCompatActivity {
 
                 // Update fabToTop button visibility
                 if (isScrolledFromTop) {
-                    fabToTop.setVisibility(View.VISIBLE);
+                    // Get the current group letter from the adapter
+                    if (adapter.getGroupedFriends() != null && !adapter.getGroupedFriends().isEmpty()) {
+                        char groupLetter = adapter.getGroupedFriends().get(0).getFirstLetter();
+                        chipGroupLetter.setText(String.valueOf(groupLetter));
+                        chipGroupLetter.setVisibility(View.VISIBLE);
+                    }
                 } else {
-                    fabToTop.setVisibility(View.GONE);
+                    chipGroupLetter.setVisibility(View.GONE);
                 }
             }
         });
@@ -333,4 +353,6 @@ public class FriendsList extends AppCompatActivity {
         // Adjust the threshold as needed (e.g., 4.5 for WCAG AA, 7 for WCAG AAA)
         return contrastRatio >= 3.2; //Standard should be 4.5
     }
+
+
 }

@@ -50,6 +50,26 @@
     </RelativeLayout>
 
 
+    <com.google.android.material.chip.Chip
+        android:id="@+id/chipGroupLetter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_marginTop="16dp"
+        android:visibility="gone"
+        app:chipBackgroundColor="@color/green_500"
+        app:chipCornerRadius="16dp"
+        app:chipIconTint="@color/white"
+        app:chipIconVisible="true"
+        app:chipStrokeColor="@color/black"
+        app:chipStrokeWidth="1dp"
+        app:layout_constraintTop_toBottomOf="@id/textView_friends"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:elevation="8dp"
+        />
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/friends_listview"
         android:layout_width="match_parent"
@@ -59,8 +79,6 @@
         android:scrollbarAlwaysDrawVerticalTrack="true"
         tools:layout_editor_absoluteX="0dp"
         tools:listitem="@layout/list_item_friends" />
-
-<!--    <include layout="@layout/item_friend_group_header" />-->
 
     <!--    Main FAB button-->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
