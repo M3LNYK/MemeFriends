@@ -167,11 +167,25 @@ public class FriendsList extends AppCompatActivity {
                     // Get the position of the first visible item
                     int firstVisibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition();
 
-                    if (firstVisibleItemPosition != RecyclerView.NO_POSITION) {
+                    if (firstVisibleItemPosition != RecyclerView.NO_POSITION && firstVisibleItemPosition < adapter.getItemCount()-1) {
                         // Get the current group letter from the adapter based on the first visible item's position
-                        GroupedFriend firstVisibleGroup = adapter.getGroupedFriends().get(firstVisibleItemPosition);
-                        char groupLetter = firstVisibleGroup.getFirstLetter();
+                        List<GroupedFriend> a = adapter.getGroupedFriends();
+                        GroupedFriend sa = a.get(firstVisibleItemPosition);
+                        char groupLetter = sa.getFirstLetter();
                         chipGroupLetter.setText(String.valueOf(groupLetter));
+                        chipGroupLetter.setVisibility(View.VISIBLE);
+
+                        // Find the first visible group from the top (excluding the currently visible group)
+                        for (int i = firstVisibleItemPosition - 1; i >= 0; i--) {
+                            if (i < adapter.getItemCount()) {
+                                GroupedFriend group = adapter.getGroupedFriends().get(i);
+                                if (group.isHeaderVisible()) {
+                                    // Display the chip with the letter for the group that is no longer visible from the top
+                                    chipGroupLetter.setText(String.valueOf(group.getFirstLetter()));
+                                    break;
+                                }
+                            }
+                        }
                         chipGroupLetter.setVisibility(View.VISIBLE);
                         chipGroupLetter.startAnimation(fadeOutAnimation);
                         chipGroupLetter.setVisibility(View.INVISIBLE);

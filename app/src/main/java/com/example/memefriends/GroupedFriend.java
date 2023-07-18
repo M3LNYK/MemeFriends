@@ -8,6 +8,8 @@ public class GroupedFriend {
     private char firstLetter;
     private List<Friend> friends;
 
+    private boolean isHeaderVisible;
+
     public GroupedFriend(char firstLetter, List<Friend> friends) {
         this.firstLetter = firstLetter;
         this.friends = friends;
@@ -19,5 +21,13 @@ public class GroupedFriend {
 
     public List<Friend> getFriends() {
         return friends;
+    }
+
+    public boolean isHeaderVisible() {
+        return isHeaderVisible;
+    }
+
+    public void setHeaderVisible(boolean headerVisible) {
+        isHeaderVisible = headerVisible;
     }
 }
