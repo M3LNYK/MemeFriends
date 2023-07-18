@@ -38,7 +38,8 @@ import java.util.Random;
 
 public class FriendsList extends AppCompatActivity {
 
-    private Animation rotateOpen, rotateClose, fromBottom, toBottom;
+    private Animation rotateOpen, rotateClose, fromBottom, toBottom, fadeOutAnimation;
+    ;
     private Boolean clicked = false;
     private FloatingActionButton fabAdd, fabReaction, fabFriend, fabToTop;
     private TextView textReaction, textFriend, friendTextView;
@@ -74,6 +75,7 @@ public class FriendsList extends AppCompatActivity {
         rotateClose = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_close_animation);
         fromBottom = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.from_bottom_anim);
         toBottom = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.to_bottom_anim);
+        fadeOutAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_out_animation);
 
         textFriend = findViewById(R.id.add_person_text);
         textReaction = findViewById(R.id.add_reaction_text);
@@ -160,14 +162,23 @@ public class FriendsList extends AppCompatActivity {
 
                 // Update fabToTop button visibility
                 if (isScrolledFromTop) {
-                    // Get the current group letter from the adapter
-                    if (adapter.getGroupedFriends() != null && !adapter.getGroupedFriends().isEmpty()) {
-                        char groupLetter = adapter.getGroupedFriends().get(0).getFirstLetter();
+                    fabToTop.setVisibility(View.VISIBLE);
+
+                    // Get the position of the first visible item
+                    int firstVisibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition();
+
+                    if (firstVisibleItemPosition != RecyclerView.NO_POSITION) {
+                        // Get the current group letter from the adapter based on the first visible item's position
+                        GroupedFriend firstVisibleGroup = adapter.getGroupedFriends().get(firstVisibleItemPosition);
+                        char groupLetter = firstVisibleGroup.getFirstLetter();
                         chipGroupLetter.setText(String.valueOf(groupLetter));
                         chipGroupLetter.setVisibility(View.VISIBLE);
+                        chipGroupLetter.startAnimation(fadeOutAnimation);
+                        chipGroupLetter.setVisibility(View.INVISIBLE);
                     }
                 } else {
                     chipGroupLetter.setVisibility(View.GONE);
+                    fabToTop.setVisibility(View.GONE);
                 }
             }
         });
@@ -206,7 +217,7 @@ public class FriendsList extends AppCompatActivity {
 
     private void onTopButtonClicked() {
         recyclerView.smoothScrollToPosition(0);
-            fabToTop.setVisibility(View.GONE);
+        fabToTop.setVisibility(View.GONE);
     }
 
     private void checkEmptyList(List<Friend> friends) {
