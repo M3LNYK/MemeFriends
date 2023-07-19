@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Widget.Material3.Chip.Suggestion" parent="Base.Widget.Material3.Chip">
+        <item name="android:checkable">true</item>
+
+        <item name="chipIconVisible">false</item>
+        <item name="checkedIconVisible">false</item>
+        <item name="closeIconVisible">false</item>
+
+        <item name="shapeAppearance">@macro/m3_comp_suggestion_chip_container_shape</item>
+        <item name="android:textAppearance">@macro/m3_comp_suggestion_chip_label_text_type</item>
+        <item name="chipMinHeight">@dimen/m3_comp_suggestion_chip_container_height</item>
+        <item name="chipIconSize">@dimen/m3_comp_suggestion_chip_with_leading_icon_leading_icon_size</item>
+        <item name="chipStrokeWidth">@dimen/m3_comp_suggestion_chip_flat_outline_width</item>
+        <item name="android:elevation" tools:ignore="NewApi">@dimen/m3_comp_suggestion_chip_flat_container_elevation</item>
+
+        <item name="chipStartPadding">8dp</item>
+        <item name="iconStartPadding">0dp</item>
+        <!-- The existence of a chip icon takes away padding before the text. -->
+        <item name="iconEndPadding">-2dp</item>
+        <item name="textStartPadding">8dp</item>
+        <item name="textEndPadding">6dp</item>
+        <!-- The existence of a chip icon takes away padding after the text. -->
+        <item name="closeIconStartPadding">-2dp</item>
+        <item name="closeIconEndPadding">0dp</item>
+        <item name="chipEndPadding">10dp</item>
+    </style>
+    
+
+
+</resources>
