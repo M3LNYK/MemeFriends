@@ -89,16 +89,9 @@ public class FriendsList extends AppCompatActivity {
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-
-        MaterialDividerItemDecoration divider = new MaterialDividerItemDecoration(recyclerView.getContext(),
-                LinearLayoutManager.VERTICAL);
-//      Divider inset should be calculated from device for pixel 5: dp * 3
-//        divider.setDividerInsetStart(192);
-//        divider.setDividerInsetEnd(48);
-//        divider.setLastItemDecorated(false);
-//        recyclerView.addItemDecoration(divider);
-//        recyclerView.setHasFixedSize(true);
-        recyclerView.addItemDecoration(new FriendAdapter.FriendItemDecoration(recyclerView.getContext()));
+//        Divider implementation
+        FriendAdapter.FriendItemDecoration itemDecoration = new FriendAdapter.FriendItemDecoration(recyclerView.getContext());
+        recyclerView.addItemDecoration(itemDecoration);
 
 
         adapter = new FriendAdapter();
@@ -382,6 +375,4 @@ public class FriendsList extends AppCompatActivity {
         // Adjust the threshold as needed (e.g., 4.5 for WCAG AA, 7 for WCAG AAA)
         return contrastRatio >= 3.2; //Standard should be 4.5
     }
-
-
 }

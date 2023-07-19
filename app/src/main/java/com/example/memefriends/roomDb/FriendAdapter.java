@@ -3,6 +3,8 @@ package com.example.memefriends.roomDb;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.InsetDrawable;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +30,8 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private List<GroupedFriend> groupedFriends;
     private static final int VIEW_TYPE_HEADER = 0;
     private static final int VIEW_TYPE_ITEM = 1;
+
+    private static int insetStart, insetEnd;
 
     @NonNull
     @Override
@@ -164,27 +168,36 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         void onItemClick(Friend friend);
     }
 
+
+    //    This was added to show divider, however for some reason it does not work.
     public static class FriendItemDecoration extends RecyclerView.ItemDecoration {
         private Drawable divider;
 
         public FriendItemDecoration(Context context) {
-            divider = ContextCompat.getDrawable(context, R.drawable.divider_horizontal); // Replace with your divider drawable
+            insetStart = dpToPx(context, 64);
+            insetEnd = pxToDp(context, 48);
+            divider = ContextCompat.getDrawable(context, R.drawable.divider_horizontal);
+            setDividerInsets(divider, insetStart, insetEnd);
         }
 
         @Override
         public void onDrawOver(@NonNull Canvas canvas, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
-            int itemCount = parent.getAdapter().getItemCount();
-            for (int i = 0; i < itemCount; i++) {
+            int childCount = parent.getChildCount();
+            int lastGroupPosition = -1;
+
+            for (int i = 0; i < childCount; i++) {
                 View child = parent.getChildAt(i);
-                if (child != null) {
-                    RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
+                RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
+                int adapterPosition = parent.getChildAdapterPosition(child);
+                int viewType = parent.getAdapter().getItemViewType(adapterPosition);
 
-                    int position = params.getViewAdapterPosition();
-
-                    // Draw the divider if it's a friend item
-                    if (parent.getAdapter().getItemViewType(position) == FriendAdapter.VIEW_TYPE_ITEM) {
-                        int left = parent.getPaddingLeft();
-                        int right = parent.getWidth() - parent.getPaddingRight();
+                if (viewType == FriendAdapter.VIEW_TYPE_HEADER) {
+                    lastGroupPosition = adapterPosition;
+                } else if (viewType == FriendAdapter.VIEW_TYPE_ITEM) {
+                    // Draw divider only if it's not the last item in the group
+                    if (adapterPosition < lastGroupPosition) {
+                        int left = child.getLeft() + insetStart;
+                        int right = child.getRight() - insetEnd;
                         int top = child.getBottom() + params.bottomMargin;
                         int bottom = top + divider.getIntrinsicHeight();
 
@@ -192,6 +205,13 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         divider.draw(canvas);
                     }
                 }
+            }
+        }
+
+        private void setDividerInsets(Drawable divider, int insetStart, int insetEnd) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                InsetDrawable insetDrawable = new InsetDrawable(divider, insetStart, 0, insetEnd, 0);
+                this.divider = insetDrawable;
             }
         }
     }
@@ -246,5 +266,13 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             count += friendCount; // Increment count for friend items
         }
         return -1; // Return -1 if position is not found (handle error condition)
+    }
+
+    public static int pxToDp(Context context, int px) {
+        return (int) (px / (context.getResources().getDisplayMetrics().densityDpi / 160f));
+    }
+
+    public static int dpToPx(Context context, int dp) {
+        return (int) (dp * context.getResources().getDisplayMetrics().density);
     }
 }
