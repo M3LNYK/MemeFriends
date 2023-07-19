@@ -93,11 +93,13 @@ public class FriendsList extends AppCompatActivity {
         MaterialDividerItemDecoration divider = new MaterialDividerItemDecoration(recyclerView.getContext(),
                 LinearLayoutManager.VERTICAL);
 //      Divider inset should be calculated from device for pixel 5: dp * 3
-        divider.setDividerInsetStart(192);
-        divider.setDividerInsetEnd(48);
-        divider.setLastItemDecorated(false);
-        recyclerView.addItemDecoration(divider);
-        recyclerView.setHasFixedSize(true);
+//        divider.setDividerInsetStart(192);
+//        divider.setDividerInsetEnd(48);
+//        divider.setLastItemDecorated(false);
+//        recyclerView.addItemDecoration(divider);
+//        recyclerView.setHasFixedSize(true);
+        recyclerView.addItemDecoration(new FriendAdapter.FriendItemDecoration(recyclerView.getContext()));
+
 
         adapter = new FriendAdapter();
         recyclerView.setAdapter(adapter);

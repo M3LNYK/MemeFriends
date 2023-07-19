@@ -1,5 +1,8 @@
 package com.example.memefriends.roomDb;
 
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.memefriends.GroupedFriend;
@@ -146,7 +151,7 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-    static class HeaderViewHolder extends RecyclerView.ViewHolder {
+    class HeaderViewHolder extends RecyclerView.ViewHolder {
         TextView headerTextView;
 
         HeaderViewHolder(View itemView) {
@@ -157,6 +162,38 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     public interface OnItemClickListener {
         void onItemClick(Friend friend);
+    }
+
+    public static class FriendItemDecoration extends RecyclerView.ItemDecoration {
+        private Drawable divider;
+
+        public FriendItemDecoration(Context context) {
+            divider = ContextCompat.getDrawable(context, R.drawable.divider_horizontal); // Replace with your divider drawable
+        }
+
+        @Override
+        public void onDrawOver(@NonNull Canvas canvas, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+            int itemCount = parent.getAdapter().getItemCount();
+            for (int i = 0; i < itemCount; i++) {
+                View child = parent.getChildAt(i);
+                if (child != null) {
+                    RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
+
+                    int position = params.getViewAdapterPosition();
+
+                    // Draw the divider if it's a friend item
+                    if (parent.getAdapter().getItemViewType(position) == FriendAdapter.VIEW_TYPE_ITEM) {
+                        int left = parent.getPaddingLeft();
+                        int right = parent.getWidth() - parent.getPaddingRight();
+                        int top = child.getBottom() + params.bottomMargin;
+                        int bottom = top + divider.getIntrinsicHeight();
+
+                        divider.setBounds(left, top, right, bottom);
+                        divider.draw(canvas);
+                    }
+                }
+            }
+        }
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
