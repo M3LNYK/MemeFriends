@@ -1,6 +1,5 @@
 package com.example.memefriends.roomDb;
 
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import com.example.memefriends.R;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<Friend> friends = new ArrayList<>();
@@ -90,6 +88,10 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             count += groupedFriend.getFriends().size(); // Increment count for friend items
         }
         return VIEW_TYPE_ITEM;
+    }
+
+    private boolean isHeaderPosition(int position) {
+        return position >= 0 && position < groupedFriends.size() && groupedFriends.get(position).isHeaderVisible();
     }
 
     public void setFriends(List<GroupedFriend> groupedFriends) {

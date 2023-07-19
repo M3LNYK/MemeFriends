@@ -111,6 +111,7 @@ public class FriendsList extends AppCompatActivity {
             chipGroupLetter.setText(String.valueOf(currentGroupLetter));
         }
 
+
         friendViewModel = new ViewModelProvider(this).get(FriendViewModel.class);
         friendViewModel.getAllFriends().observe(this, new Observer<List<Friend>>() {
             @Override
