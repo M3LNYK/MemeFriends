@@ -88,6 +88,8 @@ public class FriendsList extends AppCompatActivity {
         recyclerView = findViewById(R.id.friends_listview);
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
+
+
         MaterialDividerItemDecoration divider = new MaterialDividerItemDecoration(recyclerView.getContext(),
                 LinearLayoutManager.VERTICAL);
 //      Divider inset should be calculated from device for pixel 5: dp * 3
