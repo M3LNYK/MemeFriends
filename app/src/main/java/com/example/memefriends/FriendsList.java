@@ -28,7 +28,6 @@ import com.example.memefriends.roomDb.Friend;
 import com.example.memefriends.roomDb.FriendViewModel;
 import com.example.memefriends.roomDb.FriendAdapter;
 import com.google.android.material.chip.Chip;
-import com.google.android.material.divider.MaterialDividerItemDecoration;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -100,11 +99,7 @@ public class FriendsList extends AppCompatActivity {
         chipGroupLetter = findViewById(R.id.chipGroupLetter);
         chipGroupLetter.setText(String.valueOf(currentGroupLetter));
         // Get the first group letter from the adapter and display it in the chip
-        if (adapter.getGroupedFriends() != null && !adapter.getGroupedFriends().isEmpty()) {
-            char firstGroupLetter = adapter.getGroupedFriends().get(0).getFirstLetter();
-            currentGroupLetter = firstGroupLetter;
-            chipGroupLetter.setText(String.valueOf(currentGroupLetter));
-        }
+        getFirstGroupLetterForChip();
 
 
         friendViewModel = new ViewModelProvider(this).get(FriendViewModel.class);
@@ -145,7 +140,6 @@ public class FriendsList extends AppCompatActivity {
                 intent.putExtra(EXTRA_TOTAL_MEMES, friend.getTotalMemes());
                 intent.putExtra(EXTRA_FUNNY_MEMES, friend.getFunnyMemes());
                 intent.putExtra(EXTRA_NOT_FUNNY_MEMES, friend.getNfMemes());
-//                Passing data to FriendList activity
                 startActivity(intent);
             }
         });
@@ -226,6 +220,14 @@ public class FriendsList extends AppCompatActivity {
         });
     }
 
+    private void getFirstGroupLetterForChip() {
+        if (adapter.getGroupedFriends() != null && !adapter.getGroupedFriends().isEmpty()) {
+            char firstGroupLetter = adapter.getGroupedFriends().get(0).getFirstLetter();
+            currentGroupLetter = firstGroupLetter;
+            chipGroupLetter.setText(String.valueOf(currentGroupLetter));
+        }
+    }
+
     private void onTopButtonClicked() {
         recyclerView.smoothScrollToPosition(0);
         fabToTop.setVisibility(View.GONE);
@@ -285,25 +287,19 @@ public class FriendsList extends AppCompatActivity {
         myDialogBuilder.setView(addFriendPopupView);
         newFriendDialog = myDialogBuilder.create();
         newFriendDialog.show();
-
         editTextFriendName = newFriendDialog.findViewById(R.id.popup_friend_name);
         onAddButtonClicked();
-
     }
 
     public void saveFriend(View view) {
-
         String name = String.valueOf(editTextFriendName.getText());
-
         if (name.trim().isEmpty()) {
             Toast.makeText(this, "Friend name can not be empty!", Toast.LENGTH_SHORT).show();
             return;
         }
-
         Friend tmpFriend = new Friend(name, 0, 0, 0, getRandomColorWithSufficientContrast());
         friendViewModel.insert(tmpFriend);
         Toast.makeText(this, "Friend added", Toast.LENGTH_SHORT).show();
-
         close_popup();
     }
 
