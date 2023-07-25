@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     app:layout_constraintCircleRadius="50dp">
 
     <TextView
-        android:id="@+id/textView_add_friend"
+        android:id="@+id/textView_add_meme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Add Friend"
+        android:text="Add Meme"
         android:textAppearance="?attr/textAppearanceHeadline6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,14 +20,14 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/outlinedTextField_friend_name"
+        android:id="@+id/outlinedTextField_meme_name"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="24dp"
         android:hint="Meme name"
-        app:layout_constraintTop_toBottomOf="@+id/textView_add_friend"
+        app:layout_constraintTop_toBottomOf="@+id/textView_add_meme"
         app:endIconMode="clear_text">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -39,14 +40,25 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_add_friend"
+        android:id="@+id/button_add_funny_meme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="16dp"
+        android:onClick="addMeme"
         android:text="Add"
-        android:onClick="saveFriend"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/outlinedTextField_friend_name" />
+        app:layout_constraintStart_toStartOf="@+id/outlinedTextField_meme_name"
+        app:layout_constraintTop_toBottomOf="@+id/outlinedTextField_meme_name" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_add_nf_meme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="48dp"
+        android:onClick="addMeme"
+        android:text="Add"
+        app:layout_constraintEnd_toEndOf="@+id/outlinedTextField_meme_name"
+        app:layout_constraintTop_toBottomOf="@+id/outlinedTextField_meme_name" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

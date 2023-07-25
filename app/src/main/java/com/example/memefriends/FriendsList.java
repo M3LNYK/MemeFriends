@@ -44,7 +44,7 @@ public class FriendsList extends AppCompatActivity {
     private TextView textReaction, textFriend, friendTextView;
     private RelativeLayout emptyLayout;
     private RecyclerView recyclerView;
-    private AlertDialog newFriendDialog;
+    private AlertDialog newFriendDialog, newMemeDialog;
     private EditText editTextFriendName;
     private FriendViewModel friendViewModel;
     private FriendAdapter adapter;
@@ -208,6 +208,7 @@ public class FriendsList extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 //                Here, new window w add meme should be opened
+                addNewMemeDialog();
                 Toast.makeText(FriendsList.this, "Reaction Clicked", Toast.LENGTH_SHORT).show();
             }
         });
@@ -293,7 +294,12 @@ public class FriendsList extends AppCompatActivity {
 
     public void addNewMemeDialog() {
         AlertDialog.Builder myDialogBuilder = new AlertDialog.Builder(this);
-        final View addMemePopupView = getLayoutInflater().inflate(R.layout.popup_add_friend, null);
+        final View addMemePopupView = getLayoutInflater().inflate(R.layout.popup_add_meme, null);
+        myDialogBuilder.setView(addMemePopupView);
+        newMemeDialog = myDialogBuilder.create();
+        newMemeDialog.show();
+//        editTextFriendName = newFriendDialog.findViewById(R.id.popup_friend_name);
+//        onAddButtonClicked();
     }
 
     public void saveFriend(View view) {
@@ -312,6 +318,9 @@ public class FriendsList extends AppCompatActivity {
     public void close_popup() {
         if (newFriendDialog != null) {
             newFriendDialog.hide();
+        }
+        if (newMemeDialog != null) {
+            newMemeDialog.hide();
         }
     }
 
