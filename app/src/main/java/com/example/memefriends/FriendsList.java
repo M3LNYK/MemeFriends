@@ -291,6 +291,11 @@ public class FriendsList extends AppCompatActivity {
         onAddButtonClicked();
     }
 
+    public void addNewMemeDialog() {
+        AlertDialog.Builder myDialogBuilder = new AlertDialog.Builder(this);
+        final View addMemePopupView = getLayoutInflater().inflate(R.layout.popup_add_friend, null);
+    }
+
     public void saveFriend(View view) {
         String name = String.valueOf(editTextFriendName.getText());
         if (name.trim().isEmpty()) {
