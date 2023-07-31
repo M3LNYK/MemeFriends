@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="earth">Earth</string>
+    <string name="moon">Moon</string>
+
+    <string-array name="simple_items">
+        <item>@string/earth</item>
+        <item>@string/moon</item>
+    </string-array>
+</resources>

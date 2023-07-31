@@ -31,11 +31,30 @@
         app:endIconMode="clear_text">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/popup_friend_name"
+            android:id="@+id/text_input_meme_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="1"
             android:inputType="textPersonName"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/outlinedTextField_friend_name_p"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="24dp"
+        android:hint="Name"
+        app:layout_constraintTop_toBottomOf="@+id/outlinedTextField_meme_name"
+        app:endIconMode="clear_text">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:inputType="text"
+            />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -47,8 +66,8 @@
         android:layout_marginTop="16dp"
         android:onClick="addMeme"
         android:text="Add"
-        app:layout_constraintStart_toStartOf="@+id/outlinedTextField_meme_name"
-        app:layout_constraintTop_toBottomOf="@+id/outlinedTextField_meme_name" />
+        app:layout_constraintStart_toStartOf="@+id/outlinedTextField_friend_name_p"
+        app:layout_constraintTop_toBottomOf="@+id/outlinedTextField_friend_name_p" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_add_nf_meme"
@@ -58,7 +77,7 @@
         android:layout_marginEnd="48dp"
         android:onClick="addMeme"
         android:text="Add"
-        app:layout_constraintEnd_toEndOf="@+id/outlinedTextField_meme_name"
-        app:layout_constraintTop_toBottomOf="@+id/outlinedTextField_meme_name" />
+        app:layout_constraintEnd_toEndOf="@+id/outlinedTextField_friend_name_p"
+        app:layout_constraintTop_toBottomOf="@+id/outlinedTextField_friend_name_p" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
