@@ -38,7 +38,6 @@ import java.util.Random;
 public class FriendsList extends AppCompatActivity {
 
     private Animation rotateOpen, rotateClose, fromBottom, toBottom, fadeOutAnimation;
-    ;
     private Boolean clicked = false;
     private FloatingActionButton fabAdd, fabReaction, fabFriend, fabToTop;
     private TextView textReaction, textFriend, friendTextView;
@@ -49,7 +48,7 @@ public class FriendsList extends AppCompatActivity {
     private FriendViewModel friendViewModel;
     private FriendAdapter adapter;
     private LinearLayoutManager linearLayoutManager;
-    private Random ran = new Random();
+    private final Random ran = new Random();
     private Chip chipGroupLetter;
     private char currentGroupLetter = '\0';
 
@@ -299,7 +298,7 @@ public class FriendsList extends AppCompatActivity {
         newMemeDialog = myDialogBuilder.create();
         newMemeDialog.show();
 //        editTextFriendName = newFriendDialog.findViewById(R.id.popup_friend_name);
-//        onAddButtonClicked();
+        onAddButtonClicked();
     }
 
     public void saveFriend(View view) {
@@ -335,14 +334,12 @@ public class FriendsList extends AppCompatActivity {
     // Selector of menu items
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.delete_all_friends:
-                friendViewModel.deleteAllFriends();
-                Toast.makeText(this, "All friends deleted", Toast.LENGTH_SHORT).show();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.delete_all_friends) {
+            friendViewModel.deleteAllFriends();
+            Toast.makeText(this, "All friends deleted", Toast.LENGTH_SHORT).show();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     private List<GroupedFriend> groupFriendsByLetter(List<Friend> friends) {
