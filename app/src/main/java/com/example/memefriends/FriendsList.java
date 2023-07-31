@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.example.memefriends.roomDb.Friend;
 import com.example.memefriends.roomDb.FriendViewModel;
 import com.example.memefriends.roomDb.FriendAdapter;
+import com.example.memefriends.roomDb.GroupedFriend;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
