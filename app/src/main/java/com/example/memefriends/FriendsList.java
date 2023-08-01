@@ -65,7 +65,6 @@ public class FriendsList extends AppCompatActivity {
 
         setContentView(R.layout.activity_friends_list);
 
-
         fabAdd = findViewById(R.id.fab_add);
         fabReaction = findViewById(R.id.add_reaction_fab);
         fabFriend = findViewById(R.id.add_person_fab);
@@ -91,7 +90,6 @@ public class FriendsList extends AppCompatActivity {
 //        Divider implementation
         FriendAdapter.FriendItemDecoration itemDecoration = new FriendAdapter.FriendItemDecoration(recyclerView.getContext());
         recyclerView.addItemDecoration(itemDecoration);
-
 
         adapter = new FriendAdapter();
         recyclerView.setAdapter(adapter);

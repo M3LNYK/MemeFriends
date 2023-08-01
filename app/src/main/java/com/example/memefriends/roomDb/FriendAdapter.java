@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
     private List<Friend> friends = new ArrayList<>();
     private OnItemClickListener listener;
 
@@ -250,6 +251,10 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             }
         }
         return -1; // Return -1 if position is not found (handle error condition)
+    }
+
+    public List<Friend> getFriends() {
+        return friends;
     }
 
     // Helper method to get the position of the friend within its group in the groupedFriends list
