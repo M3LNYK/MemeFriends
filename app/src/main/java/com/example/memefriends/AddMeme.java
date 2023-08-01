@@ -2,9 +2,11 @@ package com.example.memefriends;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -22,6 +24,7 @@ public class AddMeme extends AppCompatActivity {
     private Button addFunnyMeme, addNotFunnyMeme;
     private AutoCompleteTextView friendName, memeSource;
 
+    private FriendViewModel friendViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,16 +33,17 @@ public class AddMeme extends AppCompatActivity {
 
         friendName = findViewById(R.id.dropdown_friend_name);
 
-
-        friendNameSetter();
+        friendViewModel = new ViewModelProvider(this).get(FriendViewModel.class);
+        friendViewModel.getAllFriends().observe(this, new Observer<List<Friend>>() {
+            @Override
+            public void onChanged(List<Friend> friends) {
+                friendNameSetter(friends);
+            }
+        });
     }
 
-    private void friendNameSetter() {
-        // Replace this array with your list of items for the dropdown menu
-
-//        String[] items = {"Item 1", "Item 2", "Item 3", "Item 4"};
-
-        List<String> items = setFriendsInArrayList();
+    private void friendNameSetter(List<Friend> friends) {
+        List<String> items = setFriendsInArrayList(friends);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_dropdown_item_1line,
@@ -48,10 +52,11 @@ public class AddMeme extends AppCompatActivity {
         friendName.setAdapter(adapter);
     }
 
-    private List<String> setFriendsInArrayList(){
+    private List<String> setFriendsInArrayList(List<Friend> friends) {
         List<String> res = new ArrayList<>();
-        
-        System.out.println("Size B: " + res.size());
+        for (Friend a : friends) {
+            res.add(a.getName());
+        }
         return res;
     }
 }
