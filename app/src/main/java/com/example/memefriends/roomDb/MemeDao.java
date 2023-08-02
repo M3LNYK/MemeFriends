@@ -25,8 +25,8 @@ public interface MemeDao {
     void deleteAllMemes();
 
     @Query("SELECT * FROM `meme-table` WHERE friendId = :id")
-    LiveData<List<Meme>> getEntity2ById(int id);
+    LiveData<List<Meme>> getMeme2ByFriendId(int id);
 
     @Query("SELECT * FROM `meme-table` ORDER BY memeName ASC")
-    LiveData<List<Friend>> getAllFriends();
+    LiveData<List<Meme>> getAllMemes();
 }

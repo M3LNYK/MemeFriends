@@ -20,15 +20,15 @@ public class FriendViewModel extends AndroidViewModel {
     }
 
     public void insert(Friend friend) {
-        repository.insert(friend);
+        repository.insertFriend(friend);
     }
 
     public void update(Friend friend) {
-        repository.update(friend);
+        repository.updateFriend(friend);
     }
 
     public void delete(Friend friend) {
-        repository.delete(friend);
+        repository.deleteFriend(friend);
     }
 
     public void deleteAllFriends() {
