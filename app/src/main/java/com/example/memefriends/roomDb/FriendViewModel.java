@@ -11,12 +11,15 @@ import java.util.List;
 public class FriendViewModel extends AndroidViewModel {
     private FriendRepository repository;
     private LiveData<List<Friend>> allFriends;
+    private LiveData<List<Meme>> allMemes;
+    private LiveData<List<Meme>> memesByFriendId;
 
 
     public FriendViewModel(@NonNull Application application) {
         super(application);
         repository = new FriendRepository(application);
         allFriends = repository.getAllFriends();
+        allMemes = repository.getAllMemes();
     }
 
     public void insert(Friend friend) {
@@ -38,4 +41,26 @@ public class FriendViewModel extends AndroidViewModel {
     public LiveData<List<Friend>> getAllFriends() {
         return allFriends;
     }
+
+    public void insertMeme(Meme meme) { repository.insertMeme(meme); }
+
+    public void updateMeme(Meme meme) { repository.updateMeme(meme); }
+
+    public void deleteMeme(Meme meme) {
+        repository.deleteMeme(meme);
+    }
+
+    public void deleteAllMemes() {
+        repository.deleteAllMemes();
+    }
+
+    public LiveData<List<Meme>> getAllMemes() {
+        return allMemes;
+    }
+
+    public LiveData<List<Meme>> getMemesByFriendId(int friendId) {
+        memesByFriendId = repository.getMemesByFriendId(friendId);
+        return memesByFriendId;
+    }
+
 }

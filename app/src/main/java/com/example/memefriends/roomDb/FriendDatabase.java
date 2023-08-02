@@ -47,7 +47,7 @@ public abstract class FriendDatabase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            friendDao.insert(new Friend("Test 1", 1, 1, 0, 0));
+            friendDao.insert(new Friend("Test 1", 0, 0, 0, 0));
 //            friendDao.insert(new Friend("Test 2", 0, 0, 0, 1));
 //            friendDao.insert(new Friend("Test 3", 1, 1, 0, 2));
             return null;
