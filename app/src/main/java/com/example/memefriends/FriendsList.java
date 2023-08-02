@@ -1,5 +1,7 @@
 package com.example.memefriends;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -52,11 +54,16 @@ public class FriendsList extends AppCompatActivity {
     private Chip chipGroupLetter;
     private char currentGroupLetter = '\0';
 
-
+    public static final int ADD_NOTE_REQUEST = 1;
+    public static final int EDIT_NOTE_REQUEST = 2;
+    public static final String EXTRA_ID = "com.memefriends.EXTRA_ID";
     public static final String EXTRA_NAME = "com.memefriends.EXTRA_NAME";
     public static final String EXTRA_TOTAL_MEMES = "com.memefriends.EXTRA_TOTAL_MEMES";
     public static final String EXTRA_FUNNY_MEMES = "com.memefriends.EXTRA_FUNNY_MEMES";
     public static final String EXTRA_NOT_FUNNY_MEMES = "com.memefriends.EXTRA_NOT_FUNNY_MEMES";
+    public static final String EXTRA_COLOR = "com.memefriends.EXTRA_COLOR";
+    private ActivityResultLauncher<Intent> activityResultLauncher;
+    private static final int RESULT_EDIT = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,11 +135,15 @@ public class FriendsList extends AppCompatActivity {
         adapter.setOnItemClickListener(friend -> {
 //                We clicked on friend
             Intent intent = new Intent(FriendsList.this, FriendMemes.class);
+            intent.putExtra(EXTRA_ID, friend.getId());
+            System.out.println("SENT ID IS: " + friend.getId());
             intent.putExtra(EXTRA_NAME, friend.getName());
             intent.putExtra(EXTRA_TOTAL_MEMES, friend.getTotalMemes());
             intent.putExtra(EXTRA_FUNNY_MEMES, friend.getFunnyMemes());
             intent.putExtra(EXTRA_NOT_FUNNY_MEMES, friend.getNfMemes());
-            startActivity(intent);
+            intent.putExtra(EXTRA_COLOR, friend.getColor());
+//            startActivity(intent);
+            activityResultLauncher.launch(intent);
         });
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -190,6 +201,31 @@ public class FriendsList extends AppCompatActivity {
         });
 
         fabFriend.setOnClickListener(view -> addNewFriendDialog());
+
+        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    // Handle the activity result in the callback
+                    if (result.getResultCode() == RESULT_EDIT) {
+                        Intent data = result.getData();
+                        int id = data.getIntExtra(FriendMemes.EXTRA_ID, -1);
+                        if (id == -1) {
+                            Toast.makeText(this, "Friend can not be updated!", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        String name = data.getStringExtra(FriendMemes.EXTRA_NAME);
+                        int totalMemes = data.getIntExtra(FriendMemes.EXTRA_TOTAL_MEMES, -1);
+                        int funnyMemes = data.getIntExtra(FriendMemes.EXTRA_FUNNY_MEMES, -1);
+                        int notFunnyMemes = data.getIntExtra(FriendMemes.EXTRA_NOT_FUNNY_MEMES, -1);
+                        int color = data.getIntExtra(FriendMemes.EXTRA_COLOR, -1);
+
+                        Friend friend = new Friend(name, totalMemes, funnyMemes, notFunnyMemes, color);
+                        friend.setId(id);
+                        System.out.println("ID FOR UPDATE IS: " + id);
+                        friendViewModel.update(friend);
+                        Toast.makeText(this, "Friend updated!", Toast.LENGTH_SHORT).show();
+                    }
+                    
+                });
     }
 
     private void getFirstGroupLetterForChip() {

@@ -3,6 +3,7 @@ package com.example.memefriends;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -10,16 +11,19 @@ import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class FriendMemes extends AppCompatActivity {
-
+    public static final String EXTRA_ID = "com.memefriends.EXTRA_ID";
     public static final String EXTRA_NAME = "com.memefriends.EXTRA_NAME";
     public static final String EXTRA_TOTAL_MEMES = "com.memefriends.EXTRA_TOTAL_MEMES";
     public static final String EXTRA_FUNNY_MEMES = "com.memefriends.EXTRA_FUNNY_MEMES";
     public static final String EXTRA_NOT_FUNNY_MEMES = "com.memefriends.EXTRA_NOT_FUNNY_MEMES";
+    public static final String EXTRA_COLOR = "com.memefriends.EXTRA_COLOR";
+    private static final int RESULT_EDIT = 10;
     private TextInputEditText outlinedFriendName, outlinedMemeTotal, outlinedMemeFunny, outlinedMemeNotFunny;
     private LinearLayout buttonsArea;
 
@@ -27,7 +31,7 @@ public class FriendMemes extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_memes);
-        setTitle("Friend's memes stats");
+
 
         MaterialCardView cardFriendInfo = findViewById(R.id.cardFriendInfo);
         outlinedFriendName = findViewById(R.id.outlined_friend_name);
@@ -45,18 +49,25 @@ public class FriendMemes extends AppCompatActivity {
         setLongClickListeners();
 
         // Set click listener for the root layout (CardView) to handle clicks outside the card
-        cardFriendInfo.setOnClickListener(view -> hideButtons());
+        cardFriendInfo.setOnClickListener(view -> cardClicked());
         // Set click listeners for the buttons
         saveChange.setOnClickListener(view -> onSaveButtonClicked());
         discardChange.setOnClickListener(view -> onDiscardButtonClicked());
     }
 
+    private void cardClicked(){
+        populateReceivedFriendName();
+        hideButtons();
+    }
+
     private void populateOulinedFields() {
         String receivedName = getIntent().getStringExtra(EXTRA_NAME);
+        int receivedId = getIntent().getIntExtra(EXTRA_ID, -1);
+        System.out.println("RECEIVED ID IS:" + receivedId);
         int receivedTM = getIntent().getIntExtra(EXTRA_TOTAL_MEMES, -1);
         int receivedFM = getIntent().getIntExtra(EXTRA_FUNNY_MEMES, -1);
         int receivedNFM = getIntent().getIntExtra(EXTRA_NOT_FUNNY_MEMES, -1);
-
+        setTitle(receivedName + "'s memes stats");
         outlinedFriendName.setText(receivedName);
         outlinedMemeTotal.setText(String.valueOf(receivedTM));
         outlinedMemeFunny.setText(String.valueOf(receivedFM));
@@ -98,6 +109,11 @@ public class FriendMemes extends AppCompatActivity {
         buttonsArea.setVisibility(View.GONE);
     }
 
+    private void populateReceivedFriendName() {
+        String receivedName = getIntent().getStringExtra(EXTRA_NAME);
+        outlinedFriendName.setText(receivedName);
+    }
+
     private void enableEditing(TextInputEditText editText) {
         // Enable editing for the specified TextInputEditText
         editText.setFocusableInTouchMode(true);
@@ -118,9 +134,35 @@ public class FriendMemes extends AppCompatActivity {
         disableEditing(outlinedMemeFunny);
         disableEditing(outlinedMemeNotFunny);
         hideButtons();
+        String friendName = outlinedFriendName.getText().toString();
+        int totalMemes = Integer.parseInt(outlinedMemeTotal.getText().toString());
+        int funnyMemes = Integer.parseInt(outlinedMemeFunny.getText().toString());
+        int notFunnyMemes = Integer.parseInt(outlinedMemeNotFunny.getText().toString());
+
+        if (friendName.trim().isEmpty()) {
+            Toast.makeText(this, "Friend name can not be empty!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Intent data = new Intent();
+        data.putExtra(EXTRA_NAME, friendName);
+        data.putExtra(EXTRA_TOTAL_MEMES, totalMemes);
+        data.putExtra(EXTRA_FUNNY_MEMES, funnyMemes);
+        data.putExtra(EXTRA_NOT_FUNNY_MEMES, notFunnyMemes);
+        data.putExtra(EXTRA_COLOR, getIntent().getIntExtra(EXTRA_COLOR, -1));
+
+        int id = getIntent().getIntExtra(EXTRA_ID, -1);
+        System.out.println("SECOND ID IS:" + id);
+        if (id != -1){
+            data.putExtra(EXTRA_ID, id);
+        }
+
+        setResult(FriendMemes.RESULT_EDIT, data);
+        finish();
     }
 
     private void onDiscardButtonClicked() {
+        populateReceivedFriendName();
         // Hide the buttons layout and disable editing for all fields
         disableEditing(outlinedFriendName);
         disableEditing(outlinedMemeTotal);
