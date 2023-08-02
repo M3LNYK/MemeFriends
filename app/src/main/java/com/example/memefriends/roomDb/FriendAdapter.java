@@ -167,6 +167,9 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         void onItemClick(Friend friend);
     }
 
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
 
     //    This was added to show divider, however for some reason it does not work.
     public static class FriendItemDecoration extends RecyclerView.ItemDecoration {
@@ -213,10 +216,6 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 this.divider = insetDrawable;
             }
         }
-    }
-
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.listener = listener;
     }
 
     // Helper method to get the position of the header view in the groupedFriends list
