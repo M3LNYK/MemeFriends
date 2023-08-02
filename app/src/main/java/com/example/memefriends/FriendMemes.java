@@ -2,10 +2,12 @@ package com.example.memefriends;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
@@ -66,31 +68,18 @@ public class FriendMemes extends AppCompatActivity {
             toggleButtonsVisibility();
             return true; // Return true to indicate that the long click is consumed.
         });
-//  BELOW SHOULD NOT BE EDITABLE ONLY BY DELETING AND ADDING MEMES
-//        outlinedMemeTotal.setOnLongClickListener(v -> {
-//            enableEditing(outlinedMemeTotal);
-//            toggleButtonsVisibility();
-//            return true; // Return true to indicate that the long click is consumed.
-//        });
-//
-//        outlinedMemeFunny.setOnLongClickListener(v -> {
-//            enableEditing(outlinedMemeFunny);
-//            toggleButtonsVisibility();
-//            return true; // Return true to indicate that the long click is consumed.
-//        });
-//
-//        outlinedMemeNotFunny.setOnLongClickListener(v -> {
-//            enableEditing(outlinedMemeNotFunny);
-//            toggleButtonsVisibility();
-//            return true; // Return true to indicate that the long click is consumed.
-//        });
-    }
+        //  BELOW SHOULD NOT BE EDITABLE ONLY BY DELETING AND ADDING MEMES
+        outlinedMemeTotal.setOnLongClickListener(v -> {
+            return true; // Return true to indicate that the long click is consumed.
+        });
 
-    private void toggleEditTextEnabled(TextInputEditText editText) {
-        boolean isEnabled = editText.isEnabled();
-        editText.setEnabled(!isEnabled);
-        editText.setFocusable(!isEnabled);
-        editText.setFocusableInTouchMode(!isEnabled);
+        outlinedMemeFunny.setOnLongClickListener(v -> {
+            return true; // Return true to indicate that the long click is consumed.
+        });
+
+        outlinedMemeNotFunny.setOnLongClickListener(v -> {
+            return true; // Return true to indicate that the long click is consumed.
+        });
     }
 
     private void toggleButtonsVisibility() {
@@ -98,8 +87,18 @@ public class FriendMemes extends AppCompatActivity {
         buttonsArea.setVisibility(buttonsArea.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
     }
 
+    private void hideKeyboard(){
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
     private void hideButtons() {
         // Hide the buttons layout
+        hideKeyboard();
+        disableEditing(outlinedFriendName);
         buttonsArea.setVisibility(View.GONE);
     }
 
