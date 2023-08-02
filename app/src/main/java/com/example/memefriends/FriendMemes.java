@@ -2,46 +2,135 @@ package com.example.memefriends;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class FriendMemes extends AppCompatActivity {
 
     public static final String EXTRA_NAME = "com.memefriends.EXTRA_NAME";
     public static final String EXTRA_TOTAL_MEMES = "com.memefriends.EXTRA_TOTAL_MEMES";
-//    public static final int EXTRA_TOTAL_MEMES = 5;
     public static final String EXTRA_FUNNY_MEMES = "com.memefriends.EXTRA_FUNNY_MEMES";
     public static final String EXTRA_NOT_FUNNY_MEMES = "com.memefriends.EXTRA_NOT_FUNNY_MEMES";
-
-    private TextInputEditText friendNameView, friendTMView, friendFMView, friendNFMView;
-
+    private TextInputEditText outlinedFriendName, outlinedMemeTotal, outlinedMemeFunny, outlinedMemeNotFunny;
+    private Button saveChange, discardChange;
+    private LinearLayout buttonsArea;
+    private MaterialCardView cardFriendInfo;
+    private Animation fromTop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_memes);
-
-        friendNameView = findViewById(R.id.outlined_friend_name);
-        friendTMView = findViewById(R.id.outlined_meme_total);
-        friendFMView = findViewById(R.id.outlined_meme_funny);
-        friendNFMView = findViewById(R.id.outlined_meme_not_funny);
-
         setTitle("Friend's memes stats");
 
+        cardFriendInfo = findViewById(R.id.cardFriendInfo);
+        outlinedFriendName = findViewById(R.id.outlined_friend_name);
+        outlinedMemeTotal = findViewById(R.id.outlined_meme_total);
+        outlinedMemeFunny = findViewById(R.id.outlined_meme_funny);
+        outlinedMemeNotFunny = findViewById(R.id.outlined_meme_not_funny);
+        buttonsArea = findViewById(R.id.buttons_field);
+
+        fromTop = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.to_bottom_anim);
+
+//        Extract this to method
         String receivedName = getIntent().getStringExtra(EXTRA_NAME);
         int receivedTM = getIntent().getIntExtra(EXTRA_TOTAL_MEMES, -1);
         int receivedFM = getIntent().getIntExtra(EXTRA_FUNNY_MEMES, -1);
         int receivedNFM = getIntent().getIntExtra(EXTRA_NOT_FUNNY_MEMES, -1);
 
+        outlinedFriendName.setText(receivedName);
+        outlinedMemeTotal.setText(String.valueOf(receivedTM));
+        outlinedMemeFunny.setText(String.valueOf(receivedFM));
+        outlinedMemeNotFunny.setText(String.valueOf(receivedNFM));
 
-        friendNameView.setText(receivedName);
-        friendTMView.setText(String.valueOf(receivedTM));
-        friendFMView.setText(String.valueOf(receivedFM));
-        friendNFMView.setText(String.valueOf(receivedNFM));
+        // Set the long click listeners for TextInputEditText elements
+        setLongClickListeners();
 
+        // Set click listener for the root layout (CardView) to handle clicks outside the card
+        cardFriendInfo.setOnClickListener(view -> hideButtons());
+        // Set click listeners for the buttons
+        findViewById(R.id.button_save_change).setOnClickListener(view -> onSaveButtonClicked());
+        findViewById(R.id.button_discard_change).setOnClickListener(view -> onDiscardButtonClicked());
+    }
 
+    private void setLongClickListeners() {
+        outlinedFriendName.setOnLongClickListener(v -> {
+            enableEditing(outlinedFriendName);
+            toggleButtonsVisibility();
+            return true; // Return true to indicate that the long click is consumed.
+        });
+//  BELOW SHOULD NOT BE EDITABLE ONLY BY DELETING AND ADDING MEMES
+//        outlinedMemeTotal.setOnLongClickListener(v -> {
+//            enableEditing(outlinedMemeTotal);
+//            toggleButtonsVisibility();
+//            return true; // Return true to indicate that the long click is consumed.
+//        });
+//
+//        outlinedMemeFunny.setOnLongClickListener(v -> {
+//            enableEditing(outlinedMemeFunny);
+//            toggleButtonsVisibility();
+//            return true; // Return true to indicate that the long click is consumed.
+//        });
+//
+//        outlinedMemeNotFunny.setOnLongClickListener(v -> {
+//            enableEditing(outlinedMemeNotFunny);
+//            toggleButtonsVisibility();
+//            return true; // Return true to indicate that the long click is consumed.
+//        });
+    }
+
+    private void toggleEditTextEnabled(TextInputEditText editText) {
+        boolean isEnabled = editText.isEnabled();
+        editText.setEnabled(!isEnabled);
+        editText.setFocusable(!isEnabled);
+        editText.setFocusableInTouchMode(!isEnabled);
+    }
+
+    private void toggleButtonsVisibility() {
+        // Toggle the visibility of the buttons layout
+        buttonsArea.setVisibility(buttonsArea.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+    }
+
+    private void hideButtons() {
+        // Hide the buttons layout
+        buttonsArea.setVisibility(View.GONE);
+    }
+
+    private void enableEditing(TextInputEditText editText) {
+        // Enable editing for the specified TextInputEditText
+        editText.setFocusableInTouchMode(true);
+        editText.setFocusable(true);
+        editText.requestFocus();
+    }
+
+    private void disableEditing(TextInputEditText editText) {
+        // Disable editing for the specified TextInputEditText
+        editText.setFocusableInTouchMode(false);
+        editText.setFocusable(false);
+    }
+
+    private void onSaveButtonClicked() {
+        // Hide the buttons layout and disable editing for all fields
+        hideButtons();
+        disableEditing(outlinedFriendName);
+        disableEditing(outlinedMemeTotal);
+        disableEditing(outlinedMemeFunny);
+        disableEditing(outlinedMemeNotFunny);
+    }
+
+    private void onDiscardButtonClicked() {
+        // Hide the buttons layout and disable editing for all fields
+        hideButtons();
+        disableEditing(outlinedFriendName);
+        disableEditing(outlinedMemeTotal);
+        disableEditing(outlinedMemeFunny);
+        disableEditing(outlinedMemeNotFunny);
     }
 }

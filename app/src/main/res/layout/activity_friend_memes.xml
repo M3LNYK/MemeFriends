@@ -65,7 +65,9 @@
                     android:id="@+id/outlined_meme_total"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName" />
+                    android:inputType="number"
+                    android:clickable="false"
+                    android:focusable="false"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -82,7 +84,9 @@
                     android:id="@+id/outlined_meme_funny"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName" />
+                    android:inputType="number"
+                    android:clickable="false"
+                    android:focusable="false"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -100,10 +104,38 @@
                     android:id="@+id/outlined_meme_not_funny"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName" />
+                    android:inputType="number"
+                    android:clickable="false"
+                    android:focusable="false"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Buttons -->
+            <LinearLayout
+                android:id="@+id/buttons_field"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <Button
+                    android:id="@+id/button_save_change"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="72dp"
+                    android:backgroundTint="@color/green_500"
+                    android:text="Save"
+                    />
+                <Button
+                    android:id="@+id/button_discard_change"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:backgroundTint="@color/red_500"
+                    android:text="Discard"
+                    />
+            </LinearLayout>
 
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
