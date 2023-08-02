@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.google.android.material.textfield.TextInputEditText;
+
 public class FriendMemes extends AppCompatActivity {
 
     public static final String EXTRA_NAME = "com.memefriends.EXTRA_NAME";
@@ -14,7 +16,7 @@ public class FriendMemes extends AppCompatActivity {
     public static final String EXTRA_FUNNY_MEMES = "com.memefriends.EXTRA_FUNNY_MEMES";
     public static final String EXTRA_NOT_FUNNY_MEMES = "com.memefriends.EXTRA_NOT_FUNNY_MEMES";
 
-    private TextView friendNameView, friendTMView, friendFMView, friendNFMView;
+    private TextInputEditText friendNameView, friendTMView, friendFMView, friendNFMView;
 
 
     @Override
@@ -22,10 +24,10 @@ public class FriendMemes extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_memes);
 
-        friendNameView = findViewById(R.id.textview_friend_name);
-        friendTMView = findViewById(R.id.textview_friend_tm);
-        friendFMView = findViewById(R.id.textview_friend_fm);
-        friendNFMView = findViewById(R.id.textview_friend_nfm);
+        friendNameView = findViewById(R.id.outlined_friend_name);
+        friendTMView = findViewById(R.id.outlined_meme_total);
+        friendFMView = findViewById(R.id.outlined_meme_funny);
+        friendNFMView = findViewById(R.id.outlined_meme_not_funny);
 
         setTitle("Friend's memes stats");
 

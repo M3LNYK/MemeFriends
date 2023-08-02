@@ -297,8 +297,8 @@ public class FriendsList extends AppCompatActivity {
 //        newMemeDialog = myDialogBuilder.create();
 //        newMemeDialog.show();
 //        editTextFriendName = newFriendDialog.findViewById(R.id.popup_friend_name);
-        Intent intent = new Intent(FriendsList.this, AddMeme.class);
-        startActivity(intent);
+//        Intent intent = new Intent(FriendsList.this, AddMeme.class);
+//        startActivity(intent);
         onAddButtonClicked();
     }
 
