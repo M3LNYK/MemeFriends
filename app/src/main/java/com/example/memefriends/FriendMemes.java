@@ -65,7 +65,8 @@ public class FriendMemes extends AppCompatActivity {
     private void setLongClickListeners() {
         outlinedFriendName.setOnLongClickListener(v -> {
             enableEditing(outlinedFriendName);
-            toggleButtonsVisibility();
+//            toggleButtonsVisibility();
+            animateButtons(true);
             return true; // Return true to indicate that the long click is consumed.
         });
         //  BELOW SHOULD NOT BE EDITABLE ONLY BY DELETING AND ADDING MEMES
@@ -80,11 +81,6 @@ public class FriendMemes extends AppCompatActivity {
         outlinedMemeNotFunny.setOnLongClickListener(v -> {
             return true; // Return true to indicate that the long click is consumed.
         });
-    }
-
-    private void toggleButtonsVisibility() {
-        // Toggle the visibility of the buttons layout
-        buttonsArea.setVisibility(buttonsArea.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
     }
 
     private void hideKeyboard(){
@@ -117,19 +113,31 @@ public class FriendMemes extends AppCompatActivity {
 
     private void onSaveButtonClicked() {
         // Hide the buttons layout and disable editing for all fields
-        hideButtons();
         disableEditing(outlinedFriendName);
         disableEditing(outlinedMemeTotal);
         disableEditing(outlinedMemeFunny);
         disableEditing(outlinedMemeNotFunny);
+        hideButtons();
     }
 
     private void onDiscardButtonClicked() {
         // Hide the buttons layout and disable editing for all fields
-        hideButtons();
         disableEditing(outlinedFriendName);
         disableEditing(outlinedMemeTotal);
         disableEditing(outlinedMemeFunny);
         disableEditing(outlinedMemeNotFunny);
+        hideButtons();
+    }
+
+    private void animateButtons(boolean isVisible) {
+        if (isVisible) {
+            buttonsArea.setVisibility(View.VISIBLE);
+            Animation dropDownAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.button_drop_down);
+            buttonsArea.startAnimation(dropDownAnimation);
+        } else {
+            Animation dropUpAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.button_drop_up);
+            buttonsArea.startAnimation(dropUpAnimation);
+            buttonsArea.setVisibility(View.GONE);
+        }
     }
 }
