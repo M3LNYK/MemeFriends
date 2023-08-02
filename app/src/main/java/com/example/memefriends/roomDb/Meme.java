@@ -4,6 +4,9 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
+import java.sql.Date;
+import java.sql.Time;
+
 @Entity(tableName = "meme-table",
         foreignKeys = @ForeignKey(entity = Friend.class,
                 parentColumns = "id",
@@ -17,12 +20,16 @@ public class Meme {
     private String memeSource;
     private Boolean funnyMeme;
     private int friendId;
+    private Date createdDate;
+    private Time createdTime;
 
-    public Meme(String memeName, String memeSource, Boolean funnyMeme, int friendId) {
+    public Meme(String memeName, String memeSource, Boolean funnyMeme, int friendId, Date date, Time time) {
         this.memeName = memeName;
         this.memeSource = memeSource;
         this.funnyMeme = funnyMeme;
         this.friendId = friendId;
+        this.createdDate = date;
+        this.createdTime = time;
     }
 
     public int getId() {
@@ -63,5 +70,21 @@ public class Meme {
 
     public void setFriendId(int friendId) {
         this.friendId = friendId;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public Time getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(Time createdTime) {
+        this.createdTime = createdTime;
     }
 }
