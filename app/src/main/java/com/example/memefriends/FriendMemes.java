@@ -21,10 +21,7 @@ public class FriendMemes extends AppCompatActivity {
     public static final String EXTRA_FUNNY_MEMES = "com.memefriends.EXTRA_FUNNY_MEMES";
     public static final String EXTRA_NOT_FUNNY_MEMES = "com.memefriends.EXTRA_NOT_FUNNY_MEMES";
     private TextInputEditText outlinedFriendName, outlinedMemeTotal, outlinedMemeFunny, outlinedMemeNotFunny;
-    private Button saveChange, discardChange;
     private LinearLayout buttonsArea;
-    private MaterialCardView cardFriendInfo;
-    private Animation fromTop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,16 +29,29 @@ public class FriendMemes extends AppCompatActivity {
         setContentView(R.layout.activity_friend_memes);
         setTitle("Friend's memes stats");
 
-        cardFriendInfo = findViewById(R.id.cardFriendInfo);
+        MaterialCardView cardFriendInfo = findViewById(R.id.cardFriendInfo);
         outlinedFriendName = findViewById(R.id.outlined_friend_name);
         outlinedMemeTotal = findViewById(R.id.outlined_meme_total);
         outlinedMemeFunny = findViewById(R.id.outlined_meme_funny);
         outlinedMemeNotFunny = findViewById(R.id.outlined_meme_not_funny);
         buttonsArea = findViewById(R.id.buttons_field);
 
-        fromTop = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.to_bottom_anim);
+        Button saveChange = findViewById(R.id.button_save_change);
+        Button discardChange = findViewById(R.id.button_discard_change);
 
-//        Extract this to method
+        populateOulinedFields();
+
+        // Set the long click listeners for TextInputEditText elements
+        setLongClickListeners();
+
+        // Set click listener for the root layout (CardView) to handle clicks outside the card
+        cardFriendInfo.setOnClickListener(view -> hideButtons());
+        // Set click listeners for the buttons
+        saveChange.setOnClickListener(view -> onSaveButtonClicked());
+        discardChange.setOnClickListener(view -> onDiscardButtonClicked());
+    }
+
+    private void populateOulinedFields() {
         String receivedName = getIntent().getStringExtra(EXTRA_NAME);
         int receivedTM = getIntent().getIntExtra(EXTRA_TOTAL_MEMES, -1);
         int receivedFM = getIntent().getIntExtra(EXTRA_FUNNY_MEMES, -1);
@@ -51,21 +61,11 @@ public class FriendMemes extends AppCompatActivity {
         outlinedMemeTotal.setText(String.valueOf(receivedTM));
         outlinedMemeFunny.setText(String.valueOf(receivedFM));
         outlinedMemeNotFunny.setText(String.valueOf(receivedNFM));
-
-        // Set the long click listeners for TextInputEditText elements
-        setLongClickListeners();
-
-        // Set click listener for the root layout (CardView) to handle clicks outside the card
-        cardFriendInfo.setOnClickListener(view -> hideButtons());
-        // Set click listeners for the buttons
-        findViewById(R.id.button_save_change).setOnClickListener(view -> onSaveButtonClicked());
-        findViewById(R.id.button_discard_change).setOnClickListener(view -> onDiscardButtonClicked());
     }
 
     private void setLongClickListeners() {
         outlinedFriendName.setOnLongClickListener(v -> {
             enableEditing(outlinedFriendName);
-//            toggleButtonsVisibility();
             animateButtons(true);
             return true; // Return true to indicate that the long click is consumed.
         });

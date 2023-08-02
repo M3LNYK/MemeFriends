@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.ColorUtils;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -101,17 +100,14 @@ public class FriendsList extends AppCompatActivity {
 
 
         friendViewModel = new ViewModelProvider(this).get(FriendViewModel.class);
-        friendViewModel.getAllFriends().observe(this, new Observer<List<Friend>>() {
-            @Override
-            public void onChanged(List<Friend> friends) {
-                List<GroupedFriend> groupedFriends = groupFriendsByLetter(friends);
-                adapter.setFriends(groupedFriends);
-                checkEmptyList(friends);
+        friendViewModel.getAllFriends().observe(this, friends -> {
+            List<GroupedFriend> groupedFriends = groupFriendsByLetter(friends);
+            adapter.setFriends(groupedFriends);
+            checkEmptyList(friends);
 
-                StringBuilder groupLetters = new StringBuilder();
-                for (GroupedFriend groupedFriend : groupedFriends) {
-                    groupLetters.append(groupedFriend.getFirstLetter());
-                }
+            StringBuilder groupLetters = new StringBuilder();
+            for (GroupedFriend groupedFriend : groupedFriends) {
+                groupLetters.append(groupedFriend.getFirstLetter());
             }
         });
 
@@ -129,17 +125,14 @@ public class FriendsList extends AppCompatActivity {
             }
         }).attachToRecyclerView(recyclerView);
 
-        adapter.setOnItemClickListener(new FriendAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(Friend friend) {
+        adapter.setOnItemClickListener(friend -> {
 //                We clicked on friend
-                Intent intent = new Intent(FriendsList.this, FriendMemes.class);
-                intent.putExtra(EXTRA_NAME, friend.getName());
-                intent.putExtra(EXTRA_TOTAL_MEMES, friend.getTotalMemes());
-                intent.putExtra(EXTRA_FUNNY_MEMES, friend.getFunnyMemes());
-                intent.putExtra(EXTRA_NOT_FUNNY_MEMES, friend.getNfMemes());
-                startActivity(intent);
-            }
+            Intent intent = new Intent(FriendsList.this, FriendMemes.class);
+            intent.putExtra(EXTRA_NAME, friend.getName());
+            intent.putExtra(EXTRA_TOTAL_MEMES, friend.getTotalMemes());
+            intent.putExtra(EXTRA_FUNNY_MEMES, friend.getFunnyMemes());
+            intent.putExtra(EXTRA_NOT_FUNNY_MEMES, friend.getNfMemes());
+            startActivity(intent);
         });
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -186,43 +179,22 @@ public class FriendsList extends AppCompatActivity {
             }
         });
 
-        fabToTop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onTopButtonClicked();
-            }
+        fabToTop.setOnClickListener(view -> onTopButtonClicked());
 
-        });
+        fabAdd.setOnClickListener(view -> onAddButtonClicked());
 
-        fabAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onAddButtonClicked();
-            }
-
-        });
-
-        fabReaction.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        fabReaction.setOnClickListener(view -> {
 //                Here, new window w add meme should be opened
-                addNewMemeActivityStart();
-                Toast.makeText(FriendsList.this, "Reaction Clicked", Toast.LENGTH_SHORT).show();
-            }
+            addNewMemeActivityStart();
+            Toast.makeText(FriendsList.this, "Reaction Clicked", Toast.LENGTH_SHORT).show();
         });
 
-        fabFriend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addNewFriendDialog();
-            }
-        });
+        fabFriend.setOnClickListener(view -> addNewFriendDialog());
     }
 
     private void getFirstGroupLetterForChip() {
         if (adapter.getGroupedFriends() != null && !adapter.getGroupedFriends().isEmpty()) {
-            char firstGroupLetter = adapter.getGroupedFriends().get(0).getFirstLetter();
-            currentGroupLetter = firstGroupLetter;
+            currentGroupLetter = adapter.getGroupedFriends().get(0).getFirstLetter();
             chipGroupLetter.setText(String.valueOf(currentGroupLetter));
         }
     }
