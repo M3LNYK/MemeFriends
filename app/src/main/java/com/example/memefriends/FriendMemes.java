@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 public class FriendMemes extends AppCompatActivity {
     public static final String EXTRA_ID = "com.memefriends.EXTRA_ID";
@@ -25,6 +26,7 @@ public class FriendMemes extends AppCompatActivity {
     public static final String EXTRA_COLOR = "com.memefriends.EXTRA_COLOR";
     private static final int RESULT_EDIT = 10;
     private TextInputEditText outlinedFriendName, outlinedMemeTotal, outlinedMemeFunny, outlinedMemeNotFunny;
+    private TextInputLayout nameFriendLayout;
     private LinearLayout buttonsArea;
 
     @Override
@@ -39,6 +41,9 @@ public class FriendMemes extends AppCompatActivity {
         outlinedMemeFunny = findViewById(R.id.outlined_meme_funny);
         outlinedMemeNotFunny = findViewById(R.id.outlined_meme_not_funny);
         buttonsArea = findViewById(R.id.buttons_field);
+
+        nameFriendLayout = (TextInputLayout) findViewById(R.id.textview_friend_name);
+
 
         Button saveChange = findViewById(R.id.button_save_change);
         Button discardChange = findViewById(R.id.button_discard_change);
@@ -129,20 +134,23 @@ public class FriendMemes extends AppCompatActivity {
 
     private void onSaveButtonClicked() {
         // Hide the buttons layout and disable editing for all fields
+        String friendName = outlinedFriendName.getText().toString();
+        if (friendName.trim().isEmpty()) {
+            nameFriendLayout.setErrorEnabled(true);
+            nameFriendLayout.setError("You need to enter a name!");
+            Toast.makeText(this, "Friend name can not be empty!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        nameFriendLayout.setError(null);
+        nameFriendLayout.setErrorEnabled(false);
         disableEditing(outlinedFriendName);
         disableEditing(outlinedMemeTotal);
         disableEditing(outlinedMemeFunny);
         disableEditing(outlinedMemeNotFunny);
         hideButtons();
-        String friendName = outlinedFriendName.getText().toString();
         int totalMemes = Integer.parseInt(outlinedMemeTotal.getText().toString());
         int funnyMemes = Integer.parseInt(outlinedMemeFunny.getText().toString());
         int notFunnyMemes = Integer.parseInt(outlinedMemeNotFunny.getText().toString());
-
-        if (friendName.trim().isEmpty()) {
-            Toast.makeText(this, "Friend name can not be empty!", Toast.LENGTH_SHORT).show();
-            return;
-        }
 
         Intent data = new Intent();
         data.putExtra(EXTRA_NAME, friendName);
