@@ -2,10 +2,10 @@ package com.example.memefriends.roomDb;
 
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import java.sql.Date;
-import java.sql.Time;
+//import java.util.Date;
 
 @Entity(tableName = "meme-table",
         foreignKeys = @ForeignKey(entity = Friend.class,
@@ -20,10 +20,13 @@ public class Meme {
     private String memeSource;
     private Boolean funnyMeme;
     private int friendId;
-    private Date createdDate;
-    private Time createdTime;
+    private String createdDate;
+    private String createdTime;
 
-    public Meme(String memeName, String memeSource, Boolean funnyMeme, int friendId, Date date, Time time) {
+    public Meme(){}
+
+    @Ignore
+    public Meme(String memeName, String memeSource, Boolean funnyMeme, int friendId, String date, String time) {
         this.memeName = memeName;
         this.memeSource = memeSource;
         this.funnyMeme = funnyMeme;
@@ -72,19 +75,19 @@ public class Meme {
         this.friendId = friendId;
     }
 
-    public Date getCreatedDate() {
+    public String getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(String createdDate) {
         this.createdDate = createdDate;
     }
 
-    public Time getCreatedTime() {
+    public String getCreatedTime() {
         return createdTime;
     }
 
-    public void setCreatedTime(Time createdTime) {
+    public void setCreatedTime(String createdTime) {
         this.createdTime = createdTime;
     }
 }
