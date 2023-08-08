@@ -13,16 +13,15 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.memefriends.GroupedFriend;
 import com.example.memefriends.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
     private List<Friend> friends = new ArrayList<>();
     private OnItemClickListener listener;
 
@@ -168,6 +167,9 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         void onItemClick(Friend friend);
     }
 
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
 
     //    This was added to show divider, however for some reason it does not work.
     public static class FriendItemDecoration extends RecyclerView.ItemDecoration {
@@ -216,10 +218,6 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.listener = listener;
-    }
-
     // Helper method to get the position of the header view in the groupedFriends list
     private int getHeaderPosition(int adapterPosition) {
         int count = 0;
@@ -252,6 +250,10 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             }
         }
         return -1; // Return -1 if position is not found (handle error condition)
+    }
+
+    public List<Friend> getFriends() {
+        return friends;
     }
 
     // Helper method to get the position of the friend within its group in the groupedFriends list
