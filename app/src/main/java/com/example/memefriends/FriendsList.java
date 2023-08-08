@@ -334,7 +334,7 @@ public class FriendsList extends AppCompatActivity {
     // Selector of menu items
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.delete_all_friends) {
+        if (item.getItemId() == R.id.menu_item_delete_all_friends) {
             friendViewModel.deleteAllFriends();
             Toast.makeText(this, "All friends deleted", Toast.LENGTH_SHORT).show();
             return true;
