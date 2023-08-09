@@ -1,5 +1,6 @@
 package com.example.memefriends;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -7,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -46,17 +48,13 @@ public class FriendMemes extends AppCompatActivity {
         outlinedMemeNotFunny = findViewById(R.id.outlined_meme_not_funny);
         buttonsArea = findViewById(R.id.buttons_field);
 
-        nameFriendLayout = (TextInputLayout) findViewById(R.id.textview_friend_name);
+        nameFriendLayout = findViewById(R.id.textview_friend_name);
         fabAddMeme = findViewById(R.id.fab_add_meme);
-
 
         Button saveChange = findViewById(R.id.button_save_change);
         Button discardChange = findViewById(R.id.button_discard_change);
 
         populateOulinedFields();
-
-        // Set the long click listeners for TextInputEditText elements
-        setLongClickListeners();
 
         // Set click listener for the root layout (CardView) to handle clicks outside the card
         cardFriendInfo.setOnClickListener(view -> cardClicked());
@@ -67,6 +65,7 @@ public class FriendMemes extends AppCompatActivity {
         fabSetClickListeners();
     }
 
+//    Creates options menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
@@ -74,13 +73,25 @@ public class FriendMemes extends AppCompatActivity {
         return true;
     }
 
+    // Selector of menu items
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.menu_item_edit_friend) {
+            enableEditing(outlinedFriendName);
+            animateButtons(true);
+            Toast.makeText(this, "Now you can change friend name", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void fabSetClickListeners() {
         fabAddMeme.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Add your action here, like opening a new activity or showing a dialog
+                //  Add your action here, like opening a new activity or showing a dialog
                 Intent intent = new Intent(FriendMemes.this, AddMeme.class);
-//                startActivity(intent);
+                //  startActivity(intent);
                 Toast.makeText(FriendMemes.this, "Add meme screen or popup?", Toast.LENGTH_SHORT).show();
             }
         });
@@ -103,26 +114,6 @@ public class FriendMemes extends AppCompatActivity {
         outlinedMemeTotal.setText(String.valueOf(receivedTM));
         outlinedMemeFunny.setText(String.valueOf(receivedFM));
         outlinedMemeNotFunny.setText(String.valueOf(receivedNFM));
-    }
-
-    private void setLongClickListeners() {
-        outlinedFriendName.setOnLongClickListener(v -> {
-            enableEditing(outlinedFriendName);
-            animateButtons(true);
-            return true; // Return true to indicate that the long click is consumed.
-        });
-        //  BELOW SHOULD NOT BE EDITABLE ONLY BY DELETING AND ADDING MEMES
-        outlinedMemeTotal.setOnLongClickListener(v -> {
-            return true; // Return true to indicate that the long click is consumed.
-        });
-
-        outlinedMemeFunny.setOnLongClickListener(v -> {
-            return true; // Return true to indicate that the long click is consumed.
-        });
-
-        outlinedMemeNotFunny.setOnLongClickListener(v -> {
-            return true; // Return true to indicate that the long click is consumed.
-        });
     }
 
     private void hideKeyboard(){
