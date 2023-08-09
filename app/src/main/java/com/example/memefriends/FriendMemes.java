@@ -79,6 +79,7 @@ public class FriendMemes extends AppCompatActivity {
         if (item.getItemId() == R.id.menu_item_edit_friend) {
             enableEditing(outlinedFriendName);
             animateButtons(true);
+//            Create method to show popup and delete friend
             Toast.makeText(this, "Now you can change friend name", Toast.LENGTH_SHORT).show();
             return true;
         }
@@ -187,6 +188,8 @@ public class FriendMemes extends AppCompatActivity {
     }
 
     private void onDiscardButtonClicked() {
+        nameFriendLayout.setError(null);
+        nameFriendLayout.setErrorEnabled(false);
         populateReceivedFriendName();
         // Hide the buttons layout and disable editing for all fields
         disableEditing(outlinedFriendName);
