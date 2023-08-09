@@ -5,11 +5,13 @@
         android:id="@+id/menu_item_edit_friend"
         app:showAsAction="always"
         android:icon="@drawable/baseline_edit_24"
+        android:iconTint="@color/white"
         android:title="@string/menu_item_delete_this_friend" />
     <item
         android:id="@+id/menu_item_delete_friend"
         app:showAsAction="always"
         android:icon="@drawable/baseline_delete_filled_24"
+        android:iconTint="@color/white"
         android:title="@string/menu_item_delete_this_friend" />
 
 </menu>
