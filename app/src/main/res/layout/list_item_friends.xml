@@ -33,11 +33,7 @@
             android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="bold" />
-
-
     </com.google.android.material.circularreveal.cardview.CircularRevealCardView>
-
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -46,7 +42,6 @@
         android:layout_marginEnd="56dp"
         android:layout_centerVertical="true"
         android:orientation="vertical">
-
 
         <TextView
             android:id="@+id/list_item_friend_name"
@@ -59,7 +54,6 @@
             android:text="This is the title line"
             android:textColor="@color/black_light"
             android:textSize="16sp" />
-
     </LinearLayout>
 
     <ImageView

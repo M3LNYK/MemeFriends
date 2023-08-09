@@ -93,7 +93,7 @@ public class FriendsList extends AppCompatActivity {
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-//        Divider implementation
+        //  Divider implementation
         FriendAdapter.FriendItemDecoration itemDecoration = new FriendAdapter.FriendItemDecoration(recyclerView.getContext());
         recyclerView.addItemDecoration(itemDecoration);
 
@@ -102,7 +102,7 @@ public class FriendsList extends AppCompatActivity {
 
         chipGroupLetter = findViewById(R.id.chipGroupLetter);
         chipGroupLetter.setText(String.valueOf(currentGroupLetter));
-        // Get the first group letter from the adapter and display it in the chip
+        //  Get the first group letter from the adapter and display it in the chip
         getFirstGroupLetterForChip();
 
 
@@ -195,7 +195,7 @@ public class FriendsList extends AppCompatActivity {
         fabAdd.setOnClickListener(view -> onAddButtonClicked());
 
         fabReaction.setOnClickListener(view -> {
-//                Here, new window w add meme should be opened
+            //  Here, new window w add meme should be opened
             addNewMemeActivityStart();
             Toast.makeText(FriendsList.this, "Reaction Clicked", Toast.LENGTH_SHORT).show();
         });
@@ -224,7 +224,7 @@ public class FriendsList extends AppCompatActivity {
                         friendViewModel.update(friend);
                         Toast.makeText(this, "Friend updated!", Toast.LENGTH_SHORT).show();
                     }
-                    
+
                 });
     }
 

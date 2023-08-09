@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -14,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -28,6 +31,7 @@ public class FriendMemes extends AppCompatActivity {
     private TextInputEditText outlinedFriendName, outlinedMemeTotal, outlinedMemeFunny, outlinedMemeNotFunny;
     private TextInputLayout nameFriendLayout;
     private LinearLayout buttonsArea;
+    private FloatingActionButton fabAddMeme;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +47,7 @@ public class FriendMemes extends AppCompatActivity {
         buttonsArea = findViewById(R.id.buttons_field);
 
         nameFriendLayout = (TextInputLayout) findViewById(R.id.textview_friend_name);
+        fabAddMeme = findViewById(R.id.fab_add_meme);
 
 
         Button saveChange = findViewById(R.id.button_save_change);
@@ -58,6 +63,27 @@ public class FriendMemes extends AppCompatActivity {
         // Set click listeners for the buttons
         saveChange.setOnClickListener(view -> onSaveButtonClicked());
         discardChange.setOnClickListener(view -> onDiscardButtonClicked());
+
+        fabSetClickListeners();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_friend_options, menu);
+        return true;
+    }
+
+    private void fabSetClickListeners() {
+        fabAddMeme.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Add your action here, like opening a new activity or showing a dialog
+                Intent intent = new Intent(FriendMemes.this, AddMeme.class);
+//                startActivity(intent);
+                Toast.makeText(FriendMemes.this, "Add meme screen or popup?", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void cardClicked(){
