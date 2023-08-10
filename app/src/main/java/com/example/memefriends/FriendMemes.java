@@ -2,7 +2,6 @@ package com.example.memefriends;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,13 +38,11 @@ public class FriendMemes extends AppCompatActivity {
     private LinearLayout buttonsArea;
     private FloatingActionButton fabAddMeme;
     private RecyclerView memeRecyclerView;
-    private LinearLayoutManager linearLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_memes);
-
 
         MaterialCardView cardFriendInfo = findViewById(R.id.cardFriendInfo);
         outlinedFriendName = findViewById(R.id.outlined_friend_name);
@@ -53,6 +50,7 @@ public class FriendMemes extends AppCompatActivity {
         outlinedMemeFunny = findViewById(R.id.outlined_meme_funny);
         outlinedMemeNotFunny = findViewById(R.id.outlined_meme_not_funny);
         buttonsArea = findViewById(R.id.buttons_field);
+        memeRecyclerView = findViewById(R.id.memeRecyclerView);
 
         nameFriendLayout = findViewById(R.id.textview_friend_name);
         fabAddMeme = findViewById(R.id.fab_add_meme);
@@ -60,27 +58,35 @@ public class FriendMemes extends AppCompatActivity {
         Button saveChange = findViewById(R.id.button_save_change);
         Button discardChange = findViewById(R.id.button_discard_change);
 
+        settingOnClickListeners(cardFriendInfo, saveChange, discardChange);
+
         populateOulinedFields();
 
+        fabSetClickListeners();
+
+        setDivider();
+
+    }
+
+    private void settingOnClickListeners(MaterialCardView cardFriendInfo, Button saveChange, Button discardChange) {
         // Set click listener for the root layout (CardView) to handle clicks outside the card
         cardFriendInfo.setOnClickListener(view -> cardClicked());
         // Set click listeners for the buttons
         saveChange.setOnClickListener(view -> onSaveButtonClicked());
         discardChange.setOnClickListener(view -> onDiscardButtonClicked());
+    }
 
-        fabSetClickListeners();
-
-        memeRecyclerView = findViewById(R.id.memeRecyclerView);
-        linearLayoutManager = new LinearLayoutManager(this);
+    //  Should create simple divider in the list
+    private void setDivider() {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         memeRecyclerView.setLayoutManager(linearLayoutManager);
         MaterialDividerItemDecoration divider = new MaterialDividerItemDecoration(getApplicationContext(), LinearLayoutManager.VERTICAL);
         divider.setDividerInsetStart(20);
         divider.setDividerInsetEnd(20);
         memeRecyclerView.addItemDecoration(divider);
-
     }
 
-//    Creates options menu
+    //    Creates options menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
