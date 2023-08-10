@@ -15,48 +15,58 @@ import com.example.memefriends.roomDb.Friend;
 import com.example.memefriends.roomDb.FriendAdapter;
 import com.example.memefriends.roomDb.FriendViewModel;
 import com.example.memefriends.roomDb.GroupedFriend;
+import com.example.memefriends.roomDb.Meme;
+import com.google.android.material.textfield.TextInputEditText;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class AddMeme extends AppCompatActivity {
 
     private Button addFunnyMeme, addNotFunnyMeme;
-    private AutoCompleteTextView friendName, memeSource;
-
+    private TextInputEditText friendName;
+    private AutoCompleteTextView memeSource;
     private FriendViewModel friendViewModel;
+    public static final String EXTRA_ID = "com.memefriends.EXTRA_ID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_meme);
 
-        friendName = findViewById(R.id.dropdown_friend_name);
-
+        friendName = findViewById(R.id.outlined_meme_name);
+        memeSource = findViewById(R.id.source_text_view);
         friendViewModel = new ViewModelProvider(this).get(FriendViewModel.class);
-        friendViewModel.getAllFriends().observe(this, new Observer<List<Friend>>() {
-            @Override
-            public void onChanged(List<Friend> friends) {
-                friendNameSetter(friends);
-            }
+
+        Button addFunnyMeme = findViewById(R.id.button_add_funny_meme);
+        Button addNotFunnyMeme = findViewById(R.id.button_add_nf_meme);
+
+        addFunnyMeme.setOnClickListener(view -> onAddFunnyButtonClicked());
+
+        FriendViewModel friendViewModel1 = new ViewModelProvider(this).get(FriendViewModel.class);
+        friendViewModel.getAllFriends().observe(this, friends -> {
+
         });
+
     }
 
-    private void friendNameSetter(List<Friend> friends) {
-        List<String> items = setFriendsInArrayList(friends);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                this,
-                android.R.layout.simple_dropdown_item_1line,
-                items
-        );
-        friendName.setAdapter(adapter);
+    private void onAddFunnyButtonClicked() {
+
+        Meme temp = new Meme();
+
+        String date = DateFormat.getDateInstance().format(new Date());
+        String time = DateFormat.getTimeInstance().format(new Date());
+
+        temp.setMemeName(friendName.getText().toString());
+        temp.setMemeSource(memeSource.getText().toString());
+        temp.setFunnyMeme(true);
+        temp.setFriendId(getIntent().getIntExtra(EXTRA_ID, -1));
+        temp.setCreatedDate(date);
+        temp.setCreatedTime(time);
+
     }
 
-    private List<String> setFriendsInArrayList(List<Friend> friends) {
-        List<String> res = new ArrayList<>();
-        for (Friend a : friends) {
-            res.add(a.getName());
-        }
-        return res;
-    }
+
 }

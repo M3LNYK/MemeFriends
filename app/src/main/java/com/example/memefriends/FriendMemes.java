@@ -1,7 +1,10 @@
 package com.example.memefriends;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,6 +22,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.memefriends.roomDb.Friend;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.divider.MaterialDividerItemDecoration;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -38,7 +42,12 @@ public class FriendMemes extends AppCompatActivity {
     private LinearLayout buttonsArea;
     private FloatingActionButton fabAddMeme;
     private RecyclerView memeRecyclerView;
-
+    private String receivedName;
+    private int receivedId, receivedTM, receivedFM, receivedNFM;
+    private ActivityResultLauncher<Intent> activityResultLauncher;
+//    public static final int ADD_NOTE_REQUEST = 1;
+//    public static final int EDIT_NOTE_REQUEST = 2;
+    private static final int RESULT_ADD = 11;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +75,25 @@ public class FriendMemes extends AppCompatActivity {
 
         setDivider();
 
+        receivedName = getIntent().getStringExtra(EXTRA_NAME);
+        receivedId = getIntent().getIntExtra(EXTRA_ID, -1);
+        receivedTM = getIntent().getIntExtra(EXTRA_TOTAL_MEMES, -1);
+        receivedFM = getIntent().getIntExtra(EXTRA_FUNNY_MEMES, -1);
+        receivedNFM = getIntent().getIntExtra(EXTRA_NOT_FUNNY_MEMES, -1);
+
+        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    // Handle the activity result in the callback
+                    if (result.getResultCode() == RESULT_ADD) {
+                        Intent data = result.getData();
+                        int id = data.getIntExtra(FriendMemes.EXTRA_ID, -1);
+                        if (id == -1) {
+                            Toast.makeText(this, "Friend can not be updated!", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        Toast.makeText(this, "Meme added!", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void settingOnClickListeners(MaterialCardView cardFriendInfo, Button saveChange, Button discardChange) {
@@ -80,9 +108,11 @@ public class FriendMemes extends AppCompatActivity {
     private void setDivider() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         memeRecyclerView.setLayoutManager(linearLayoutManager);
-        MaterialDividerItemDecoration divider = new MaterialDividerItemDecoration(getApplicationContext(), LinearLayoutManager.VERTICAL);
-        divider.setDividerInsetStart(20);
-        divider.setDividerInsetEnd(20);
+
+        DividerItemDecoration divider = new DividerItemDecoration(getApplicationContext(), LinearLayoutManager.VERTICAL);
+//        divider.(20); // Set start inset
+//        divider.setDividerInsetEnd(20);   // Set end inset
+
         memeRecyclerView.addItemDecoration(divider);
     }
 
@@ -111,7 +141,15 @@ public class FriendMemes extends AppCompatActivity {
         fabAddMeme.setOnClickListener(view -> {
             //  Add your action here, like opening a new activity or showing a dialog
             Intent intent = new Intent(FriendMemes.this, AddMeme.class);
-            //  startActivity(intent);
+            intent.putExtra(EXTRA_ID, receivedId);
+            System.out.println("SENT ID IS: " + receivedId);
+//            intent.putExtra(EXTRA_TOTAL_MEMES, friend.getTotalMemes());
+//            intent.putExtra(EXTRA_FUNNY_MEMES, friend.getFunnyMemes());
+//            intent.putExtra(EXTRA_NOT_FUNNY_MEMES, friend.getNfMemes());
+//            intent.putExtra(EXTRA_COLOR, friend.getColor());
+            activityResultLauncher.launch(intent);
+
+
             Toast.makeText(FriendMemes.this, "Add meme screen or popup?", Toast.LENGTH_SHORT).show();
         });
     }
@@ -122,12 +160,7 @@ public class FriendMemes extends AppCompatActivity {
     }
 
     private void populateOulinedFields() {
-        String receivedName = getIntent().getStringExtra(EXTRA_NAME);
-        int receivedId = getIntent().getIntExtra(EXTRA_ID, -1);
         System.out.println("RECEIVED ID IS:" + receivedId);
-        int receivedTM = getIntent().getIntExtra(EXTRA_TOTAL_MEMES, -1);
-        int receivedFM = getIntent().getIntExtra(EXTRA_FUNNY_MEMES, -1);
-        int receivedNFM = getIntent().getIntExtra(EXTRA_NOT_FUNNY_MEMES, -1);
         setTitle(receivedName + "'s memes stats");
         outlinedFriendName.setText(receivedName);
         outlinedMemeTotal.setText(String.valueOf(receivedTM));

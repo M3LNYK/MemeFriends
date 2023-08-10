@@ -133,7 +133,7 @@ public class FriendsList extends AppCompatActivity {
         }).attachToRecyclerView(recyclerView);
 
         adapter.setOnItemClickListener(friend -> {
-//                We clicked on friend
+            //  We clicked on friend
             Intent intent = new Intent(FriendsList.this, FriendMemes.class);
             intent.putExtra(EXTRA_ID, friend.getId());
             System.out.println("SENT ID IS: " + friend.getId());
@@ -142,7 +142,6 @@ public class FriendsList extends AppCompatActivity {
             intent.putExtra(EXTRA_FUNNY_MEMES, friend.getFunnyMemes());
             intent.putExtra(EXTRA_NOT_FUNNY_MEMES, friend.getNfMemes());
             intent.putExtra(EXTRA_COLOR, friend.getColor());
-//            startActivity(intent);
             activityResultLauncher.launch(intent);
         });
 
