@@ -10,7 +10,10 @@
         android:layout_height="wrap_content"
         android:text="Meme name"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        android:layout_margin="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="24dp"
         android:layout_gravity="center_vertical"/>
 
     <TextView
@@ -19,7 +22,7 @@
         android:layout_height="wrap_content"
         android:text="Oct 26, 2023"
         android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="32dp"
         android:layout_gravity="center_vertical"/>
 
     <TextView
