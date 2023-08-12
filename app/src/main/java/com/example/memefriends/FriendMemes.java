@@ -3,6 +3,7 @@ package com.example.memefriends;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -122,6 +124,12 @@ public class FriendMemes extends AppCompatActivity {
 //            intent.putExtra(EXTRA_COLOR, friend.getColor());
 //            activityResultLauncher.launch(intent);
 //            startActivity(intent);
+            LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View popupView = inflater.inflate(R.layout.popup_add_meme, null);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setView(popupView);
+            AlertDialog dialog = builder.create();
+            dialog.show();
 
             Toast.makeText(FriendMemes.this, "Add meme screen or popup?", Toast.LENGTH_SHORT).show();
         });
