@@ -136,7 +136,7 @@ public class FriendsList extends AppCompatActivity {
             //  We clicked on friend
             Intent intent = new Intent(FriendsList.this, FriendMemes.class);
             intent.putExtra(EXTRA_ID, friend.getId());
-            System.out.println("SENT ID IS: " + friend.getId());
+            System.out.println("FL SENT ID IS: " + friend.getId());
             intent.putExtra(EXTRA_NAME, friend.getName());
             intent.putExtra(EXTRA_TOTAL_MEMES, friend.getTotalMemes());
             intent.putExtra(EXTRA_FUNNY_MEMES, friend.getFunnyMemes());

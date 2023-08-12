@@ -29,7 +29,6 @@ public class AddMeme extends AppCompatActivity {
     private TextInputEditText friendName;
     private AutoCompleteTextView memeSource;
     private FriendViewModel friendViewModel;
-    public static final String EXTRA_ID = "com.memefriends.EXTRA_ID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,30 +42,7 @@ public class AddMeme extends AppCompatActivity {
         Button addFunnyMeme = findViewById(R.id.button_add_funny_meme);
         Button addNotFunnyMeme = findViewById(R.id.button_add_nf_meme);
 
-        addFunnyMeme.setOnClickListener(view -> onAddFunnyButtonClicked());
-
-        FriendViewModel friendViewModel1 = new ViewModelProvider(this).get(FriendViewModel.class);
-        friendViewModel.getAllFriends().observe(this, friends -> {
-
-        });
 
     }
-
-    private void onAddFunnyButtonClicked() {
-
-        Meme temp = new Meme();
-
-        String date = DateFormat.getDateInstance().format(new Date());
-        String time = DateFormat.getTimeInstance().format(new Date());
-
-        temp.setMemeName(friendName.getText().toString());
-        temp.setMemeSource(memeSource.getText().toString());
-        temp.setFunnyMeme(true);
-        temp.setFriendId(getIntent().getIntExtra(EXTRA_ID, -1));
-        temp.setCreatedDate(date);
-        temp.setCreatedTime(time);
-
-    }
-
 
 }
