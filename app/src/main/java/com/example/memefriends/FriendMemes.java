@@ -19,6 +19,8 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -40,12 +42,13 @@ public class FriendMemes extends AppCompatActivity {
     public static final String EXTRA_COLOR = "com.memefriends.EXTRA_COLOR";
     private static final int RESULT_EDIT = 10;
     private TextInputEditText outlinedFriendName, outlinedMemeTotal, outlinedMemeFunny, outlinedMemeNotFunny,
-            popupFriendName, popupMemeName, popupMemeSource;
+            popupFriendName, popupMemeName;
+    private AutoCompleteTextView popupMemeSource;
     private TextInputLayout nameFriendLayout;
     private LinearLayout buttonsArea;
     private FloatingActionButton fabAddMeme;
     private RecyclerView memeRecyclerView;
-    private Button addFunny, addNotFunny,saveChange, discardChange;
+    private Button addFunny, addNotFunny, saveChange, discardChange;
     private RelativeLayout emptyMemeList;
 
     @Override
@@ -131,15 +134,28 @@ public class FriendMemes extends AppCompatActivity {
             addFunny = popupView.findViewById(R.id.button_add_funny_meme);
             addNotFunny = popupView.findViewById(R.id.button_add_nf_meme);
             addMemeButtonsListener();
+
             popupFriendName = popupView.findViewById(R.id.popup_friend_name);
             String receivedName = getIntent().getStringExtra(EXTRA_NAME);
             popupFriendName.setText(receivedName);
+
+            popupMemeName = findViewById(R.id.popup_meme_name);
+
+            popupMemeSource = popupView.findViewById(R.id.atv_meme_source);
+            String[] options = {"Instagram", "9GAG", "Reddit", "Twitter", "TikTok", "Other"};
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                    android.R.layout.simple_dropdown_item_1line, options);
+            popupMemeSource.setAdapter(adapter);
+
         });
     }
 
     private void addMemeButtonsListener() {
         addFunny.setOnClickListener(v -> {
-            // Perform actions when the button in the popup is clicked
+            //  Perform actions when the button in the popup is clicked
+            //  Pass data
+            //  Hide keyboard
+            //  Hide popup
             Toast.makeText(FriendMemes.this, "Add funny clicked", Toast.LENGTH_SHORT).show();
         });
         addNotFunny.setOnClickListener(v -> {
