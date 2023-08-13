@@ -21,6 +21,7 @@ import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.material.card.MaterialCardView;
@@ -38,12 +39,14 @@ public class FriendMemes extends AppCompatActivity {
     public static final String EXTRA_NOT_FUNNY_MEMES = "com.memefriends.EXTRA_NOT_FUNNY_MEMES";
     public static final String EXTRA_COLOR = "com.memefriends.EXTRA_COLOR";
     private static final int RESULT_EDIT = 10;
-    private TextInputEditText outlinedFriendName, outlinedMemeTotal, outlinedMemeFunny, outlinedMemeNotFunny;
+    private TextInputEditText outlinedFriendName, outlinedMemeTotal, outlinedMemeFunny, outlinedMemeNotFunny,
+            popupFriendName, popupMemeName, popupMemeSource;
     private TextInputLayout nameFriendLayout;
     private LinearLayout buttonsArea;
     private FloatingActionButton fabAddMeme;
     private RecyclerView memeRecyclerView;
-    private Button addFunny, addNotFunny;
+    private Button addFunny, addNotFunny,saveChange, discardChange;
+    private RelativeLayout emptyMemeList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,10 +64,12 @@ public class FriendMemes extends AppCompatActivity {
         nameFriendLayout = findViewById(R.id.textview_friend_name);
         fabAddMeme = findViewById(R.id.fab_add_meme);
 
-        Button saveChange = findViewById(R.id.button_save_change);
-        Button discardChange = findViewById(R.id.button_discard_change);
+        emptyMemeList = findViewById(R.id.rl_empty_meme_list);
 
-        settingOnClickListeners(cardFriendInfo, saveChange, discardChange);
+        saveChange = findViewById(R.id.button_save_change);
+        discardChange = findViewById(R.id.button_discard_change);
+
+        settingOnClickListeners(cardFriendInfo);
 
         populateOutlinedFields();
 
@@ -74,7 +79,7 @@ public class FriendMemes extends AppCompatActivity {
 
     }
 
-    private void settingOnClickListeners(MaterialCardView cardFriendInfo, Button saveChange, Button discardChange) {
+    private void settingOnClickListeners(MaterialCardView cardFriendInfo) {
         // Set click listener for the root layout (CardView) to handle clicks outside the card
         cardFriendInfo.setOnClickListener(view -> cardClicked());
         // Set click listeners for the buttons
@@ -126,6 +131,9 @@ public class FriendMemes extends AppCompatActivity {
             addFunny = popupView.findViewById(R.id.button_add_funny_meme);
             addNotFunny = popupView.findViewById(R.id.button_add_nf_meme);
             addMemeButtonsListener();
+            popupFriendName = popupView.findViewById(R.id.popup_friend_name);
+            String receivedName = getIntent().getStringExtra(EXTRA_NAME);
+            popupFriendName.setText(receivedName);
         });
     }
 
