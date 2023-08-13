@@ -159,14 +159,44 @@
         android:id="@+id/card_friend_memes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="?attr/materialCardViewFilledStyle"
         android:layout_margin="9dp"
         app:layout_constraintTop_toBottomOf="@+id/chip_friend_memes">
+
+        <RelativeLayout
+            android:id="@+id/rl_empty_meme_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <ImageView
+                android:id="@+id/image_view_empty_meme_list"
+                android:layout_width="256px"
+                android:layout_height="256px"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="12dp"
+                android:src="@drawable/baseline_dashboard_customize_24" />
+
+            <TextView
+                android:id="@+id/text_emptyList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/your_meme_list_is_empty"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/image_view_empty_meme_list"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:layout_margin="16dp"
+                android:visibility="visible" />
+
+        </RelativeLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/memeRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:listitem="@layout/list_item_memes"
+            android:visibility="invisible"
             />
 
 

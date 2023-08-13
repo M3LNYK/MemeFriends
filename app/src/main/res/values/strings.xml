@@ -20,4 +20,5 @@
     <string name="menu_item_rate_app">Rate app</string>
     <string name="label_meme_name">Meme name</string>
     <string name="menu_item_delete_this_friend">Delete friend</string>
+    <string name="your_meme_list_is_empty">No memes to display!</string>
 </resources>
