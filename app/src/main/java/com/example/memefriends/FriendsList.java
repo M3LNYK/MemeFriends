@@ -223,7 +223,6 @@ public class FriendsList extends AppCompatActivity {
                         friendViewModel.update(friend);
                         Toast.makeText(this, "Friend updated!", Toast.LENGTH_SHORT).show();
                     }
-
                 });
     }
 
@@ -321,7 +320,7 @@ public class FriendsList extends AppCompatActivity {
         close_popup();
     }
 
-    //For popups
+    // For popups
     public void close_popup() {
         if (newFriendDialog != null) {
             newFriendDialog.hide();
@@ -385,6 +384,6 @@ public class FriendsList extends AppCompatActivity {
     private boolean hasSufficientContrast(int color) {
         double contrastRatio = ColorUtils.calculateContrast(color, Color.WHITE);
         // Adjust the threshold as needed (e.g., 4.5 for WCAG AA, 7 for WCAG AAA)
-        return contrastRatio >= 3.2; //Standard should be 4.5
+        return contrastRatio >= 3.2; // Standard should be 4.5
     }
 }

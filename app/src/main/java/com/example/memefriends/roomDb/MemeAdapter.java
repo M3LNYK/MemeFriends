@@ -28,7 +28,8 @@ public class MemeAdapter extends RecyclerView.Adapter<MemeAdapter.MemeHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MemeHolder holder, int position) {
-        Meme currentMeme = memes.get(position);
+        // modify this to distinguish friend and all memes
+        Meme currentMeme = friendMemes.get(position);
         holder.textViewMemeName.setText(currentMeme.getMemeName());
         holder.textViewDate.setText(currentMeme.getCreatedDate());
         holder.textViewFunny.setText(String.valueOf(currentMeme.getFunnyMeme()).substring(0,1));
@@ -37,7 +38,7 @@ public class MemeAdapter extends RecyclerView.Adapter<MemeAdapter.MemeHolder> {
 
     @Override
     public int getItemCount() {
-        return memes.size();
+        return friendMemes.size();
     }
 
     public void setAllMemes(List<Meme> memes){

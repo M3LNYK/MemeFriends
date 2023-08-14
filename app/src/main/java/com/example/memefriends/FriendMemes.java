@@ -59,6 +59,7 @@ public class FriendMemes extends AppCompatActivity {
     private FriendViewModel memeViewModel;
     private AlertDialog newMemeDialog;
     private int receivedId;
+    private MemeAdapter memeAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +92,7 @@ public class FriendMemes extends AppCompatActivity {
 
 
         memeRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        MemeAdapter memeAdapter = new MemeAdapter();
+        memeAdapter = new MemeAdapter();
         memeRecyclerView.setAdapter(memeAdapter);
         memeViewModel = new ViewModelProvider(this).get(FriendViewModel.class);
         receivedId = getIntent().getIntExtra(EXTRA_ID, -1);
