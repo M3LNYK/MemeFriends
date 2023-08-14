@@ -9,10 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -28,7 +26,6 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.memefriends.roomDb.FriendViewModel;
-import com.example.memefriends.roomDb.GroupedFriend;
 import com.example.memefriends.roomDb.Meme;
 import com.example.memefriends.roomDb.MemeAdapter;
 import com.google.android.material.card.MaterialCardView;
@@ -36,6 +33,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
@@ -57,6 +57,8 @@ public class FriendMemes extends AppCompatActivity {
     private Button addFunny, addNotFunny, saveChange, discardChange;
     private RelativeLayout emptyMemeList;
     private FriendViewModel memeViewModel;
+    private AlertDialog newMemeDialog;
+    private int receivedId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +94,7 @@ public class FriendMemes extends AppCompatActivity {
         MemeAdapter memeAdapter = new MemeAdapter();
         memeRecyclerView.setAdapter(memeAdapter);
         memeViewModel = new ViewModelProvider(this).get(FriendViewModel.class);
-        int receivedId = getIntent().getIntExtra(EXTRA_ID, -1);
+        receivedId = getIntent().getIntExtra(EXTRA_ID, -1);
         memeViewModel.getMemesByFriendId(receivedId).observe(this, friendMemes -> {
             memeAdapter.setFriendMemes(friendMemes);
             checkEmptyList(friendMemes);
@@ -148,24 +150,23 @@ public class FriendMemes extends AppCompatActivity {
 
     private void fabSetClickListeners() {
         fabAddMeme.setOnClickListener(view -> {
-            LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View popupView = inflater.inflate(R.layout.popup_add_meme, null);
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setView(popupView)
-                    .setTitle("Add meme")
-                    .create()
-                    .show();
-            addFunny = popupView.findViewById(R.id.button_add_funny_meme);
-            addNotFunny = popupView.findViewById(R.id.button_add_nf_meme);
+            final View addMemePopupView = getLayoutInflater().inflate(R.layout.popup_add_meme, null);
+            builder.setView(addMemePopupView)
+                    .setTitle("Add meme");
+            newMemeDialog = builder.create();
+            newMemeDialog.show();
+            addFunny = newMemeDialog.findViewById(R.id.button_add_funny_meme);
+            addNotFunny = newMemeDialog.findViewById(R.id.button_add_nf_meme);
             addMemeButtonsListener();
 
-            popupFriendName = popupView.findViewById(R.id.popup_friend_name);
+            popupFriendName = newMemeDialog.findViewById(R.id.popup_friend_name);
             String receivedName = getIntent().getStringExtra(EXTRA_NAME);
             popupFriendName.setText(receivedName);
 
-            popupMemeName = findViewById(R.id.popup_meme_name);
+            popupMemeName = newMemeDialog.findViewById(R.id.popup_meme_name);
 
-            popupMemeSource = popupView.findViewById(R.id.atv_meme_source);
+            popupMemeSource = newMemeDialog.findViewById(R.id.atv_meme_source);
             String[] options = {"Instagram", "9GAG", "Reddit", "Twitter", "TikTok", "Other"};
             ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                     android.R.layout.simple_dropdown_item_1line, options);
@@ -177,9 +178,12 @@ public class FriendMemes extends AppCompatActivity {
     private void addMemeButtonsListener() {
         addFunny.setOnClickListener(v -> {
             // Perform actions when the button in the popup is clicked
-            // Pass data
             // Hide keyboard
+            hideKeyboard();
+            // Pass data
+            addMemeToFriend();
             // Hide popup
+            close_popup();
             Toast.makeText(FriendMemes.this, "Add funny clicked", Toast.LENGTH_SHORT).show();
         });
         addNotFunny.setOnClickListener(v -> {
@@ -189,6 +193,29 @@ public class FriendMemes extends AppCompatActivity {
             // Hide popup
             Toast.makeText(FriendMemes.this, "Add Not funny clicked", Toast.LENGTH_SHORT).show();
         });
+    }
+
+    private void addMemeToFriend() {
+        String memeName = String.valueOf(popupMemeName.getText());
+        String memeSource = popupMemeSource.getText().toString();
+        // DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+        Calendar cal = Calendar.getInstance();
+        String date = dateFormat.format(cal.getTime());
+        String time = timeFormat.format(cal.getTime());
+        if (memeName.trim().isEmpty()) {
+            Toast.makeText(this, "Friend name can not be empty!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Meme tmpMeme = new Meme(memeName, memeSource, Boolean.TRUE, receivedId, date, time);
+        memeViewModel.insertMeme(tmpMeme);
+    }
+
+    public void close_popup() {
+        if (newMemeDialog != null) {
+            newMemeDialog.hide();
+        }
     }
 
     private void cardClicked() {
@@ -275,7 +302,6 @@ public class FriendMemes extends AppCompatActivity {
         if (id != -1) {
             data.putExtra(EXTRA_ID, id);
         }
-
         setResult(FriendMemes.RESULT_EDIT, data);
         finish();
     }

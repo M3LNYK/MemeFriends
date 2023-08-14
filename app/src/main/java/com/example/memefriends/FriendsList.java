@@ -45,7 +45,7 @@ public class FriendsList extends AppCompatActivity {
     private TextView textReaction, textFriend, friendTextView;
     private RelativeLayout emptyLayout;
     private RecyclerView recyclerView;
-    private AlertDialog newFriendDialog, newMemeDialog;
+    private AlertDialog newFriendDialog;
     private EditText editTextFriendName;
     private FriendViewModel friendViewModel;
     private FriendAdapter adapter;
@@ -325,9 +325,6 @@ public class FriendsList extends AppCompatActivity {
     public void close_popup() {
         if (newFriendDialog != null) {
             newFriendDialog.hide();
-        }
-        if (newMemeDialog != null) {
-            newMemeDialog.hide();
         }
     }
 
