@@ -167,6 +167,7 @@
             android:id="@+id/rl_empty_meme_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="invisible"
             >
 
             <ImageView

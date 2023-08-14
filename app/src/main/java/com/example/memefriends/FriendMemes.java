@@ -3,6 +3,7 @@ package com.example.memefriends;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,11 +27,16 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.example.memefriends.roomDb.FriendViewModel;
+import com.example.memefriends.roomDb.GroupedFriend;
+import com.example.memefriends.roomDb.Meme;
+import com.example.memefriends.roomDb.MemeAdapter;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.List;
 import java.util.Objects;
 
 public class FriendMemes extends AppCompatActivity {
@@ -50,6 +56,7 @@ public class FriendMemes extends AppCompatActivity {
     private RecyclerView memeRecyclerView;
     private Button addFunny, addNotFunny, saveChange, discardChange;
     private RelativeLayout emptyMemeList;
+    private FriendViewModel memeViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +87,25 @@ public class FriendMemes extends AppCompatActivity {
 
         setDivider();
 
+
+        memeRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        MemeAdapter memeAdapter = new MemeAdapter();
+        memeRecyclerView.setAdapter(memeAdapter);
+        memeViewModel = new ViewModelProvider(this).get(FriendViewModel.class);
+        int receivedId = getIntent().getIntExtra(EXTRA_ID, -1);
+        memeViewModel.getMemesByFriendId(receivedId).observe(this, friendMemes -> {
+            memeAdapter.setFriendMemes(friendMemes);
+            checkEmptyList(friendMemes);
+        });
+
+    }
+
+    private void checkEmptyList(List<Meme> friendMemes) {
+        if (friendMemes.isEmpty()) {
+            emptyMemeList.setVisibility(View.VISIBLE);
+        } else {
+            emptyMemeList.setVisibility(View.INVISIBLE);
+        }
     }
 
     private void settingOnClickListeners(MaterialCardView cardFriendInfo) {
@@ -94,11 +120,9 @@ public class FriendMemes extends AppCompatActivity {
     private void setDivider() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         memeRecyclerView.setLayoutManager(linearLayoutManager);
-
         DividerItemDecoration divider = new DividerItemDecoration(getApplicationContext(), LinearLayoutManager.VERTICAL);
 //        divider.(20); // Set start inset
 //        divider.setDividerInsetEnd(20);   // Set end inset
-
         memeRecyclerView.addItemDecoration(divider);
     }
 
@@ -152,14 +176,17 @@ public class FriendMemes extends AppCompatActivity {
 
     private void addMemeButtonsListener() {
         addFunny.setOnClickListener(v -> {
-            //  Perform actions when the button in the popup is clicked
-            //  Pass data
-            //  Hide keyboard
-            //  Hide popup
+            // Perform actions when the button in the popup is clicked
+            // Pass data
+            // Hide keyboard
+            // Hide popup
             Toast.makeText(FriendMemes.this, "Add funny clicked", Toast.LENGTH_SHORT).show();
         });
         addNotFunny.setOnClickListener(v -> {
             // Perform actions when the button in the popup is clicked
+            // Pass data
+            // Hide keyboard
+            // Hide popup
             Toast.makeText(FriendMemes.this, "Add Not funny clicked", Toast.LENGTH_SHORT).show();
         });
     }
