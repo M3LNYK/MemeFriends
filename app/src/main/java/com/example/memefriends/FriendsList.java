@@ -5,6 +5,8 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.ColorUtils;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -12,7 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -37,6 +41,8 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
 
 public class FriendsList extends AppCompatActivity {
@@ -235,12 +241,13 @@ public class FriendsList extends AppCompatActivity {
                     friendViewModel.delete(adapter.getFriendAt(position));
                     adapter.notifyItemRemoved(position);
                     // Toast.makeText(FriendsList.this, "Friend deleted", Toast.LENGTH_SHORT).show();
-                    Snackbar.make(recyclerView, deletedFriend.getName(), BaseTransientBottomBar.LENGTH_LONG)
+                    Snackbar.make(recyclerView, "Deleted friend: " + deletedFriend.getName(), BaseTransientBottomBar.LENGTH_LONG)
                             .setAction("Undo", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
                                     friendViewModel.insert(deletedFriend);
-                                    adapter.notifyItemInserted(position);
+                                    // Below caused index out of bounds exception error
+                                    // adapter.notifyItemInserted(position);
                                 }
                             })
                             .show();
@@ -249,6 +256,20 @@ public class FriendsList extends AppCompatActivity {
 
                     break;
             }
+        }
+
+        @Override
+        public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+            new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                    .addSwipeLeftBackgroundColor(ContextCompat.getColor(FriendsList.this,R.color.red_600))
+                    .addSwipeLeftLabel("Delete")
+                    .setSwipeLeftLabelColor(ContextCompat.getColor(FriendsList.this,R.color.black))
+                    .addSwipeLeftActionIcon(R.drawable.baseline_delete_filled_24)
+                    .setSwipeLeftActionIconTint(ContextCompat.getColor(FriendsList.this,R.color.black))
+                    .create()
+                    .decorate();
+
+            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
         }
     };
 
