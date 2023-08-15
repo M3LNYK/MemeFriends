@@ -1,6 +1,6 @@
-package com.example.memefriends.roomDb;
+package com.example.memefriends.roomDb.Friend;
 
-import com.example.memefriends.roomDb.Friend;
+import com.example.memefriends.roomDb.Friend.Friend;
 
 import java.util.List;
 

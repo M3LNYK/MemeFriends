@@ -1,4 +1,4 @@
-package com.example.memefriends.roomDb;
+package com.example.memefriends.roomDb.Friend;
 
 import android.content.Context;
 import android.graphics.Canvas;
