@@ -5,6 +5,8 @@ import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import com.example.memefriends.roomDb.Friend.Friend;
+
 //import java.util.Date;
 
 @Entity(tableName = "meme-table",

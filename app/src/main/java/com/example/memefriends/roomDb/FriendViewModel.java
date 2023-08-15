@@ -6,6 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.example.memefriends.roomDb.Friend.Friend;
+import com.example.memefriends.roomDb.Friend.FriendRepository;
+
 import java.util.List;
 
 public class FriendViewModel extends AndroidViewModel {
@@ -25,6 +28,7 @@ public class FriendViewModel extends AndroidViewModel {
     public void insert(Friend friend) {
         repository.insertFriend(friend);
     }
+    public void insertFriendAtPosition(int position, Friend friend){ }
 
     public void update(Friend friend) {
         repository.updateFriend(friend);

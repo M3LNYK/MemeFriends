@@ -2,7 +2,7 @@ package com.example.memefriends;
 
 import static org.junit.Assert.*;
 
-import com.example.memefriends.roomDb.Friend;
+import com.example.memefriends.roomDb.Friend.Friend;
 
 import org.junit.Before;
 import org.junit.Test;

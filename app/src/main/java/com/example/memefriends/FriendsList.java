@@ -25,12 +25,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.memefriends.roomDb.Friend;
+import com.example.memefriends.roomDb.Friend.Friend;
 import com.example.memefriends.roomDb.FriendViewModel;
-import com.example.memefriends.roomDb.FriendAdapter;
-import com.example.memefriends.roomDb.GroupedFriend;
+import com.example.memefriends.roomDb.Friend.FriendAdapter;
+import com.example.memefriends.roomDb.Friend.GroupedFriend;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,19 +120,8 @@ public class FriendsList extends AppCompatActivity {
             }
         });
 
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
-                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                return false;
-            }
-
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                friendViewModel.delete(adapter.getFriendAt(viewHolder.getAdapterPosition()));
-                Toast.makeText(FriendsList.this, "Friend deleted", Toast.LENGTH_SHORT).show();
-            }
-        }).attachToRecyclerView(recyclerView);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
 
         adapter.setOnItemClickListener(friend -> {
             //  We clicked on friend
@@ -225,6 +216,41 @@ public class FriendsList extends AppCompatActivity {
                     }
                 });
     }
+
+    Friend deletedFriend = null;
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,
+            // ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            ItemTouchHelper.LEFT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            int position = viewHolder.getAdapterPosition();
+            switch (direction) {
+                case ItemTouchHelper.LEFT:
+                    deletedFriend = adapter.getFriendAt(position);
+                    friendViewModel.delete(adapter.getFriendAt(position));
+                    adapter.notifyItemRemoved(position);
+                    // Toast.makeText(FriendsList.this, "Friend deleted", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(recyclerView, deletedFriend.getName(), BaseTransientBottomBar.LENGTH_LONG)
+                            .setAction("Undo", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    friendViewModel.insert(deletedFriend);
+                                    adapter.notifyItemInserted(position);
+                                }
+                            })
+                            .show();
+                    break;
+                case ItemTouchHelper.RIGHT:
+
+                    break;
+            }
+        }
+    };
 
     private void getFirstGroupLetterForChip() {
         if (adapter.getGroupedFriends() != null && !adapter.getGroupedFriends().isEmpty()) {
