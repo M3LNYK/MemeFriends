@@ -151,15 +151,9 @@ public class FriendMemes extends AppCompatActivity {
 
     private void fabSetClickListeners() {
         fabAddMeme.setOnClickListener(view -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            final View addMemePopupView = getLayoutInflater().inflate(R.layout.popup_add_meme, null);
-            builder.setView(addMemePopupView)
-                    .setTitle("Add meme");
-            newMemeDialog = builder.create();
-            newMemeDialog.show();
+            displayAddMemePopup();
             addFunny = newMemeDialog.findViewById(R.id.button_add_funny_meme);
             addNotFunny = newMemeDialog.findViewById(R.id.button_add_nf_meme);
-            addMemeButtonsListener();
 
             popupFriendName = newMemeDialog.findViewById(R.id.popup_friend_name);
             String receivedName = getIntent().getStringExtra(EXTRA_NAME);
@@ -173,25 +167,31 @@ public class FriendMemes extends AppCompatActivity {
                     android.R.layout.simple_dropdown_item_1line, options);
             popupMemeSource.setAdapter(adapter);
 
+            addMemeButtonsListener();
         });
+    }
+
+    private void displayAddMemePopup() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final View addMemePopupView = getLayoutInflater().inflate(R.layout.popup_add_meme, null);
+        builder.setView(addMemePopupView)
+                .setTitle("Add meme");
+        newMemeDialog = builder.create();
+        newMemeDialog.show();
     }
 
     private void addMemeButtonsListener() {
         addFunny.setOnClickListener(v -> {
-            // Perform actions when the button in the popup is clicked
-            // Hide keyboard
             hideKeyboard();
-            // Pass data
             addMemeToFriend();
-            // Hide popup
             close_popup();
             Toast.makeText(FriendMemes.this, "Add funny clicked", Toast.LENGTH_SHORT).show();
         });
         addNotFunny.setOnClickListener(v -> {
             // Perform actions when the button in the popup is clicked
             // Pass data
-            // Hide keyboard
-            // Hide popup
+            hideKeyboard();
+            close_popup();
             Toast.makeText(FriendMemes.this, "Add Not funny clicked", Toast.LENGTH_SHORT).show();
         });
     }
