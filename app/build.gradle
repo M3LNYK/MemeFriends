@@ -46,6 +46,9 @@ dependencies {
 
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
 
+    // Implementation of on swipe show icon and color
+    implementation 'it.xabaras.android:recyclerview-swipedecorator:1.4'
+
     // Local unit tests
     testImplementation "androidx.test.espresso:espresso-core:3.5.1"
     testImplementation "junit:junit:4.13.2"
