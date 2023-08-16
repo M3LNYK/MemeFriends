@@ -149,28 +149,33 @@ public class FriendMemes extends AppCompatActivity {
         }
         if (item.getItemId() == R.id.menu_item_delete_friend) {
             Toast.makeText(this, "Delete friend", Toast.LENGTH_SHORT).show();
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            final View addMemePopupView = getLayoutInflater().inflate(R.layout.popup_delete_friend_confirm, null);
-            builder.setView(addMemePopupView)
-                    .setTitle("Delete friend?")
-                    .setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            // Handle user input
-                            Toast.makeText(FriendMemes.this, "Confirmed deletion", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-            AlertDialog dialog = builder.create();
-            dialog.show();
-            return true;
+            return menu_item_delete_friend();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private boolean menu_item_delete_friend() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final View addMemePopupView = getLayoutInflater().inflate(R.layout.popup_delete_friend_confirm, null);
+        builder.setView(addMemePopupView)
+                .setTitle("Delete friend?")
+                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Handle user input
+                        Toast.makeText(FriendMemes.this, "Confirmed deletion", Toast.LENGTH_SHORT).show();
+                        
+                    }
+                })
+                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        return true;
     }
 
     private void fabSetClickListeners() {
