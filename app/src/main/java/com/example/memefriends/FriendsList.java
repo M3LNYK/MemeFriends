@@ -5,7 +5,6 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.ColorUtils;
 import androidx.lifecycle.ViewModelProvider;
@@ -16,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -61,9 +59,6 @@ public class FriendsList extends AppCompatActivity {
     private final Random ran = new Random();
     private Chip chipGroupLetter;
     private char currentGroupLetter = '\0';
-
-    public static final int ADD_NOTE_REQUEST = 1;
-    public static final int EDIT_NOTE_REQUEST = 2;
     public static final String EXTRA_ID = "com.memefriends.EXTRA_ID";
     public static final String EXTRA_NAME = "com.memefriends.EXTRA_NAME";
     public static final String EXTRA_TOTAL_MEMES = "com.memefriends.EXTRA_TOTAL_MEMES";
@@ -203,6 +198,7 @@ public class FriendsList extends AppCompatActivity {
                     // Handle the activity result in the callback
                     if (result.getResultCode() == RESULT_EDIT) {
                         Intent data = result.getData();
+                        assert data != null;
                         int id = data.getIntExtra(FriendMemes.EXTRA_ID, -1);
                         if (id == -1) {
                             Toast.makeText(this, "Friend can not be updated!", Toast.LENGTH_SHORT).show();
@@ -234,7 +230,7 @@ public class FriendsList extends AppCompatActivity {
 
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-            int position = viewHolder.getAdapterPosition();
+            int position = viewHolder.getBindingAdapterPosition();
             switch (direction) {
                 case ItemTouchHelper.LEFT:
                     deletedFriend = adapter.getFriendAt(position);
@@ -242,13 +238,10 @@ public class FriendsList extends AppCompatActivity {
                     adapter.notifyItemRemoved(position);
                     // Toast.makeText(FriendsList.this, "Friend deleted", Toast.LENGTH_SHORT).show();
                     Snackbar.make(recyclerView, "Deleted friend: " + deletedFriend.getName(), BaseTransientBottomBar.LENGTH_LONG)
-                            .setAction("Undo", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    friendViewModel.insert(deletedFriend);
-                                    // Below caused index out of bounds exception error
-                                    // adapter.notifyItemInserted(position);
-                                }
+                            .setAction("Undo", view -> {
+                                friendViewModel.insert(deletedFriend);
+                                // Below caused index out of bounds exception error
+                                // adapter.notifyItemInserted(position);
                             })
                             .show();
                     break;
@@ -259,13 +252,13 @@ public class FriendsList extends AppCompatActivity {
         }
 
         @Override
-        public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+        public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
             new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-                    .addSwipeLeftBackgroundColor(ContextCompat.getColor(FriendsList.this,R.color.red_600))
-                    .addSwipeLeftLabel("Delete")
-                    .setSwipeLeftLabelColor(ContextCompat.getColor(FriendsList.this,R.color.black))
+                    .addSwipeLeftBackgroundColor(ContextCompat.getColor(FriendsList.this, R.color.red_600))
+                    .setSwipeLeftActionIconTint(ContextCompat.getColor(FriendsList.this, R.color.black))
+                    .setSwipeLeftLabelColor(ContextCompat.getColor(FriendsList.this, R.color.black))
                     .addSwipeLeftActionIcon(R.drawable.baseline_delete_filled_24)
-                    .setSwipeLeftActionIconTint(ContextCompat.getColor(FriendsList.this,R.color.black))
+                    .addSwipeLeftLabel("Delete")
                     .create()
                     .decorate();
 
@@ -344,14 +337,6 @@ public class FriendsList extends AppCompatActivity {
     }
 
     public void addNewMemeActivityStart() {
-//        AlertDialog.Builder myDialogBuilder = new AlertDialog.Builder(this);
-//        final View addMemePopupView = getLayoutInflater().inflate(R.layout.popup_add_meme, null);
-//        myDialogBuilder.setView(addMemePopupView);
-//        newMemeDialog = myDialogBuilder.create();
-//        newMemeDialog.show();
-//        editTextFriendName = newFriendDialog.findViewById(R.id.popup_friend_name);
-//        Intent intent = new Intent(FriendsList.this, AddMeme.class);
-//        startActivity(intent);
         onAddButtonClicked();
     }
 
