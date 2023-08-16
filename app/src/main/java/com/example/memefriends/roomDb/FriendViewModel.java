@@ -38,6 +38,8 @@ public class FriendViewModel extends AndroidViewModel {
         repository.deleteFriend(friend);
     }
 
+    public void deleteFriendById(int id) {repository.deleteFriendById(id);}
+
     public void deleteAllFriends() {
         repository.deleteAllFriends();
     }

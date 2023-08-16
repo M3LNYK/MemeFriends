@@ -26,4 +26,7 @@ public interface FriendDao {
 
     @Query("SELECT * FROM `friend-table` ORDER BY name ASC")
     LiveData<List<Friend>> getAllFriends();
+
+    @Query("DELETE FROM 'friend-table' WHERE id = :friendId")
+    void deleteFriendById(int friendId);
 }
