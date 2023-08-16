@@ -5,21 +5,14 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-<!--    <TextView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Dialog Title"-->
-<!--        android:textSize="18sp"-->
-<!--        android:textStyle="bold"-->
-<!--        android:gravity="center"-->
-<!--        android:padding="16dp"/>-->
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="This friend will be permanently deleted. This action can not be undone."
-        android:textSize="18sp"
-        android:layout_margin="16dp"
-        android:layout_gravity="center"/>
+        android:textSize="16sp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="10dp" />
+
 
 </LinearLayout>
