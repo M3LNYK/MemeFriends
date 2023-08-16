@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -35,7 +34,6 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
@@ -159,23 +157,15 @@ public class FriendMemes extends AppCompatActivity {
         final View addMemePopupView = getLayoutInflater().inflate(R.layout.popup_delete_friend_confirm, null);
         builder.setView(addMemePopupView)
                 .setTitle("Delete friend?")
-                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Handle user input
-                        Toast.makeText(FriendMemes.this, "Confirmed deletion", Toast.LENGTH_SHORT).show();
-                        Intent resultIntent = new Intent();
-                        resultIntent.putExtra("deletedFriendId", receivedId); // Pass the deleted friend ID
-                        setResult(RESULT_OK, resultIntent);
-                        finish();
-                    }
+                .setPositiveButton("YES", (dialog, which) -> {
+                    // Handle user input
+                    Toast.makeText(FriendMemes.this, "Confirmed deletion", Toast.LENGTH_SHORT).show();
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra("deletedFriendId", receivedId); // Pass the deleted friend ID
+                    setResult(RESULT_OK, resultIntent);
+                    finish();
                 })
-                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
+                .setNegativeButton("NO", (dialog, which) -> dialog.dismiss());
         AlertDialog dialog = builder.create();
         dialog.show();
         return true;
@@ -232,8 +222,8 @@ public class FriendMemes extends AppCompatActivity {
         String memeName = String.valueOf(popupMemeName.getText());
         String memeSource = popupMemeSource.getText().toString();
         // DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+        DateFormat dateFormat = DateFormat.getDateInstance();
+        DateFormat timeFormat = DateFormat.getTimeInstance();
         Calendar cal = Calendar.getInstance();
         String date = dateFormat.format(cal.getTime());
         String time = timeFormat.format(cal.getTime());
