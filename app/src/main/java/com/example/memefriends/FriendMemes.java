@@ -164,7 +164,10 @@ public class FriendMemes extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         // Handle user input
                         Toast.makeText(FriendMemes.this, "Confirmed deletion", Toast.LENGTH_SHORT).show();
-                        
+                        Intent resultIntent = new Intent();
+                        resultIntent.putExtra("deletedFriendId", receivedId); // Pass the deleted friend ID
+                        setResult(RESULT_OK, resultIntent);
+                        finish();
                     }
                 })
                 .setNegativeButton("NO", new DialogInterface.OnClickListener() {

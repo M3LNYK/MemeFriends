@@ -69,6 +69,10 @@ public class FriendRepository {
         return memeDao.getMeme2ByFriendId(friendId);
     }
 
+    public void deleteFriendById(int friendId) {
+        new DeleteFriendByIdAsyncTask(friendDao).execute(friendId);
+    }
+
 
     private static class InsertFriendAsyncTask extends AsyncTask<Friend, Void, Void> {
         private FriendDao friendDao;
@@ -108,6 +112,20 @@ public class FriendRepository {
         @Override
         protected Void doInBackground(Friend... friends) {
             friendDao.delete(friends[0]);
+            return null;
+        }
+    }
+
+    private static class DeleteFriendByIdAsyncTask extends AsyncTask<Integer, Void, Void> {
+        private FriendDao friendDao;
+
+        private DeleteFriendByIdAsyncTask(FriendDao friendDao) {
+            this.friendDao = friendDao;
+        }
+
+        @Override
+        protected Void doInBackground(Integer... friendIds) {
+            friendDao.deleteFriendById(friendIds[0]);
             return null;
         }
     }

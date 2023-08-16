@@ -220,6 +220,16 @@ public class FriendsList extends AppCompatActivity {
                         friendViewModel.update(friend);
                         Toast.makeText(this, "Friend updated!", Toast.LENGTH_SHORT).show();
                     }
+                    if (result.getResultCode() == RESULT_OK) {
+                        Intent data = result.getData();
+                        if (data != null && data.hasExtra("deletedFriendId")) {
+                            int deletedFriendId = data.getIntExtra("deletedFriendId", -1);
+                            if (deletedFriendId != -1) {
+                                // Delete the friend from the list
+                                friendViewModel.deleteFriendById(deletedFriendId);
+                            }
+                        }
+                    }
                 });
     }
 
