@@ -35,6 +35,7 @@ import com.google.android.material.chip.Chip;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,6 +68,7 @@ public class FriendsList extends AppCompatActivity {
     public static final String EXTRA_COLOR = "com.memefriends.EXTRA_COLOR";
     private ActivityResultLauncher<Intent> activityResultLauncher;
     private static final int RESULT_EDIT = 10;
+    private TextInputLayout newFriendNameLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -342,7 +344,8 @@ public class FriendsList extends AppCompatActivity {
         myDialogBuilder.setView(addFriendPopupView);
         newFriendDialog = myDialogBuilder.create();
         newFriendDialog.show();
-        editTextFriendName = newFriendDialog.findViewById(R.id.popup_friend_name);
+        editTextFriendName = newFriendDialog.findViewById(R.id.TIED_popup_friend_name);
+        newFriendNameLayout = newFriendDialog.findViewById(R.id.TIL_friend_name);
         onAddButtonClicked();
     }
 
@@ -353,9 +356,13 @@ public class FriendsList extends AppCompatActivity {
     public void saveFriend(View view) {
         String name = String.valueOf(editTextFriendName.getText());
         if (name.trim().isEmpty()) {
+            newFriendNameLayout.setErrorEnabled(true);
+            newFriendNameLayout.setError("You need to enter a name!");
             Toast.makeText(this, "Friend name can not be empty!", Toast.LENGTH_SHORT).show();
             return;
         }
+        newFriendNameLayout.setError(null);
+        newFriendNameLayout.setErrorEnabled(false);
         Friend tmpFriend = new Friend(name, 0, 0, 0, getRandomColorWithSufficientContrast());
         friendViewModel.insert(tmpFriend);
         Toast.makeText(this, "Friend added", Toast.LENGTH_SHORT).show();

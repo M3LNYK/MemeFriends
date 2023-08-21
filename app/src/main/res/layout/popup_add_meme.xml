@@ -22,7 +22,7 @@
         tools:layout_editor_absoluteX="16dp">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/popup_friend_name"
+            android:id="@+id/TIED_popup_friend_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="false"

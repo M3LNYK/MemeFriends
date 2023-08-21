@@ -181,7 +181,7 @@ public class FriendMemes extends AppCompatActivity {
             addFunny = newMemeDialog.findViewById(R.id.button_add_funny_meme);
             addNotFunny = newMemeDialog.findViewById(R.id.button_add_nf_meme);
 
-            popupFriendName = newMemeDialog.findViewById(R.id.popup_friend_name);
+            popupFriendName = newMemeDialog.findViewById(R.id.TIED_popup_friend_name);
             String receivedName = getIntent().getStringExtra(EXTRA_NAME);
             popupFriendName.setText(receivedName);
 
