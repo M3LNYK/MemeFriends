@@ -344,8 +344,8 @@ public class FriendsList extends AppCompatActivity {
         myDialogBuilder.setView(addFriendPopupView);
         newFriendDialog = myDialogBuilder.create();
         newFriendDialog.show();
-        editTextFriendName = newFriendDialog.findViewById(R.id.TIED_popup_friend_name);
-        newFriendNameLayout = newFriendDialog.findViewById(R.id.TIL_friend_name);
+        editTextFriendName = newFriendDialog.findViewById(R.id.popup_add_friend_tied_friend_name);
+        newFriendNameLayout = newFriendDialog.findViewById(R.id.popup_add_friend_til_friend_name);
         onAddButtonClicked();
     }
 

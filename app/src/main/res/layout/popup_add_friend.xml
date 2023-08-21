@@ -19,7 +19,7 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/TIL_friend_name"
+        android:id="@+id/popup_add_friend_til_friend_name"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
         app:endIconMode="clear_text">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/TIED_popup_friend_name"
+            android:id="@+id/popup_add_friend_tied_friend_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="1"
@@ -47,6 +47,6 @@
         android:onClick="saveFriend"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TIL_friend_name" />
+        app:layout_constraintTop_toBottomOf="@+id/popup_add_friend_til_friend_name" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

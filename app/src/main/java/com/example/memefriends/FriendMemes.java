@@ -50,7 +50,7 @@ public class FriendMemes extends AppCompatActivity {
     private TextInputEditText outlinedFriendName, outlinedMemeTotal, outlinedMemeFunny, outlinedMemeNotFunny,
             popupFriendName, popupMemeName;
     private AutoCompleteTextView popupMemeSource;
-    private TextInputLayout nameFriendLayout;
+    private TextInputLayout nameFriendLayout, memeNameLayout, memeSourceLayout;
     private LinearLayout buttonsArea;
     private FloatingActionButton fabAddMeme;
     private RecyclerView memeRecyclerView;
@@ -60,7 +60,6 @@ public class FriendMemes extends AppCompatActivity {
     private AlertDialog newMemeDialog;
     private int receivedId;
     private MemeAdapter memeAdapter;
-    private TextView supportingPopUpText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -170,7 +169,7 @@ public class FriendMemes extends AppCompatActivity {
                 .setNegativeButton("NO", (dialog, which) -> dialog.dismiss());
         AlertDialog dialog = builder.create();
         dialog.show();
-        supportingPopUpText = dialog.findViewById(R.id.tv_details_text);
+        TextView supportingPopUpText = dialog.findViewById(R.id.tv_details_text);
         supportingPopUpText.setText("This friend will be permanently deleted. This action can not be undone.");
         return true;
     }
@@ -178,16 +177,20 @@ public class FriendMemes extends AppCompatActivity {
     private void fabSetClickListeners() {
         fabAddMeme.setOnClickListener(view -> {
             displayAddMemePopup();
-            addFunny = newMemeDialog.findViewById(R.id.button_add_funny_meme);
-            addNotFunny = newMemeDialog.findViewById(R.id.button_add_nf_meme);
+            addFunny = newMemeDialog.findViewById(R.id.popup_add_meme_button_add_funny_meme);
+            addNotFunny = newMemeDialog.findViewById(R.id.popup_add_meme_button_add_nf_meme);
 
-            popupFriendName = newMemeDialog.findViewById(R.id.TIED_popup_friend_name);
+            popupFriendName = newMemeDialog.findViewById(R.id.popup_add_meme_tied_friend_name);
             String receivedName = getIntent().getStringExtra(EXTRA_NAME);
             popupFriendName.setText(receivedName);
 
-            popupMemeName = newMemeDialog.findViewById(R.id.popup_meme_name);
+            popupMemeName = newMemeDialog.findViewById(R.id.popup_add_meme_tied_meme_name);
 
-            popupMemeSource = newMemeDialog.findViewById(R.id.atv_meme_source);
+            memeNameLayout = newMemeDialog.findViewById(R.id.popup_add_meme_til_meme_name);
+            memeSourceLayout = newMemeDialog.findViewById(R.id.popup_add_meme_til_meme_source_selection);
+
+
+            popupMemeSource = newMemeDialog.findViewById(R.id.popup_add_meme_atv_meme_source);
             String[] options = {"Instagram", "9GAG", "Reddit", "Twitter", "TikTok", "Other"};
             ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                     android.R.layout.simple_dropdown_item_1line, options);
@@ -209,9 +212,7 @@ public class FriendMemes extends AppCompatActivity {
     private void addMemeButtonsListener() {
         addFunny.setOnClickListener(v -> {
             hideKeyboard();
-            addMemeToFriend();
-            close_popup();
-            Toast.makeText(FriendMemes.this, "Add funny clicked", Toast.LENGTH_SHORT).show();
+            addFunnyMemeToFriend();
         });
         addNotFunny.setOnClickListener(v -> {
             // Perform actions when the button in the popup is clicked
@@ -222,7 +223,7 @@ public class FriendMemes extends AppCompatActivity {
         });
     }
 
-    private void addMemeToFriend() {
+    private void addFunnyMemeToFriend() {
         String memeName = String.valueOf(popupMemeName.getText());
         String memeSource = popupMemeSource.getText().toString();
         // DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
@@ -231,12 +232,32 @@ public class FriendMemes extends AppCompatActivity {
         Calendar cal = Calendar.getInstance();
         String date = dateFormat.format(cal.getTime());
         String time = timeFormat.format(cal.getTime());
-        if (memeName.trim().isEmpty()) {
-            Toast.makeText(this, "Friend name can not be empty!", Toast.LENGTH_SHORT).show();
-            return;
+        if (memeName.trim().isEmpty() && memeSource.trim().isEmpty()) {
+            memeNameLayout.setErrorEnabled(true);
+            memeNameLayout.setError("You need to enter a name!");
+            memeSourceLayout.setErrorEnabled(true);
+            memeSourceLayout.setError("You need to provide a source!");
+        } else if (memeSource.trim().isEmpty()) {
+            memeSourceLayout.setErrorEnabled(true);
+            memeSourceLayout.setError("You need to provide a source!");
+            memeNameLayout.setError(null);
+            memeNameLayout.setErrorEnabled(false);
+        } else if (memeName.trim().isEmpty()) {
+            memeSourceLayout.setError(null);
+            memeSourceLayout.setErrorEnabled(false);
+            memeNameLayout.setErrorEnabled(true);
+            memeNameLayout.setError("You need to enter a name!");
+        } else {
+            memeNameLayout.setError(null);
+            memeNameLayout.setErrorEnabled(false);
+            memeSourceLayout.setError(null);
+            memeSourceLayout.setErrorEnabled(false);
+            Meme tmpMeme = new Meme(memeName, memeSource, Boolean.TRUE, receivedId, date, time);
+            memeViewModel.insertMeme(tmpMeme);
+            close_popup();
+            //    Update friend's data with memes
+
         }
-        Meme tmpMeme = new Meme(memeName, memeSource, Boolean.TRUE, receivedId, date, time);
-        memeViewModel.insertMeme(tmpMeme);
     }
 
     public void close_popup() {
