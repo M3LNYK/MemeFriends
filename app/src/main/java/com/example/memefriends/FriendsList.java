@@ -381,11 +381,30 @@ public class FriendsList extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.menu_item_delete_all_friends) {
-            friendViewModel.deleteAllFriends();
-            Toast.makeText(this, "All friends deleted", Toast.LENGTH_SHORT).show();
+            AlertDialog dialog = createDeletionConfirmationDialog();
+            TextView supportingPopUpText = dialog.findViewById(R.id.tv_details_text);
+            supportingPopUpText.setText("All friends will be permanently deleted. This action can not be undone.");
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @NonNull
+    private AlertDialog createDeletionConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final View addMemePopupView = getLayoutInflater().inflate(R.layout.popup_delete_confirm, null);
+        builder.setView(addMemePopupView)
+                .setTitle("Delete all friends?")
+                .setPositiveButton("YES", (dialog, which) -> {
+                    // Handle user input
+                    friendViewModel.deleteAllFriends();
+                    Toast.makeText(this, "All friends deleted", Toast.LENGTH_SHORT).show();
+                    finish();
+                })
+                .setNegativeButton("NO", (dialog, which) -> dialog.dismiss());
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        return dialog;
     }
 
     private List<GroupedFriend> groupFriendsByLetter(List<Friend> friends) {

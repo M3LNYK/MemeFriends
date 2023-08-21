@@ -6,9 +6,10 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/tv_details_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="This friend will be permanently deleted. This action can not be undone."
+        android:text=""
         android:textSize="16sp"
         android:layout_marginLeft="24dp"
         android:layout_marginTop="12dp"

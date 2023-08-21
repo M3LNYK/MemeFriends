@@ -23,6 +23,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.memefriends.roomDb.FriendViewModel;
@@ -59,6 +60,7 @@ public class FriendMemes extends AppCompatActivity {
     private AlertDialog newMemeDialog;
     private int receivedId;
     private MemeAdapter memeAdapter;
+    private TextView supportingPopUpText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,7 +148,7 @@ public class FriendMemes extends AppCompatActivity {
             return true;
         }
         if (item.getItemId() == R.id.menu_item_delete_friend) {
-            Toast.makeText(this, "Delete friend", Toast.LENGTH_SHORT).show();
+            // Toast.makeText(this, "Delete friend", Toast.LENGTH_SHORT).show();
             return menu_item_delete_friend();
         }
         return super.onOptionsItemSelected(item);
@@ -154,7 +156,7 @@ public class FriendMemes extends AppCompatActivity {
 
     private boolean menu_item_delete_friend() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        final View addMemePopupView = getLayoutInflater().inflate(R.layout.popup_delete_friend_confirm, null);
+        final View addMemePopupView = getLayoutInflater().inflate(R.layout.popup_delete_confirm, null);
         builder.setView(addMemePopupView)
                 .setTitle("Delete friend?")
                 .setPositiveButton("YES", (dialog, which) -> {
@@ -168,6 +170,8 @@ public class FriendMemes extends AppCompatActivity {
                 .setNegativeButton("NO", (dialog, which) -> dialog.dismiss());
         AlertDialog dialog = builder.create();
         dialog.show();
+        supportingPopUpText = dialog.findViewById(R.id.tv_details_text);
+        supportingPopUpText.setText("This friend will be permanently deleted. This action can not be undone.");
         return true;
     }
 
