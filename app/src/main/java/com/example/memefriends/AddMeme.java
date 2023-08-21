@@ -23,7 +23,7 @@ public class AddMeme extends AppCompatActivity {
         setContentView(R.layout.activity_add_meme);
 
         friendName = findViewById(R.id.outlined_meme_name);
-        memeSource = findViewById(R.id.source_text_view);
+        memeSource = findViewById(R.id.actv_source);
         friendViewModel = new ViewModelProvider(this).get(FriendViewModel.class);
 
         Button addFunnyMeme = findViewById(R.id.button_add_funny_meme);

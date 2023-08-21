@@ -68,14 +68,14 @@ public class FriendMemes extends AppCompatActivity {
         setContentView(R.layout.activity_friend_memes);
 
         MaterialCardView cardFriendInfo = findViewById(R.id.cardFriendInfo);
-        outlinedFriendName = findViewById(R.id.outlined_friend_name);
-        outlinedMemeTotal = findViewById(R.id.outlined_meme_total);
-        outlinedMemeFunny = findViewById(R.id.outlined_meme_funny);
-        outlinedMemeNotFunny = findViewById(R.id.outlined_meme_not_funny);
-        buttonsArea = findViewById(R.id.buttons_field);
+        outlinedFriendName = findViewById(R.id.tiet_friend_name);
+        outlinedMemeTotal = findViewById(R.id.tied_meme_total);
+        outlinedMemeFunny = findViewById(R.id.tied_meme_funny);
+        outlinedMemeNotFunny = findViewById(R.id.tied_meme_not_funny);
+        buttonsArea = findViewById(R.id.ll_buttons_field);
         memeRecyclerView = findViewById(R.id.memeRecyclerView);
 
-        nameFriendLayout = findViewById(R.id.textview_friend_name);
+        nameFriendLayout = findViewById(R.id.til_friend_name);
         fabAddMeme = findViewById(R.id.fab_add_meme);
 
         emptyMemeList = findViewById(R.id.rl_empty_meme_list);

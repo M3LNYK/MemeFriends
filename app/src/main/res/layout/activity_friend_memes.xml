@@ -34,7 +34,7 @@
             android:padding="16dp">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textview_friend_name"
+                android:id="@+id/til_friend_name"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/outlined_friend_name"
+                    android:id="@+id/tiet_friend_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
@@ -54,7 +54,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textview_friend_tm"
+                android:id="@+id/til_friend_total_memes"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -63,7 +63,7 @@
                 app:endIconMode="clear_text">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/outlined_meme_total"
+                    android:id="@+id/tied_meme_total"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none"
@@ -74,7 +74,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textview_friend_fm"
+                android:id="@+id/til_friend_fm"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
                 app:endIconMode="clear_text">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/outlined_meme_funny"
+                    android:id="@+id/tied_meme_funny"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none"
@@ -96,7 +96,7 @@
 
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textview_friend_nfm"
+                android:id="@+id/til_friend_nfm"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -105,7 +105,7 @@
                 app:endIconMode="clear_text">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/outlined_meme_not_funny"
+                    android:id="@+id/tied_meme_not_funny"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none"
@@ -117,7 +117,7 @@
 
             <!-- Buttons -->
             <LinearLayout
-                android:id="@+id/buttons_field"
+                android:id="@+id/ll_buttons_field"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
@@ -158,8 +158,9 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_friend_memes"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         style="?attr/materialCardViewFilledStyle"
+        android:scrollbars="vertical"
         android:layout_margin="9dp"
         app:layout_constraintTop_toBottomOf="@+id/chip_friend_memes">
 
@@ -195,9 +196,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/memeRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:listitem="@layout/list_item_memes"
-            />
+            android:layout_height="195dp"
+            tools:listitem="@layout/list_item_memes" />
 
 
     </com.google.android.material.card.MaterialCardView>
