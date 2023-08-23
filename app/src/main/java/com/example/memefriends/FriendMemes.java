@@ -61,6 +61,7 @@ public class FriendMemes extends AppCompatActivity {
     private int receivedId;
     private MemeAdapter memeAdapter;
     private String selectedMemeSource = "MemeSource";
+    private ChipGroup chipGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,6 +172,7 @@ public class FriendMemes extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
         TextView supportingPopUpText = dialog.findViewById(R.id.tv_details_text);
+        assert supportingPopUpText != null;
         supportingPopUpText.setText("This friend will be permanently deleted. This action can not be undone.");
         return true;
     }
@@ -200,10 +202,16 @@ public class FriendMemes extends AppCompatActivity {
                 .setTitle("Add meme");
         newMemeDialog = builder.create();
         newMemeDialog.show();
+        chipGroupInit();
+    }
+
+    private void chipGroupInit() {
+        chipGroup = newMemeDialog.findViewById(R.id.popup_add_meme_cg_meme_source);
+        assert chipGroup != null;
+        chipGroup.check(chipGroup.getChildAt(0).getId());
     }
 
     private void memeSource() {
-        ChipGroup chipGroup = newMemeDialog.findViewById(R.id.popup_add_meme_cg_meme_source);
         int chipId = chipGroup.getCheckedChipId();
         switch (chipId) {
             case R.id.popup_add_meme_chip_instagram:
@@ -269,6 +277,8 @@ public class FriendMemes extends AppCompatActivity {
             close_popup();
 
             //    Update friend's data with memes
+
+
         }
     }
 
