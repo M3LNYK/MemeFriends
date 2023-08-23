@@ -50,8 +50,7 @@ public class FriendMemes extends AppCompatActivity {
     private static final int RESULT_EDIT = 10;
     private TextInputEditText outlinedFriendName, outlinedMemeTotal, outlinedMemeFunny, outlinedMemeNotFunny,
             popupFriendName, popupMemeName;
-    private AutoCompleteTextView popupMemeSource;
-    private TextInputLayout nameFriendLayout, memeNameLayout, memeSourceLayout;
+    private TextInputLayout nameFriendLayout, memeNameLayout;
     private LinearLayout buttonsArea;
     private FloatingActionButton fabAddMeme;
     private RecyclerView memeRecyclerView;
@@ -189,14 +188,6 @@ public class FriendMemes extends AppCompatActivity {
             popupMemeName = newMemeDialog.findViewById(R.id.popup_add_meme_tied_meme_name);
 
             memeNameLayout = newMemeDialog.findViewById(R.id.popup_add_meme_til_meme_name);
-            memeSourceLayout = newMemeDialog.findViewById(R.id.popup_add_meme_til_meme_source_selection);
-
-
-            popupMemeSource = newMemeDialog.findViewById(R.id.popup_add_meme_atv_meme_source);
-            String[] options = {"Instagram", "9GAG", "Reddit", "Twitter", "TikTok", "Other"};
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                    android.R.layout.simple_dropdown_item_1line, options);
-            popupMemeSource.setAdapter(adapter);
 
             addMemeButtonsListener();
         });
@@ -264,28 +255,20 @@ public class FriendMemes extends AppCompatActivity {
         if (memeName.trim().isEmpty() && selectedMemeSource.trim().isEmpty()) {
             memeNameLayout.setErrorEnabled(true);
             memeNameLayout.setError("You need to enter a name!");
-            memeSourceLayout.setErrorEnabled(true);
-            memeSourceLayout.setError("You need to provide a source!");
         } else if (selectedMemeSource.trim().isEmpty()) {
-            memeSourceLayout.setErrorEnabled(true);
-            memeSourceLayout.setError("You need to provide a source!");
             memeNameLayout.setError(null);
             memeNameLayout.setErrorEnabled(false);
         } else if (memeName.trim().isEmpty()) {
-            memeSourceLayout.setError(null);
-            memeSourceLayout.setErrorEnabled(false);
             memeNameLayout.setErrorEnabled(true);
             memeNameLayout.setError("You need to enter a name!");
         } else {
             memeNameLayout.setError(null);
             memeNameLayout.setErrorEnabled(false);
-            memeSourceLayout.setError(null);
-            memeSourceLayout.setErrorEnabled(false);
             Meme tmpMeme = new Meme(memeName, selectedMemeSource, Boolean.TRUE, receivedId, date, time);
             memeViewModel.insertMeme(tmpMeme);
             close_popup();
-            //    Update friend's data with memes
 
+            //    Update friend's data with memes
         }
     }
 
