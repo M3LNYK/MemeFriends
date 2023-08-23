@@ -30,6 +30,7 @@ import com.example.memefriends.roomDb.FriendViewModel;
 import com.example.memefriends.roomDb.Meme;
 import com.example.memefriends.roomDb.MemeAdapter;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -60,6 +61,7 @@ public class FriendMemes extends AppCompatActivity {
     private AlertDialog newMemeDialog;
     private int receivedId;
     private MemeAdapter memeAdapter;
+    private String selectedMemeSource = "MemeSource";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -209,6 +211,32 @@ public class FriendMemes extends AppCompatActivity {
         newMemeDialog.show();
     }
 
+    private void memeSource() {
+        ChipGroup chipGroup = newMemeDialog.findViewById(R.id.popup_add_meme_cg_meme_source);
+        int chipId = chipGroup.getCheckedChipId();
+        switch (chipId) {
+            case R.id.popup_add_meme_chip_instagram:
+                // Handle option 1 selection
+                selectedMemeSource = "Instagram";
+                break;
+            case R.id.popup_add_meme_chip_twitter:
+                selectedMemeSource = "Twitter";
+                break;
+            case R.id.popup_add_meme_chip_reddit:
+                selectedMemeSource = "Reddit";
+                break;
+            case R.id.popup_add_meme_chip_9gag:
+                selectedMemeSource = "9Gag";
+                break;
+            case R.id.popup_add_meme_chip_tiktok:
+                selectedMemeSource = "TikTok";
+                break;
+            case R.id.popup_add_meme_chip_other:
+                selectedMemeSource = "Other";
+                break;
+        }
+    }
+
     private void addMemeButtonsListener() {
         addFunny.setOnClickListener(v -> {
             hideKeyboard();
@@ -225,19 +253,20 @@ public class FriendMemes extends AppCompatActivity {
 
     private void addFunnyMemeToFriend() {
         String memeName = String.valueOf(popupMemeName.getText());
-        String memeSource = popupMemeSource.getText().toString();
+        memeSource();
+        System.out.println("Meme source is: " + selectedMemeSource);
         // DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         DateFormat dateFormat = DateFormat.getDateInstance();
         DateFormat timeFormat = DateFormat.getTimeInstance();
         Calendar cal = Calendar.getInstance();
         String date = dateFormat.format(cal.getTime());
         String time = timeFormat.format(cal.getTime());
-        if (memeName.trim().isEmpty() && memeSource.trim().isEmpty()) {
+        if (memeName.trim().isEmpty() && selectedMemeSource.trim().isEmpty()) {
             memeNameLayout.setErrorEnabled(true);
             memeNameLayout.setError("You need to enter a name!");
             memeSourceLayout.setErrorEnabled(true);
             memeSourceLayout.setError("You need to provide a source!");
-        } else if (memeSource.trim().isEmpty()) {
+        } else if (selectedMemeSource.trim().isEmpty()) {
             memeSourceLayout.setErrorEnabled(true);
             memeSourceLayout.setError("You need to provide a source!");
             memeNameLayout.setError(null);
@@ -252,7 +281,7 @@ public class FriendMemes extends AppCompatActivity {
             memeNameLayout.setErrorEnabled(false);
             memeSourceLayout.setError(null);
             memeSourceLayout.setErrorEnabled(false);
-            Meme tmpMeme = new Meme(memeName, memeSource, Boolean.TRUE, receivedId, date, time);
+            Meme tmpMeme = new Meme(memeName, selectedMemeSource, Boolean.TRUE, receivedId, date, time);
             memeViewModel.insertMeme(tmpMeme);
             close_popup();
             //    Update friend's data with memes

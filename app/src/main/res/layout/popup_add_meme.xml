@@ -86,6 +86,7 @@
             app:singleSelection="true">
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/popup_add_meme_chip_instagram"
                 style="@style/Widget.MaterialComponents.Chip.Filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -93,6 +94,7 @@
                 app:ensureMinTouchTargetSize="true" />
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/popup_add_meme_chip_twitter"
                 style="@style/Widget.MaterialComponents.Chip.Filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -100,6 +102,7 @@
                 app:ensureMinTouchTargetSize="true" />
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/popup_add_meme_chip_reddit"
                 style="@style/Widget.MaterialComponents.Chip.Filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -107,13 +110,7 @@
                 app:ensureMinTouchTargetSize="true" />
 
             <com.google.android.material.chip.Chip
-                style="@style/Widget.MaterialComponents.Chip.Filter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="X"
-                app:ensureMinTouchTargetSize="true" />
-
-            <com.google.android.material.chip.Chip
+                android:id="@+id/popup_add_meme_chip_9gag"
                 style="@style/Widget.MaterialComponents.Chip.Filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -121,6 +118,7 @@
                 app:ensureMinTouchTargetSize="true" />
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/popup_add_meme_chip_tiktok"
                 style="@style/Widget.MaterialComponents.Chip.Filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -128,6 +126,7 @@
                 app:ensureMinTouchTargetSize="true" />
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/popup_add_meme_chip_other"
                 style="@style/Widget.MaterialComponents.Chip.Filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
