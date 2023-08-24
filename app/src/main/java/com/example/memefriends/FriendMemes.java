@@ -154,6 +154,27 @@ public class FriendMemes extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        // Perform any necessary actions here before going back
+        // For example, you can save data, show a confirmation dialog, etc.
+        Intent data = new Intent();
+        data.putExtra(EXTRA_NAME, (outlinedFriendName.getText()).toString());
+        data.putExtra(EXTRA_TOTAL_MEMES, Integer.parseInt(String.valueOf(outlinedMemeTotal.getText())));
+        data.putExtra(EXTRA_FUNNY_MEMES, Integer.parseInt(String.valueOf(outlinedMemeFunny.getText())));
+        data.putExtra(EXTRA_NOT_FUNNY_MEMES, Integer.parseInt(String.valueOf(outlinedMemeNotFunny.getText())));
+        data.putExtra(EXTRA_COLOR, getIntent().getIntExtra(EXTRA_COLOR, -1));
+
+        int id = getIntent().getIntExtra(EXTRA_ID, -1);
+        System.out.println("SECOND ID IS:" + id);
+        if (id != -1) {
+            data.putExtra(EXTRA_ID, id);
+        }
+        setResult(FriendMemes.RESULT_EDIT, data);
+
+        super.onBackPressed(); // This line is important to actually navigate back
+    }
+
     private boolean menu_item_delete_friend() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final View addMemePopupView = getLayoutInflater().inflate(R.layout.popup_delete_confirm, null);
