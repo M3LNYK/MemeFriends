@@ -245,21 +245,24 @@ public class FriendMemes extends AppCompatActivity {
             // Perform actions when the button in the popup is clicked
             // Pass data
             hideKeyboard();
-            close_popup();
-            Toast.makeText(FriendMemes.this, "Add Not funny clicked", Toast.LENGTH_SHORT).show();
+            addNotFunnyMemeToFriend();
         });
     }
 
-    private void addFunnyMemeToFriend() {
-        String memeName = String.valueOf(popupMemeName.getText());
-        memeSource();
-        System.out.println("Meme source is: " + selectedMemeSource);
+    private Meme getMemeData(boolean funnyCheck, String memeName) {
         // DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         DateFormat dateFormat = DateFormat.getDateInstance();
         DateFormat timeFormat = DateFormat.getTimeInstance();
         Calendar cal = Calendar.getInstance();
         String date = dateFormat.format(cal.getTime());
         String time = timeFormat.format(cal.getTime());
+        Meme tmpMeme = new Meme(memeName, selectedMemeSource, funnyCheck, receivedId, date, time);
+        return tmpMeme;
+    }
+
+    private void addFunnyMemeToFriend() {
+        String memeName = String.valueOf(popupMemeName.getText());
+        memeSource();
         if (memeName.trim().isEmpty() && selectedMemeSource.trim().isEmpty()) {
             memeNameLayout.setErrorEnabled(true);
             memeNameLayout.setError("You need to enter a name!");
@@ -272,13 +275,30 @@ public class FriendMemes extends AppCompatActivity {
         } else {
             memeNameLayout.setError(null);
             memeNameLayout.setErrorEnabled(false);
-            Meme tmpMeme = new Meme(memeName, selectedMemeSource, Boolean.TRUE, receivedId, date, time);
+            Meme tmpMeme = getMemeData(true, memeName);
             memeViewModel.insertMeme(tmpMeme);
             close_popup();
+        }
+    }
 
-            //    Update friend's data with memes
-
-
+    private void addNotFunnyMemeToFriend() {
+        String memeName = String.valueOf(popupMemeName.getText());
+        memeSource();
+        if (memeName.trim().isEmpty() && selectedMemeSource.trim().isEmpty()) {
+            memeNameLayout.setErrorEnabled(true);
+            memeNameLayout.setError("You need to enter a name!");
+        } else if (selectedMemeSource.trim().isEmpty()) {
+            memeNameLayout.setError(null);
+            memeNameLayout.setErrorEnabled(false);
+        } else if (memeName.trim().isEmpty()) {
+            memeNameLayout.setErrorEnabled(true);
+            memeNameLayout.setError("You need to enter a name!");
+        } else {
+            memeNameLayout.setError(null);
+            memeNameLayout.setErrorEnabled(false);
+            Meme tmpMeme = getMemeData(false, memeName);
+            memeViewModel.insertMeme(tmpMeme);
+            close_popup();;
         }
     }
 
