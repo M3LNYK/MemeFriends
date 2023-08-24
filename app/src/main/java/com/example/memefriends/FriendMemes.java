@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,8 +19,6 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -209,8 +206,6 @@ public class FriendMemes extends AppCompatActivity {
 
     private void chipGroupInit() {
         chipGroup = newMemeDialog.findViewById(R.id.popup_add_meme_cg_meme_source);
-        // assert chipGroup != null;
-        // chipGroup.check(chipGroup.getChildAt(0).getId());
     }
 
     private void memeSource() {
@@ -258,8 +253,7 @@ public class FriendMemes extends AppCompatActivity {
         Calendar cal = Calendar.getInstance();
         String date = dateFormat.format(cal.getTime());
         String time = timeFormat.format(cal.getTime());
-        Meme tmpMeme = new Meme(memeName, selectedMemeSource, funnyCheck, receivedId, date, time);
-        return tmpMeme;
+        return new Meme(memeName, selectedMemeSource, funnyCheck, receivedId, date, time);
     }
 
     private void addFunnyMemeToFriend() {
@@ -281,8 +275,13 @@ public class FriendMemes extends AppCompatActivity {
         } else {
             memeNameLayout.setError(null);
             memeNameLayout.setErrorEnabled(false);
+            popupMemeSource.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.text_default));
             Meme tmpMeme = getMemeData(true, memeName);
             memeViewModel.insertMeme(tmpMeme);
+            outlinedMemeFunny.setText(String
+                    .valueOf(Integer.parseInt(outlinedMemeFunny.getText().toString())+1));
+            outlinedMemeTotal.setText(String
+                    .valueOf(Integer.parseInt(outlinedMemeTotal.getText().toString())+1));
             close_popup();
         }
     }
@@ -306,10 +305,14 @@ public class FriendMemes extends AppCompatActivity {
         } else {
             memeNameLayout.setError(null);
             memeNameLayout.setErrorEnabled(false);
+            popupMemeSource.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.text_default));
             Meme tmpMeme = getMemeData(false, memeName);
             memeViewModel.insertMeme(tmpMeme);
+            outlinedMemeNotFunny.setText(String
+                    .valueOf(Integer.parseInt(outlinedMemeNotFunny.getText().toString())+1));
+            outlinedMemeTotal.setText(String
+                    .valueOf(Integer.parseInt(outlinedMemeTotal.getText().toString())+1));
             close_popup();
-            ;
         }
     }
 
