@@ -111,7 +111,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:hint="Funny memes count"
+                        android:hint="Not so funny memes count"
                         app:endIconMode="clear_text">
 
                         <com.google.android.material.textfield.TextInputEditText

@@ -3,6 +3,7 @@ package com.example.memefriends;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -207,8 +209,8 @@ public class FriendMemes extends AppCompatActivity {
 
     private void chipGroupInit() {
         chipGroup = newMemeDialog.findViewById(R.id.popup_add_meme_cg_meme_source);
-        assert chipGroup != null;
-        chipGroup.check(chipGroup.getChildAt(0).getId());
+        // assert chipGroup != null;
+        // chipGroup.check(chipGroup.getChildAt(0).getId());
     }
 
     private void memeSource() {
@@ -263,15 +265,19 @@ public class FriendMemes extends AppCompatActivity {
     private void addFunnyMemeToFriend() {
         String memeName = String.valueOf(popupMemeName.getText());
         memeSource();
-        if (memeName.trim().isEmpty() && selectedMemeSource.trim().isEmpty()) {
+        TextView popupMemeSource = newMemeDialog.findViewById(R.id.popup_add_meme_tv_meme_source);
+        if (memeName.trim().isEmpty() && selectedMemeSource.equals("MemeSource")) {
             memeNameLayout.setErrorEnabled(true);
             memeNameLayout.setError("You need to enter a name!");
-        } else if (selectedMemeSource.trim().isEmpty()) {
+            popupMemeSource.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red_500));
+        } else if (selectedMemeSource.equals("MemeSource")) {
             memeNameLayout.setError(null);
             memeNameLayout.setErrorEnabled(false);
+            popupMemeSource.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red_500));
         } else if (memeName.trim().isEmpty()) {
             memeNameLayout.setErrorEnabled(true);
             memeNameLayout.setError("You need to enter a name!");
+            popupMemeSource.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.text_default));
         } else {
             memeNameLayout.setError(null);
             memeNameLayout.setErrorEnabled(false);
@@ -284,21 +290,26 @@ public class FriendMemes extends AppCompatActivity {
     private void addNotFunnyMemeToFriend() {
         String memeName = String.valueOf(popupMemeName.getText());
         memeSource();
-        if (memeName.trim().isEmpty() && selectedMemeSource.trim().isEmpty()) {
+        TextView popupMemeSource = newMemeDialog.findViewById(R.id.popup_add_meme_tv_meme_source);
+        if (memeName.trim().isEmpty() && selectedMemeSource.equals("MemeSource")) {
             memeNameLayout.setErrorEnabled(true);
             memeNameLayout.setError("You need to enter a name!");
-        } else if (selectedMemeSource.trim().isEmpty()) {
+            popupMemeSource.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red_500));
+        } else if (selectedMemeSource.equals("MemeSource")) {
             memeNameLayout.setError(null);
             memeNameLayout.setErrorEnabled(false);
+            popupMemeSource.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red_500));
         } else if (memeName.trim().isEmpty()) {
             memeNameLayout.setErrorEnabled(true);
             memeNameLayout.setError("You need to enter a name!");
+            popupMemeSource.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.text_default));
         } else {
             memeNameLayout.setError(null);
             memeNameLayout.setErrorEnabled(false);
             Meme tmpMeme = getMemeData(false, memeName);
             memeViewModel.insertMeme(tmpMeme);
-            close_popup();;
+            close_popup();
+            ;
         }
     }
 
