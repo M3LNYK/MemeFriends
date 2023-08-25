@@ -25,7 +25,7 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private List<Friend> friends = new ArrayList<>();
     private OnItemClickListener listener;
 
-    //Added for groups
+    // Added for groups
     private List<GroupedFriend> groupedFriends;
     private static final int VIEW_TYPE_HEADER = 0;
     private static final int VIEW_TYPE_ITEM = 1;
@@ -62,15 +62,15 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             if (groupPosition >= 0 && groupPosition < groupedFriends.size() && friendPosition >= 0) {
                 GroupedFriend groupedFriend = groupedFriends.get(groupPosition);
                 List<Friend> friends = groupedFriend.getFriends();
-                if (friends.size() == 1){
-                // Case where only one element in group, divider not necessary
+                if (friends.size() == 1) {
+                    // Case where only one element in group, divider not necessary
                     Friend friend = friends.get(friendPosition); // Adjust position for header view
                     friendViewHolder.friendName.setText(friend.getName());
                     friendViewHolder.avatarName.setText(String.valueOf(friend.getName().charAt(0)).toUpperCase());
                     friendViewHolder.imageView.setBackgroundColor(friend.getColor());
                     friendViewHolder.divider.setVisibility(View.INVISIBLE);
-                } else if (friends.size() > 1 && friendPosition+1 != friends.size()) {
-                //    Case where group is bigger and friend is not last
+                } else if (friends.size() > 1 && friendPosition + 1 != friends.size()) {
+                    //    Case where group is bigger and friend is not last
                     Friend friend = friends.get(friendPosition); // Adjust position for header view
                     friendViewHolder.friendName.setText(friend.getName());
                     friendViewHolder.avatarName.setText(String.valueOf(friend.getName().charAt(0)).toUpperCase());
@@ -111,7 +111,7 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         return VIEW_TYPE_ITEM;
     }
 
-    private boolean isHeaderPosition(int position) {
+    public boolean isHeaderPosition(int position) {
         return position >= 0 && position < groupedFriends.size() && groupedFriends.get(position).isHeaderVisible();
     }
 
@@ -167,6 +167,17 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     }
                 }
             });
+        }
+    }
+
+    public char getGroupHeaderAt(int position) {
+        int headerPosition = getHeaderPosition(position);
+        if (headerPosition >= 0 && headerPosition < groupedFriends.size()) {
+            GroupedFriend groupedFriend = groupedFriends.get(headerPosition);
+            char firstLetter = groupedFriend.getFirstLetter();
+            return firstLetter;
+        } else {
+            return '\0';
         }
     }
 

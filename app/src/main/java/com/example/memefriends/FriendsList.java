@@ -46,7 +46,7 @@ import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
 public class FriendsList extends AppCompatActivity {
 
-    private Animation rotateOpen, rotateClose, fromBottom, toBottom, fadeOutAnimation;
+    private Animation rotateOpen, rotateClose, fromBottom, toBottom, fadeOutAnimation, fabFadeOutAnimation;
     private Boolean clicked = false;
     private FloatingActionButton fabAdd, fabReaction, fabFriend, fabToTop;
     private TextView textReaction, textFriend, friendTextView;
@@ -69,6 +69,7 @@ public class FriendsList extends AppCompatActivity {
     private ActivityResultLauncher<Intent> activityResultLauncher;
     private static final int RESULT_EDIT = 10;
     private TextInputLayout newFriendNameLayout;
+    private int lastHeaderPosition = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +86,7 @@ public class FriendsList extends AppCompatActivity {
         fromBottom = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.from_bottom_anim);
         toBottom = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.to_bottom_anim);
         fadeOutAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_out_animation);
+        fabFadeOutAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_to_top_fade_out);
 
         textFriend = findViewById(R.id.add_person_text);
         textReaction = findViewById(R.id.add_reaction_text);
@@ -141,41 +143,41 @@ public class FriendsList extends AppCompatActivity {
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
 
-                // Check if RecyclerView is scrolled from top
-                boolean isScrolledFromTop = linearLayoutManager.findFirstVisibleItemPosition() > 0;
+                int firstVisibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition();
+                int lastVisibleItemPosition = linearLayoutManager.findLastVisibleItemPosition();
 
-                // Update fabToTop button visibility
-                if (isScrolledFromTop) {
+                if (dy > 0) {
+                    // Scrolled down
                     fabToTop.setVisibility(View.VISIBLE);
-
-                    // Get the position of the first visible item
-                    int firstVisibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition();
-
-                    if (firstVisibleItemPosition != RecyclerView.NO_POSITION && adapter.getGroupedFriends() != null && firstVisibleItemPosition < adapter.getGroupedFriends().size()) {
-                        // Get the current group letter from the adapter based on the first visible item's position
-                        GroupedFriend sa = adapter.getGroupedFriends().get(firstVisibleItemPosition);
-                        char groupLetter = sa.getFirstLetter();
-                        chipGroupLetter.setText(String.valueOf(groupLetter));
-                        chipGroupLetter.setVisibility(View.VISIBLE);
-
-                        // Find the first visible group from the top (excluding the currently visible group)
-                        for (int i = firstVisibleItemPosition - 1; i >= 0; i--) {
-                            if (i < adapter.getGroupedFriends().size()) {
-                                GroupedFriend group = adapter.getGroupedFriends().get(i);
-                                if (group.isHeaderVisible()) {
-                                    // Display the chip with the letter for the group that is no longer visible from the top
-                                    chipGroupLetter.setText(String.valueOf(group.getFirstLetter()));
-                                    break;
-                                }
-                            }
+                    if (adapter.getItemViewType(firstVisibleItemPosition) == 0) {
+                        //    we have header on top
+                        lastHeaderPosition = firstVisibleItemPosition;
+                    } else {
+                        //    it's item on top
+                        if (firstVisibleItemPosition > lastHeaderPosition || lastHeaderPosition > lastVisibleItemPosition) {
+                            chipGroupLetter.setText(String.valueOf(adapter.getGroupHeaderAt(lastHeaderPosition)));
+                            chipGroupLetter.setVisibility(View.VISIBLE);
                         }
-                        chipGroupLetter.setVisibility(View.VISIBLE);
                         chipGroupLetter.startAnimation(fadeOutAnimation);
                         chipGroupLetter.setVisibility(View.INVISIBLE);
                     }
-                } else {
-                    chipGroupLetter.setVisibility(View.GONE);
-                    fabToTop.setVisibility(View.GONE);
+                    chipGroupLetter.startAnimation(fadeOutAnimation);
+                    fabToTop.startAnimation(fabFadeOutAnimation);
+                    fabToTop.setVisibility(View.INVISIBLE);
+                } else if (dy < 0) {
+                    // Scrolled up
+                    fabToTop.setVisibility(View.VISIBLE);
+                    System.out.println("First vis pos: " + firstVisibleItemPosition + " last header: " + lastHeaderPosition);
+                    if (firstVisibleItemPosition < lastHeaderPosition) {
+                        //    reset header position -> return to previous header?
+                        lastHeaderPosition = findLastHeaderInAdapter(firstVisibleItemPosition);
+                        chipGroupLetter.setText(String.valueOf(adapter.getGroupHeaderAt(lastHeaderPosition)));
+                        chipGroupLetter.setVisibility(View.VISIBLE);
+                    }
+                    chipGroupLetter.startAnimation(fadeOutAnimation);
+                    chipGroupLetter.setVisibility(View.INVISIBLE);
+                    fabToTop.startAnimation(fabFadeOutAnimation);
+                    fabToTop.setVisibility(View.INVISIBLE);
                 }
             }
         });
@@ -226,6 +228,14 @@ public class FriendsList extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    private int findLastHeaderInAdapter(int firstVisibleItemPosition) {
+        if (adapter.getItemViewType(firstVisibleItemPosition) == 1) {
+            return findLastHeaderInAdapter(firstVisibleItemPosition - 1);
+        } else {
+            return firstVisibleItemPosition;
+        }
     }
 
     Friend deletedFriend = null;
