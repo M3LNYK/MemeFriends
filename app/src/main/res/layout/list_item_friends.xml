@@ -9,8 +9,8 @@
     <com.google.android.material.circularreveal.cardview.CircularRevealCardView
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginLeft="16dp"
         android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:theme="@style/Theme.MaterialComponents.Light"
         app:cardCornerRadius="20dp">
@@ -19,8 +19,8 @@
             android:id="@+id/imageView_friend_avatar"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:contentDescription="Avatar"
-            android:background="@color/green_500"/>
+            android:background="@color/green_500"
+            android:contentDescription="Avatar" />
 
         <TextView
             android:id="@+id/textView_friend_avatar_text"
@@ -38,9 +38,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:layout_marginStart="72dp"
         android:layout_marginEnd="56dp"
-        android:layout_centerVertical="true"
         android:orientation="vertical">
 
         <TextView
@@ -59,12 +59,18 @@
     <ImageView
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:layout_centerVertical="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
         android:layout_marginHorizontal="16dp"
         android:src="@drawable/ic_launcher_background" />
 
+    <View
+        android:id="@+id/list_item_divider_view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/black" />
 
 </RelativeLayout>

@@ -32,6 +32,7 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     private static int insetStart, insetEnd;
 
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -61,14 +62,26 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             if (groupPosition >= 0 && groupPosition < groupedFriends.size() && friendPosition >= 0) {
                 GroupedFriend groupedFriend = groupedFriends.get(groupPosition);
                 List<Friend> friends = groupedFriend.getFriends();
-                if (friendPosition < friends.size()) {
+                if (friends.size() == 1){
+                // Case where only one element in group, divider not necessary
                     Friend friend = friends.get(friendPosition); // Adjust position for header view
-
-                    // Bind friend data to FriendViewHolder
                     friendViewHolder.friendName.setText(friend.getName());
-                    // Set other views with friend data
                     friendViewHolder.avatarName.setText(String.valueOf(friend.getName().charAt(0)).toUpperCase());
                     friendViewHolder.imageView.setBackgroundColor(friend.getColor());
+                    friendViewHolder.divider.setVisibility(View.INVISIBLE);
+                } else if (friends.size() > 1 && friendPosition+1 != friends.size()) {
+                //    Case where group is bigger and friend is not last
+                    Friend friend = friends.get(friendPosition); // Adjust position for header view
+                    friendViewHolder.friendName.setText(friend.getName());
+                    friendViewHolder.avatarName.setText(String.valueOf(friend.getName().charAt(0)).toUpperCase());
+                    friendViewHolder.imageView.setBackgroundColor(friend.getColor());
+                    friendViewHolder.divider.setVisibility(View.VISIBLE);
+                } else {
+                    Friend friend = friends.get(friendPosition); // Adjust position for header view
+                    friendViewHolder.friendName.setText(friend.getName());
+                    friendViewHolder.avatarName.setText(String.valueOf(friend.getName().charAt(0)).toUpperCase());
+                    friendViewHolder.imageView.setBackgroundColor(friend.getColor());
+                    friendViewHolder.divider.setVisibility(View.INVISIBLE);
                 }
             }
         }
@@ -128,12 +141,15 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         private ImageView imageView;
         private TextView friendName;
         private TextView avatarName;
+        private View divider;
 
         public FriendViewHolder(View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageView_friend_avatar);
             friendName = itemView.findViewById(R.id.list_item_friend_name);
             avatarName = itemView.findViewById(R.id.textView_friend_avatar_text);
+            divider = itemView.findViewById(R.id.list_item_divider_view); // Replace with your divider view's ID
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -169,53 +185,6 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
-    }
-
-    //    This was added to show divider, however for some reason it does not work.
-    public static class FriendItemDecoration extends RecyclerView.ItemDecoration {
-        private Drawable divider;
-
-        public FriendItemDecoration(Context context) {
-            insetStart = dpToPx(context, 64);
-            insetEnd = pxToDp(context, 48);
-            divider = ContextCompat.getDrawable(context, R.drawable.divider_horizontal);
-            setDividerInsets(divider, insetStart, insetEnd);
-        }
-
-        @Override
-        public void onDrawOver(@NonNull Canvas canvas, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
-            int childCount = parent.getChildCount();
-            int lastGroupPosition = -1;
-
-            for (int i = 0; i < childCount; i++) {
-                View child = parent.getChildAt(i);
-                RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
-                int adapterPosition = parent.getChildAdapterPosition(child);
-                int viewType = parent.getAdapter().getItemViewType(adapterPosition);
-
-                if (viewType == FriendAdapter.VIEW_TYPE_HEADER) {
-                    lastGroupPosition = adapterPosition;
-                } else if (viewType == FriendAdapter.VIEW_TYPE_ITEM) {
-                    // Draw divider only if it's not the last item in the group
-                    if (adapterPosition < lastGroupPosition) {
-                        int left = child.getLeft() + insetStart;
-                        int right = child.getRight() - insetEnd;
-                        int top = child.getBottom() + params.bottomMargin;
-                        int bottom = top + divider.getIntrinsicHeight();
-
-                        divider.setBounds(left, top, right, bottom);
-                        divider.draw(canvas);
-                    }
-                }
-            }
-        }
-
-        private void setDividerInsets(Drawable divider, int insetStart, int insetEnd) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                InsetDrawable insetDrawable = new InsetDrawable(divider, insetStart, 0, insetEnd, 0);
-                this.divider = insetDrawable;
-            }
-        }
     }
 
     // Helper method to get the position of the header view in the groupedFriends list
@@ -270,11 +239,4 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         return -1; // Return -1 if position is not found (handle error condition)
     }
 
-    public static int pxToDp(Context context, int px) {
-        return (int) (px / (context.getResources().getDisplayMetrics().densityDpi / 160f));
-    }
-
-    public static int dpToPx(Context context, int dp) {
-        return (int) (dp * context.getResources().getDisplayMetrics().density);
-    }
 }

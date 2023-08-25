@@ -98,9 +98,6 @@ public class FriendsList extends AppCompatActivity {
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        //  Divider implementation
-        FriendAdapter.FriendItemDecoration itemDecoration = new FriendAdapter.FriendItemDecoration(recyclerView.getContext());
-        recyclerView.addItemDecoration(itemDecoration);
 
         adapter = new FriendAdapter();
         recyclerView.setAdapter(adapter);
