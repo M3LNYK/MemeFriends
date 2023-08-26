@@ -215,7 +215,7 @@ public class FriendsList extends AppCompatActivity {
                         friend.setId(id);
                         System.out.println("ID FOR UPDATE IS: " + id);
                         friendViewModel.update(friend);
-                        Toast.makeText(this, "Friend updated!", Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(this, "Friend updated!", Toast.LENGTH_SHORT).show();
                     }
                     if (result.getResultCode() == RESULT_OK) {
                         Intent data = result.getData();
@@ -255,7 +255,6 @@ public class FriendsList extends AppCompatActivity {
                     deletedFriend = adapter.getFriendAt(position);
                     friendViewModel.delete(adapter.getFriendAt(position));
                     adapter.notifyItemRemoved(position);
-                    // Toast.makeText(FriendsList.this, "Friend deleted", Toast.LENGTH_SHORT).show();
                     Snackbar.make(recyclerView, "Deleted friend: " + deletedFriend.getName(), BaseTransientBottomBar.LENGTH_LONG)
                             .setAction("Undo", view -> {
                                 friendViewModel.insert(deletedFriend);
@@ -265,7 +264,6 @@ public class FriendsList extends AppCompatActivity {
                             .show();
                     break;
                 case ItemTouchHelper.RIGHT:
-
                     break;
             }
         }
@@ -365,7 +363,6 @@ public class FriendsList extends AppCompatActivity {
         if (name.trim().isEmpty()) {
             newFriendNameLayout.setErrorEnabled(true);
             newFriendNameLayout.setError("You need to enter a name!");
-            Toast.makeText(this, "Friend name can not be empty!", Toast.LENGTH_SHORT).show();
             return;
         }
         newFriendNameLayout.setError(null);
@@ -413,7 +410,6 @@ public class FriendsList extends AppCompatActivity {
                 .setPositiveButton("YES", (dialog, which) -> {
                     // Handle user input
                     friendViewModel.deleteAllFriends();
-                    Toast.makeText(this, "All friends deleted", Toast.LENGTH_SHORT).show();
                 })
                 .setNegativeButton("NO", (dialog, which) -> dialog.dismiss());
         AlertDialog dialog = builder.create();
