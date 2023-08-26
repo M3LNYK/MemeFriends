@@ -17,7 +17,7 @@
     <color name="red_500">#F44336</color>
     <color name="red_600">#E53935</color>
 
-<!--    Gray color -->
+    <!--    Gray color -->
     <color name="gray_50">#FAFAFA</color>
     <color name="gray_100">#F5F5F5</color>
     <color name="gray_200">#EEEEEE</color>
@@ -30,5 +30,23 @@
     <color name="gray_900">#212121</color>
 
     <color name="text_default">#808080</color>
+
+    <!-- Android purple palette-->
+    <color name="custom_purple_50">#EDE7F6</color>
+    <color name="custom_purple_100">#D1C4E9</color>
+    <color name="custom_purple_200">#B39DDB</color>
+    <color name="custom_purple_300">#9575CD</color>
+    <color name="custom_purple_400">#7E57C2</color>
+    <color name="custom_purple_500">#673AB7</color>
+    <color name="custom_purple_600">#5E35B1</color>
+    <color name="custom_purple_700">#512DA8</color>
+    <color name="custom_purple_800">#4527A0</color>
+    <color name="custom_purple_900">#311B92</color>
+    <color name="custom_purple_a100">#B388FF</color>
+    <color name="custom_purple_a200">#7C4DFF</color>
+    <color name="custom_purple_a400">#5E35B1</color>
+    <color name="custom_purple_a700">#6200EA</color>
+
+
 
 </resources>
