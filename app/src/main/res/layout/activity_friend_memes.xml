@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".FriendMemes"
-    android:background="@color/design_default_color_primary">
+    android:background="@color/custom_purple_100">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/friend_memes_card_title"
@@ -32,15 +32,16 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="84dp"
         android:scrollbarSize="5dp"
-        android:scrollbarStyle="outsideInset"
-        app:layout_constraintTop_toBottomOf="@id/friend_memes_card_title">
+        android:scrollbarStyle="insideOverlay"
+        app:layout_constraintTop_toBottomOf="@id/friend_memes_card_title"
+        tools:layout_editor_absoluteX="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/gray_400"
+            android:background="@color/custom_purple_100"
             android:orientation="vertical">
 
             <com.google.android.material.card.MaterialCardView
@@ -49,7 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="9dp"
-                >
+                app:cardCornerRadius="5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -171,7 +172,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="9dp"
+                android:layout_marginTop="8dp"
                 android:text="Last memes"
                 app:chipIcon="@drawable/test_icon"
                 app:layout_constraintTop_toBottomOf="@+id/cardFriendInfo" />
@@ -222,6 +223,16 @@
 
 
             </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_friend_stats"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:text="Some stats"
+                app:chipIcon="@drawable/test_icon"
+                app:layout_constraintTop_toBottomOf="@+id/memeRecyclerView" />
 
         </LinearLayout>
     </ScrollView>
