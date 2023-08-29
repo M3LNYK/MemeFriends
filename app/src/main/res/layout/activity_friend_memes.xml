@@ -217,8 +217,9 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/memeRecyclerView"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
+                    android:layout_height="400dp"
                     android:scrollbarStyle="insideInset"
+                    android:nestedScrollingEnabled="false"
                     tools:listitem="@layout/list_item_memes" />
 
 
