@@ -34,8 +34,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-import java.text.DateFormat;
-import java.util.Calendar;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
 
@@ -268,12 +268,16 @@ public class FriendMemes extends AppCompatActivity {
     }
 
     private Meme getMemeData(boolean funnyCheck, String memeName) {
-        // DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-        DateFormat dateFormat = DateFormat.getDateInstance();
-        DateFormat timeFormat = DateFormat.getTimeInstance();
-        Calendar cal = Calendar.getInstance();
-        String date = dateFormat.format(cal.getTime());
-        String time = timeFormat.format(cal.getTime());
+        // Get the current date and time
+        LocalDateTime currentDateTime = LocalDateTime.now();
+
+        // Define a formatter for date and time
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+        // Format date and time as strings
+        String date = currentDateTime.format(dateFormatter);
+        String time = currentDateTime.format(timeFormatter);
         return new Meme(memeName, selectedMemeSource, funnyCheck, receivedId, date, time);
     }
 
