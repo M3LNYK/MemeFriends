@@ -46,7 +46,7 @@
             </com.google.android.material.circularreveal.cardview.CircularRevealCardView>
 
             <LinearLayout
-                android:layout_width="200dp"
+                android:layout_width="190dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
