@@ -32,7 +32,7 @@ public class MemeAdapter extends RecyclerView.Adapter<MemeAdapter.MemeHolder> {
         Meme currentMeme = friendMemes.get(position);
         holder.textViewMemeName.setText(currentMeme.getMemeName());
         holder.textViewDate.setText(currentMeme.getCreatedDate());
-        holder.textViewFunny.setText(String.valueOf(currentMeme.getFunnyMeme()).substring(0,1));
+        // holder.textViewFunny.setText(String.valueOf(currentMeme.getFunnyMeme()).substring(0,1));
 
     }
 
@@ -61,7 +61,7 @@ public class MemeAdapter extends RecyclerView.Adapter<MemeAdapter.MemeHolder> {
             super(itemView);
             textViewMemeName = itemView.findViewById(R.id.tv_meme_name);
             textViewDate = itemView.findViewById(R.id.tv_date);
-            textViewFunny = itemView.findViewById(R.id.tv_boolean);
+            // textViewFunny = itemView.findViewById(R.id.tv_boolean);
 
         }
     }
