@@ -186,7 +186,7 @@
                     android:id="@+id/rl_empty_meme_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="invisible">
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/image_view_empty_meme_list"
@@ -213,10 +213,12 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/memeRecyclerView"
                     android:layout_width="match_parent"
-                    android:layout_height="400dp"
+                    android:layout_height="wrap_content"
+                    android:maxHeight="400dp"
                     android:scrollbarStyle="insideInset"
                     android:nestedScrollingEnabled="false"
-                    tools:listitem="@layout/list_item_memes" />
+                    tools:listitem="@layout/list_item_memes"
+                    android:visibility="gone"/>
 
 
             </com.google.android.material.card.MaterialCardView>
