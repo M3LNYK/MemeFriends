@@ -69,4 +69,8 @@ public class FriendViewModel extends AndroidViewModel {
         return memesByFriendId;
     }
 
+    public void deleteAllMemesByFriend(int friendId) {
+        repository.deleteAllMemesByFriend(friendId);
+    }
+
 }

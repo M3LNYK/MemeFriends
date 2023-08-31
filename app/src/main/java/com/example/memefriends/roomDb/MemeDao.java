@@ -29,4 +29,7 @@ public interface MemeDao {
 
     @Query("SELECT * FROM `meme-table` ORDER BY createdDate DESC, createdTime DESC")
     LiveData<List<Meme>> getAllMemes();
+
+    @Query("DELETE FROM `meme-table` WHERE friendId = :id")
+    void deleteAllMemesByFriend(int id);
 }

@@ -73,6 +73,10 @@ public class FriendRepository {
         new DeleteFriendByIdAsyncTask(friendDao).execute(friendId);
     }
 
+    public void deleteAllMemesByFriend(int friendId) {
+        new DeleteAllMemesByFriendAsyncTask(memeDao).execute(friendId);
+    }
+
 
     private static class InsertFriendAsyncTask extends AsyncTask<Friend, Void, Void> {
         private FriendDao friendDao;
@@ -199,6 +203,21 @@ public class FriendRepository {
             memeDao.deleteAllMemes();
             return null;
         }
+    }
+
+    private static class DeleteAllMemesByFriendAsyncTask extends AsyncTask<Integer, Void, Void> {
+        private MemeDao memeDao;
+
+        private DeleteAllMemesByFriendAsyncTask(MemeDao memeDao) {
+            this.memeDao = memeDao;
+        }
+
+        @Override
+        protected Void doInBackground(Integer... friendId) {
+            memeDao.deleteAllMemesByFriend(friendId[0]);
+            return null;
+        }
+
     }
 
 }
