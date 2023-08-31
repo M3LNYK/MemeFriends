@@ -127,8 +127,6 @@ public class FriendMemes extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         memeRecyclerView.setLayoutManager(linearLayoutManager);
         DividerItemDecoration divider = new DividerItemDecoration(getApplicationContext(), LinearLayoutManager.VERTICAL);
-//        divider.(20); // Set start inset
-//        divider.setDividerInsetEnd(20);   // Set end inset
         memeRecyclerView.addItemDecoration(divider);
     }
 
@@ -290,6 +288,7 @@ public class FriendMemes extends AppCompatActivity {
             hideKeyboard();
             addNotFunnyMemeToFriend();
         });
+        selectedMemeSource = "MemeSource";
     }
 
     private Meme getMemeData(boolean funnyCheck, String memeName) {
