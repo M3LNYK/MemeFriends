@@ -151,6 +151,9 @@ public class FriendMemes extends AppCompatActivity {
             // Toast.makeText(this, "Delete friend", Toast.LENGTH_SHORT).show();
             return menu_item_delete_friend();
         }
+        if (item.getItemId() == R.id.menu_item_delete_all_memes) {
+            return menu_item_delete_all_memes();
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -194,6 +197,26 @@ public class FriendMemes extends AppCompatActivity {
         TextView supportingPopUpText = dialog.findViewById(R.id.tv_details_text);
         assert supportingPopUpText != null;
         supportingPopUpText.setText("This friend will be permanently deleted. This action can not be undone.");
+        return true;
+    }
+
+
+    private boolean menu_item_delete_all_memes() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final View addMemePopupView = getLayoutInflater().inflate(R.layout.popup_delete_confirm, null);
+        builder.setView(addMemePopupView)
+                .setTitle("Delete all memes?")
+                .setPositiveButton("YES", (dialog, which) -> {
+                    // Handle user input
+                    Toast.makeText(FriendMemes.this, "Confirmed deletion", Toast.LENGTH_SHORT).show();
+                    memeViewModel.deleteAllMemes();
+                })
+                .setNegativeButton("NO", (dialog, which) -> dialog.dismiss());
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        TextView supportingPopUpText = dialog.findViewById(R.id.tv_details_text);
+        assert supportingPopUpText != null;
+        supportingPopUpText.setText("All memes of this friend will be permanently deleted. This action can not be undone.");
         return true;
     }
 
