@@ -107,8 +107,10 @@ public class FriendMemes extends AppCompatActivity {
     private void checkEmptyList(List<Meme> friendMemes) {
         if (friendMemes.isEmpty()) {
             emptyMemeList.setVisibility(View.VISIBLE);
+            memeRecyclerView.setVisibility(View.GONE);
         } else {
-            emptyMemeList.setVisibility(View.INVISIBLE);
+            emptyMemeList.setVisibility(View.GONE);
+            memeRecyclerView.setVisibility(View.VISIBLE);
         }
     }
 
