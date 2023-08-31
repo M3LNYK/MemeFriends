@@ -14,4 +14,10 @@
         android:iconTint="@color/white"
         android:title="@string/menu_item_delete_this_friend" />
 
+    <item
+        android:id="@+id/menu_item_delete_all_memes"
+        app:showAsAction="never"
+        android:title="Delete all memes"
+        android:iconTint="@color/white"/>
+
 </menu>
