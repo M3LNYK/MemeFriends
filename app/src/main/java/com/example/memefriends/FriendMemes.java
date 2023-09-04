@@ -6,11 +6,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -38,6 +40,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
+
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
 public class FriendMemes extends AppCompatActivity {
     public static final String EXTRA_ID = "com.memefriends.EXTRA_ID";
@@ -102,7 +106,59 @@ public class FriendMemes extends AppCompatActivity {
             checkEmptyList(friendMemes);
         });
 
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(memeRecyclerView);
+
     }
+
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,
+            // ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            ItemTouchHelper.LEFT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            int position = viewHolder.getBindingAdapterPosition();
+            Meme tmp;
+            switch (direction) {
+                case ItemTouchHelper.LEFT:
+                    tmp = memeAdapter.getMemeAt(position);
+                    memeViewModel.deleteMeme(memeAdapter.getMemeAt(position));
+                    memeAdapter.notifyItemRemoved(position);
+                    if (tmp.getFunnyMeme()) {
+                        outlinedMemeTotal.setText(String
+                                .valueOf(Integer.parseInt(outlinedMemeTotal.getText().toString()) - 1));
+                        outlinedMemeFunny.setText(String
+                                .valueOf(Integer.parseInt(outlinedMemeFunny.getText().toString()) - 1));
+                    } else {
+                        outlinedMemeNotFunny.setText(String
+                                .valueOf(Integer.parseInt(outlinedMemeNotFunny.getText().toString()) - 1));
+                        outlinedMemeTotal.setText(String
+                                .valueOf(Integer.parseInt(outlinedMemeTotal.getText().toString()) - 1));
+                    }
+                    break;
+                case ItemTouchHelper.RIGHT:
+                    break;
+            }
+        }
+
+        @Override
+        public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+            new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                    .addSwipeLeftBackgroundColor(ContextCompat.getColor(FriendMemes.this, R.color.red_600))
+                    .setSwipeLeftActionIconTint(ContextCompat.getColor(FriendMemes.this, R.color.black))
+                    .setSwipeLeftLabelColor(ContextCompat.getColor(FriendMemes.this, R.color.black))
+                    .addSwipeLeftActionIcon(R.drawable.baseline_delete_filled_24)
+                    .addSwipeLeftLabel("Delete")
+                    .create()
+                    .decorate();
+
+            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+        }
+    };
 
     private void checkEmptyList(List<Meme> friendMemes) {
         if (friendMemes.isEmpty()) {
