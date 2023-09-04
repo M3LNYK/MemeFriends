@@ -1,8 +1,10 @@
 package com.example.memefriends.roomDb;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -32,7 +34,13 @@ public class MemeAdapter extends RecyclerView.Adapter<MemeAdapter.MemeHolder> {
         holder.textViewMemeName.setText(currentMeme.getMemeName());
         holder.textViewDate.setText(currentMeme.getCreatedDate());
         // holder.textViewFunny.setText(String.valueOf(currentMeme.getFunnyMeme()).substring(0,1));
-
+        if (currentMeme.getFunnyMeme()){
+            holder.textViewMemeStatus.setText("F");
+            holder.imageViewMemeColor.setBackgroundColor(Color.rgb(46,125, 50));
+        } else {
+            holder.textViewMemeStatus.setText("NF");
+            holder.imageViewMemeColor.setBackgroundColor(Color.rgb(198,40, 40));
+        }
     }
 
     @Override
@@ -61,14 +69,16 @@ public class MemeAdapter extends RecyclerView.Adapter<MemeAdapter.MemeHolder> {
     class MemeHolder extends RecyclerView.ViewHolder {
         private TextView textViewMemeName;
         private TextView textViewDate;
-        private TextView textViewFunny;
-
+        private TextView textViewMemeStatus;
+        private ImageView imageViewMemeColor;
 
         public MemeHolder(@NonNull View itemView) {
             super(itemView);
             textViewMemeName = itemView.findViewById(R.id.tv_meme_name);
             textViewDate = itemView.findViewById(R.id.tv_date);
             // textViewFunny = itemView.findViewById(R.id.tv_boolean);
+            imageViewMemeColor = itemView.findViewById(R.id.imageView_meme_color);
+            textViewMemeStatus = itemView.findViewById(R.id.textView_meme_status_text);
 
         }
     }
