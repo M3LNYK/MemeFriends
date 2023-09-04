@@ -3,7 +3,6 @@ package com.example.memefriends.roomDb;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -41,7 +40,7 @@ public class MemeAdapter extends RecyclerView.Adapter<MemeAdapter.MemeHolder> {
         return friendMemes.size();
     }
 
-    public void setAllMemes(List<Meme> memes){
+    public void setAllMemes(List<Meme> memes) {
         this.memes = memes;
         notifyDataSetChanged();
     }
@@ -49,6 +48,14 @@ public class MemeAdapter extends RecyclerView.Adapter<MemeAdapter.MemeHolder> {
     public void setFriendMemes(List<Meme> friendMemes) {
         this.friendMemes = friendMemes;
         notifyDataSetChanged();
+    }
+
+    public Meme getMemeAt(int position) {
+        if (position < friendMemes.size()) {
+            return friendMemes.get(position);
+        } else {
+            return null; // Return null if position is not valid or friend is not found
+        }
     }
 
     class MemeHolder extends RecyclerView.ViewHolder {
