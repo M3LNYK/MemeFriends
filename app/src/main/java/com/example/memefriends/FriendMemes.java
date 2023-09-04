@@ -210,6 +210,10 @@ public class FriendMemes extends AppCompatActivity {
                     // Handle user input
                     Toast.makeText(FriendMemes.this, "Confirmed deletion", Toast.LENGTH_SHORT).show();
                     memeViewModel.deleteAllMemes();
+                    // Update friend meme's stats
+                    outlinedMemeFunny.setText(String.valueOf(0));
+                    outlinedMemeTotal.setText(String.valueOf(0));
+                    outlinedMemeNotFunny.setText(String.valueOf(0));
                 })
                 .setNegativeButton("NO", (dialog, which) -> dialog.dismiss());
         AlertDialog dialog = builder.create();
@@ -328,9 +332,9 @@ public class FriendMemes extends AppCompatActivity {
             Meme tmpMeme = getMemeData(true, memeName);
             memeViewModel.insertMeme(tmpMeme);
             outlinedMemeFunny.setText(String
-                    .valueOf(Integer.parseInt(outlinedMemeFunny.getText().toString())+1));
+                    .valueOf(Integer.parseInt(outlinedMemeFunny.getText().toString()) + 1));
             outlinedMemeTotal.setText(String
-                    .valueOf(Integer.parseInt(outlinedMemeTotal.getText().toString())+1));
+                    .valueOf(Integer.parseInt(outlinedMemeTotal.getText().toString()) + 1));
             close_popup();
         }
     }
@@ -358,9 +362,9 @@ public class FriendMemes extends AppCompatActivity {
             Meme tmpMeme = getMemeData(false, memeName);
             memeViewModel.insertMeme(tmpMeme);
             outlinedMemeNotFunny.setText(String
-                    .valueOf(Integer.parseInt(outlinedMemeNotFunny.getText().toString())+1));
+                    .valueOf(Integer.parseInt(outlinedMemeNotFunny.getText().toString()) + 1));
             outlinedMemeTotal.setText(String
-                    .valueOf(Integer.parseInt(outlinedMemeTotal.getText().toString())+1));
+                    .valueOf(Integer.parseInt(outlinedMemeTotal.getText().toString()) + 1));
             close_popup();
         }
     }
