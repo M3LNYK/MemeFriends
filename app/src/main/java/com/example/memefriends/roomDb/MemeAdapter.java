@@ -33,7 +33,7 @@ public class MemeAdapter extends RecyclerView.Adapter<MemeAdapter.MemeHolder> {
         Meme currentMeme = friendMemes.get(position);
         holder.textViewMemeName.setText(currentMeme.getMemeName());
         holder.textViewDate.setText(currentMeme.getCreatedDate());
-        // holder.textViewFunny.setText(String.valueOf(currentMeme.getFunnyMeme()).substring(0,1));
+        holder.textViewMemeSource.setText(currentMeme.getMemeSource());
         if (currentMeme.getFunnyMeme()){
             holder.textViewMemeStatus.setText("F");
             holder.imageViewMemeColor.setBackgroundColor(Color.rgb(46,125, 50));
@@ -67,15 +67,14 @@ public class MemeAdapter extends RecyclerView.Adapter<MemeAdapter.MemeHolder> {
     }
 
     class MemeHolder extends RecyclerView.ViewHolder {
-        private TextView textViewMemeName;
-        private TextView textViewDate;
-        private TextView textViewMemeStatus;
+        private TextView textViewMemeName, textViewDate, textViewMemeStatus, textViewMemeSource;
         private ImageView imageViewMemeColor;
 
         public MemeHolder(@NonNull View itemView) {
             super(itemView);
             textViewMemeName = itemView.findViewById(R.id.tv_meme_name);
             textViewDate = itemView.findViewById(R.id.tv_date);
+            textViewMemeSource = itemView.findViewById(R.id.tv_meme_source);
             // textViewFunny = itemView.findViewById(R.id.tv_boolean);
             imageViewMemeColor = itemView.findViewById(R.id.imageView_meme_color);
             textViewMemeStatus = itemView.findViewById(R.id.textView_meme_status_text);
