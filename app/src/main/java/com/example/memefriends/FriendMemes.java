@@ -95,7 +95,6 @@ public class FriendMemes extends AppCompatActivity {
 
         setDivider();
 
-
         memeRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         memeAdapter = new MemeAdapter();
         memeRecyclerView.setAdapter(memeAdapter);
@@ -310,6 +309,7 @@ public class FriendMemes extends AppCompatActivity {
 
     private void chipGroupInit() {
         chipGroup = newMemeDialog.findViewById(R.id.popup_add_meme_cg_meme_source);
+        // chipGroup.check(chipGroup.getChildAt(0).getId());
     }
 
     private void memeSource() {
