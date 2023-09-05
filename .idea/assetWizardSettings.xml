@@ -81,11 +81,23 @@
                                 <PersistentState>
                                   <option name="children">
                                     <map>
+                                      <entry key="backgroundImage">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="imagePath" value="D:\Downloads\logo_ideas\canva\v3\Full logo_background.png" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
                                       <entry key="foregroundClipArt">
                                         <value>
                                           <PersistentState>
                                             <option name="values">
                                               <map>
+                                                <entry key="color" value="000000" />
                                                 <entry key="imagePath" value="C:\Users\vikme\AppData\Local\Temp\ic_android_black_24dp.xml" />
                                               </map>
                                             </option>
@@ -98,6 +110,8 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
+                                                <entry key="imagePath" value="D:\Downloads\logo_ideas\canva\v3\Full_logo_white_svg_v3-removebg-preview.png" />
+                                                <entry key="scalingPercent" value="75" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -293,11 +307,6 @@
                                 </PersistentState>
                               </value>
                             </entry>
-                          </map>
-                        </option>
-                        <option name="values">
-                          <map>
-                            <entry key="outputIconType" value="ACTIONBAR" />
                           </map>
                         </option>
                       </PersistentState>
