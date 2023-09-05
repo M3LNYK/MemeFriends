@@ -129,7 +129,6 @@ public class FriendsList extends AppCompatActivity {
             //  We clicked on friend
             Intent intent = new Intent(FriendsList.this, FriendMemes.class);
             intent.putExtra(EXTRA_ID, friend.getId());
-            System.out.println("FL SENT ID IS: " + friend.getId());
             intent.putExtra(EXTRA_NAME, friend.getName());
             intent.putExtra(EXTRA_TOTAL_MEMES, friend.getTotalMemes());
             intent.putExtra(EXTRA_FUNNY_MEMES, friend.getFunnyMemes());
@@ -167,7 +166,6 @@ public class FriendsList extends AppCompatActivity {
                 } else if (dy < 0) {
                     // Scrolled up
                     fabToTop.setVisibility(View.VISIBLE);
-                    System.out.println("First vis pos: " + firstVisibleItemPosition + " last header: " + lastHeaderPosition);
                     if (firstVisibleItemPosition < lastHeaderPosition) {
                         //    reset header position -> return to previous header?
                         lastHeaderPosition = findLastHeaderInAdapter(firstVisibleItemPosition);
@@ -213,7 +211,6 @@ public class FriendsList extends AppCompatActivity {
 
                         Friend friend = new Friend(name, totalMemes, funnyMemes, notFunnyMemes, color);
                         friend.setId(id);
-                        System.out.println("ID FOR UPDATE IS: " + id);
                         friendViewModel.update(friend);
                         // Toast.makeText(this, "Friend updated!", Toast.LENGTH_SHORT).show();
                     }

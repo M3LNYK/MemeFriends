@@ -224,7 +224,6 @@ public class FriendMemes extends AppCompatActivity {
         data.putExtra(EXTRA_COLOR, getIntent().getIntExtra(EXTRA_COLOR, -1));
 
         int id = getIntent().getIntExtra(EXTRA_ID, -1);
-        System.out.println("SECOND ID IS:" + id);
         if (id != -1) {
             data.putExtra(EXTRA_ID, id);
         }
@@ -438,7 +437,6 @@ public class FriendMemes extends AppCompatActivity {
 
     private void populateOutlinedFields() {
         int receivedId = getIntent().getIntExtra(EXTRA_ID, -1);
-        System.out.println("FM RECEIVED ID IS:" + receivedId);
         String receivedName = getIntent().getStringExtra(EXTRA_NAME);
         int receivedTM = getIntent().getIntExtra(EXTRA_TOTAL_MEMES, -1);
         int receivedFM = getIntent().getIntExtra(EXTRA_FUNNY_MEMES, -1);
@@ -511,7 +509,6 @@ public class FriendMemes extends AppCompatActivity {
         data.putExtra(EXTRA_COLOR, getIntent().getIntExtra(EXTRA_COLOR, -1));
 
         int id = getIntent().getIntExtra(EXTRA_ID, -1);
-        System.out.println("SECOND ID IS:" + id);
         if (id != -1) {
             data.putExtra(EXTRA_ID, id);
         }

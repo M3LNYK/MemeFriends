@@ -75,7 +75,6 @@ public class MemeAdapter extends RecyclerView.Adapter<MemeAdapter.MemeHolder> {
             textViewMemeName = itemView.findViewById(R.id.tv_meme_name);
             textViewDate = itemView.findViewById(R.id.tv_date);
             textViewMemeSource = itemView.findViewById(R.id.tv_meme_source);
-            // textViewFunny = itemView.findViewById(R.id.tv_boolean);
             imageViewMemeColor = itemView.findViewById(R.id.imageView_meme_color);
             textViewMemeStatus = itemView.findViewById(R.id.textView_meme_status_text);
 
