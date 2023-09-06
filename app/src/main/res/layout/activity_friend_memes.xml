@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".FriendMemes"
-    android:background="@color/custom_purple_100">
+    android:background="@color/md_theme_light_primaryContainer">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/custom_purple_100"
+            android:background="@color/md_theme_light_primaryContainer"
             android:orientation="vertical">
 
             <androidx.cardview.widget.CardView
