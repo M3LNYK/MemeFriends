@@ -86,7 +86,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="imagePath" value="D:\Downloads\logo_ideas\canva\v3\Full logo_background.png" />
+                                                <entry key="imagePath" value="D:\Downloads" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -110,8 +110,8 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="D:\Downloads\logo_ideas\canva\v3\Full_logo_white_svg_v3-removebg-preview.png" />
-                                                <entry key="scalingPercent" value="75" />
+                                                <entry key="imagePath" value="D:\Downloads\App_designs\memeFriends\logo_ideas\v4\Full_logo_white_v4-removebg.png" />
+                                                <entry key="scalingPercent" value="83" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -139,6 +139,12 @@
                                           </PersistentState>
                                         </value>
                                       </entry>
+                                    </map>
+                                  </option>
+                                  <option name="values">
+                                    <map>
+                                      <entry key="backgroundAssetType" value="COLOR" />
+                                      <entry key="backgroundColor" value="ffffff" />
                                     </map>
                                   </option>
                                 </PersistentState>
