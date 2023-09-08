@@ -246,37 +246,44 @@ public class FriendsList extends AppCompatActivity {
 
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
             int position = viewHolder.getBindingAdapterPosition();
-            switch (direction) {
-                case ItemTouchHelper.LEFT:
-                    deletedFriend = adapter.getFriendAt(position);
-                    friendViewModel.delete(adapter.getFriendAt(position));
-                    adapter.notifyItemRemoved(position);
-                    Snackbar.make(recyclerView, "Deleted friend: " + deletedFriend.getName(), BaseTransientBottomBar.LENGTH_LONG)
-                            .setAction("Undo", view -> {
-                                friendViewModel.insert(deletedFriend);
-                                // Below caused index out of bounds exception error
-                                // adapter.notifyItemInserted(position);
-                            })
-                            .show();
-                    break;
-                case ItemTouchHelper.RIGHT:
-                    break;
+            int decider = adapter.getItemViewType(position);
+            if (decider == 1) {
+                switch (direction) {
+                    case ItemTouchHelper.LEFT:
+                        deletedFriend = adapter.getFriendAt(position);
+                        friendViewModel.delete(adapter.getFriendAt(position));
+                        adapter.notifyItemRemoved(position);
+                        Snackbar.make(recyclerView, "Deleted friend: " + deletedFriend.getName(), BaseTransientBottomBar.LENGTH_LONG)
+                                .setAction("Undo", view -> {
+                                    friendViewModel.insert(deletedFriend);
+                                    // Below caused index out of bounds exception error
+                                    // adapter.notifyItemInserted(position);
+                                })
+                                .show();
+
+                        break;
+                    case ItemTouchHelper.RIGHT:
+                        break;
+                }
             }
         }
 
         @Override
         public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-            new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-                    .addSwipeLeftBackgroundColor(ContextCompat.getColor(FriendsList.this, R.color.red_600))
-                    .setSwipeLeftActionIconTint(ContextCompat.getColor(FriendsList.this, R.color.black))
-                    .setSwipeLeftLabelColor(ContextCompat.getColor(FriendsList.this, R.color.black))
-                    .addSwipeLeftActionIcon(R.drawable.baseline_delete_filled_24)
-                    .addSwipeLeftLabel("Delete")
-                    .create()
-                    .decorate();
+            if (viewHolder instanceof FriendAdapter.FriendViewHolder) {
+                new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                        .addSwipeLeftBackgroundColor(ContextCompat.getColor(FriendsList.this, R.color.red_600))
+                        .setSwipeLeftActionIconTint(ContextCompat.getColor(FriendsList.this, R.color.black))
+                        .setSwipeLeftLabelColor(ContextCompat.getColor(FriendsList.this, R.color.black))
+                        .addSwipeLeftActionIcon(R.drawable.baseline_delete_filled_24)
+                        .addSwipeLeftLabel("Delete")
+                        .create()
+                        .decorate();
 
-            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+            }
         }
     };
 

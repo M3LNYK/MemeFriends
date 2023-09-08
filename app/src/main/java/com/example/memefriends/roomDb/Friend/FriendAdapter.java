@@ -137,7 +137,7 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         return groupedFriends;
     }
 
-    class FriendViewHolder extends RecyclerView.ViewHolder {
+    public class FriendViewHolder extends RecyclerView.ViewHolder {
         private ImageView imageView;
         private TextView friendName;
         private TextView avatarName;
