@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="56dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/md_theme_light_secondaryContainer">
 
     <com.google.android.material.circularreveal.cardview.CircularRevealCardView
         android:layout_width="40dp"
@@ -46,24 +47,11 @@
             android:id="@+id/list_item_friend_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:ellipsize="marquee"
-            android:fontFamily="sans-serif"
-            android:singleLine="true"
             android:text="This is the title line"
-            android:textColor="@color/black_light"
-            android:textSize="16sp" />
+            style="@style/friendItemHeader"
+            android:translationY="-1.8sp"
+            />
     </LinearLayout>
-
-    <ImageView
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerVertical="true"
-        android:layout_marginHorizontal="16dp"
-        android:src="@drawable/ic_launcher_background" />
 
     <View
         android:id="@+id/list_item_divider_view"

@@ -63,8 +63,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/friends_listview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/textView_friends"
+        android:layout_height="match_parent"
+        android:layout_marginTop="32dp"
         android:scrollbarAlwaysDrawVerticalTrack="true"
         android:scrollbars="vertical"
         tools:layout_editor_absoluteX="0dp"
