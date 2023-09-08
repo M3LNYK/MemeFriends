@@ -56,16 +56,16 @@
     <style name="groupHeader">
         <item name="android:textSize">16sp</item>
         <item name="android:letterSpacing">0.01</item>
-        <item name="android:textColor">@color/md_theme_light_onPrimaryContainer</item>
+        <item name="android:textColor">?attr/colorOnPrimaryContainer</item>
         <item name="fontFamily">@font/roboto_medium</item>
         <item name="lineHeight">32dp</item>
-        <item name="android:background">@color/md_theme_light_primaryContainer</item>
+        <item name="android:background">?attr/colorPrimaryContainer</item>
         <item name="android:paddingStart">16dp</item>
         <item name="android:gravity">center_vertical</item>
     </style>
 
     <style name="friendItemHeader" parent="header">
-        <item name="android:textColor">@color/md_theme_light_onSecondaryContainer</item>
+        <item name="android:textColor">?attr/colorOnSecondaryContainer</item>
         <item name="lineHeight">24sp</item>
         <item name="singleLine">true</item>
         <item name="android:ellipsize">marquee</item>

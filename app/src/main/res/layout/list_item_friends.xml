@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="56dp"
     android:orientation="vertical"
-    android:background="@color/md_theme_light_secondaryContainer">
+    android:background="?attr/colorSecondaryContainer">
 
     <com.google.android.material.circularreveal.cardview.CircularRevealCardView
         android:layout_width="40dp"
