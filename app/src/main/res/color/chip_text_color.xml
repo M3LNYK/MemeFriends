@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:color="@color/gray_900" android:state_checked="false"/>
-    <item android:color="@color/gray_50" android:state_checked="true"/>
+    <item android:color="?attr/colorOnPrimaryContainer" android:state_checked="false"/>
+    <item android:color="?attr/colorOnSecondaryContainer" android:state_checked="true"/>
 
 </selector>
