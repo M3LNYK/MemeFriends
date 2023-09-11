@@ -37,6 +37,13 @@
         <item name="checkedIconTint">@color/chip_text_color</item>
     </style>
 
+    <style name="OutlinedChipStyle">
+        <item name="chipBackgroundColor">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="chipIconTint">?attr/colorOnPrimary</item>
+        <item name="colorOutline">?attr/colorOutline</item>
+    </style>
+
     <style name="subhead">
         <item name="android:textSize">14sp</item>
         <item name="android:letterSpacing">0.02</item>
