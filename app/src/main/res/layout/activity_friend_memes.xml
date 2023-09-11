@@ -165,10 +165,11 @@
                 android:id="@+id/chip_friend_memes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                style="@style/OutlinedChipStyle"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
                 android:text="Last memes"
-                app:chipIcon="@drawable/test_icon"
+                app:chipIcon="@drawable/baseline_list_24"
                 app:layout_constraintTop_toBottomOf="@+id/cardFriendInfo" />
 
             <com.google.android.material.card.MaterialCardView
@@ -228,8 +229,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
+                style="@style/OutlinedChipStyle"
                 android:text="Some stats"
-                app:chipIcon="@drawable/test_icon"
+                app:chipIcon="@drawable/baseline_show_chart_24"
                 app:layout_constraintTop_toBottomOf="@+id/memeRecyclerView" />
 
         </LinearLayout>
