@@ -25,7 +25,8 @@
         <activity
             android:name=".FriendMemes"
             android:exported="true"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:parentActivityName=".FriendsList"/>
     </application>
 
 </manifest>
