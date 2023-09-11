@@ -234,6 +234,19 @@
                 app:chipIcon="@drawable/baseline_show_chart_24"
                 app:layout_constraintTop_toBottomOf="@+id/memeRecyclerView" />
 
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:layout_margin="9dp"
+                style="?attr/materialCardViewFilledStyle"
+                app:layout_constraintTop_toBottomOf="@+id/chip_friend_stats"
+                app:cardCornerRadius="12dp">
+
+
+
+            </com.google.android.material.card.MaterialCardView>
+
         </LinearLayout>
     </ScrollView>
 
