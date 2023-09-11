@@ -41,7 +41,12 @@
         <item name="chipBackgroundColor">?attr/colorPrimary</item>
         <item name="android:textColor">?attr/colorOnPrimary</item>
         <item name="chipIconTint">?attr/colorOnPrimary</item>
-        <item name="colorOutline">?attr/colorOutline</item>
+        <item name="strokeColor">?attr/colorOnSurface</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="fontFamily">@font/roboto_regular</item>
+        <item name="lineHeight">20sp</item>
     </style>
 
     <style name="subhead">
