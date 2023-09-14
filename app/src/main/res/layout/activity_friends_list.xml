@@ -51,6 +51,7 @@
         android:id="@+id/chipGroupLetter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="@style/OutlinedChipStyle"
         android:layout_margin="8dp"
         android:layout_marginTop="16dp"
         android:elevation="8dp"
