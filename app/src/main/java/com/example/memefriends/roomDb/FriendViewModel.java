@@ -64,6 +64,8 @@ public class FriendViewModel extends AndroidViewModel {
         return allMemes;
     }
 
+    public Friend getFriendById(int id){return repository.getFriendByID(id);}
+
     public LiveData<List<Meme>> getMemesByFriendId(int friendId) {
         memesByFriendId = repository.getMemesByFriendId(friendId);
         return memesByFriendId;

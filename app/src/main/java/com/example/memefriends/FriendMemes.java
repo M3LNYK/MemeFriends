@@ -27,6 +27,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.memefriends.roomDb.Friend.Friend;
+import com.example.memefriends.roomDb.Friend.FriendAdapter;
 import com.example.memefriends.roomDb.FriendViewModel;
 import com.example.memefriends.roomDb.Meme;
 import com.example.memefriends.roomDb.MemeAdapter;
@@ -446,6 +448,13 @@ public class FriendMemes extends AppCompatActivity {
         outlinedMemeTotal.setText(String.valueOf(receivedTM));
         outlinedMemeFunny.setText(String.valueOf(receivedFM));
         outlinedMemeNotFunny.setText(String.valueOf(receivedNFM));
+        // Friend a = memeViewModel.getFriendById(receivedId);
+        // setTitle(a.getName() + "'s stats");
+        // outlinedFriendName.setText(a.getName());
+        // outlinedMemeTotal.setText(a.getTotalMemes());
+        // outlinedMemeFunny.setText(a.getFunnyMemes());
+        // outlinedMemeNotFunny.setText(a.getNfMemes());
+        // return a;
     }
 
     private void hideKeyboard() {

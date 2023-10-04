@@ -29,4 +29,7 @@ public interface FriendDao {
 
     @Query("DELETE FROM 'friend-table' WHERE id = :friendId")
     void deleteFriendById(int friendId);
+
+    @Query("SELECT * FROM `friend-table` WHERE id= :friendId")
+    Friend getFriendById(int friendId);
 }

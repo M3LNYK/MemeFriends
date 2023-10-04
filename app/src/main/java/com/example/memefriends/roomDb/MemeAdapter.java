@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.memefriends.R;
+import com.example.memefriends.roomDb.Friend.Friend;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.List;
 public class MemeAdapter extends RecyclerView.Adapter<MemeAdapter.MemeHolder> {
     private List<Meme> memes = new ArrayList<>();
     private List<Meme> friendMemes = new ArrayList<>();
+    private Friend tmpFriend;
 
     @NonNull
     @Override
@@ -77,7 +79,6 @@ public class MemeAdapter extends RecyclerView.Adapter<MemeAdapter.MemeHolder> {
             textViewMemeSource = itemView.findViewById(R.id.tv_meme_source);
             imageViewMemeColor = itemView.findViewById(R.id.imageView_meme_color);
             textViewMemeStatus = itemView.findViewById(R.id.textView_meme_status_text);
-
         }
     }
 }

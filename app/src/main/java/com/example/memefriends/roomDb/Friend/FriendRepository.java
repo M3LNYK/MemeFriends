@@ -77,6 +77,10 @@ public class FriendRepository {
         new DeleteAllMemesByFriendAsyncTask(memeDao).execute(friendId);
     }
 
+    public Friend getFriendByID(int friendId) {
+        return friendDao.getFriendById(friendId);
+    }
+
 
     private static class InsertFriendAsyncTask extends AsyncTask<Friend, Void, Void> {
         private FriendDao friendDao;
