@@ -153,7 +153,7 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    int position = getAdapterPosition();
+                    int position = getBindingAdapterPosition();
                     if (listener != null && position != RecyclerView.NO_POSITION) {
                         int groupPosition = getGroupPosition(position);
                         int friendPosition = getFriendPosition(position);
