@@ -32,6 +32,11 @@ import com.example.memefriends.roomDb.Friend.FriendAdapter;
 import com.example.memefriends.roomDb.FriendViewModel;
 import com.example.memefriends.roomDb.Meme;
 import com.example.memefriends.roomDb.MemeAdapter;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -40,6 +45,7 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -67,6 +73,7 @@ public class FriendMemes extends AppCompatActivity {
     private MemeAdapter memeAdapter;
     private String selectedMemeSource = "MemeSource";
     private ChipGroup chipGroup;
+    private PieChart pieChart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +116,11 @@ public class FriendMemes extends AppCompatActivity {
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(memeRecyclerView);
+
+        pieChart = findViewById(R.id.test_chart);
+
+        populatePieChart();
+
 
     }
 
@@ -160,6 +172,34 @@ public class FriendMemes extends AppCompatActivity {
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
         }
     };
+
+    private void populatePieChart() {
+        List<PieEntry> entries = new ArrayList<>();
+        entries.add(new PieEntry(55f, "Funny")); // 55% completed
+        entries.add(new PieEntry(45f, "Not Funny")); // 45% remaining
+
+        // Create a PieDataSet
+        PieDataSet dataSet = new PieDataSet(entries, "Percent");
+        dataSet.setColors(new int[]{R.color.green_500, R.color.red_500}, this);
+
+        // Create PieData from the dataSet
+        PieData data = new PieData(dataSet);
+
+        // Customize the data (e.g., text size, text color)
+        data.setValueTextSize(14f);
+        data.setValueTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+
+        // Set the data to the chart
+        pieChart.setData(data);
+
+        // Remove the description label
+        Description description = new Description();
+        description.setText("");
+        pieChart.setDescription(description);
+
+        // Refresh the chart
+        pieChart.invalidate();
+    }
 
     private void checkEmptyList(List<Meme> friendMemes) {
         if (friendMemes.isEmpty()) {
