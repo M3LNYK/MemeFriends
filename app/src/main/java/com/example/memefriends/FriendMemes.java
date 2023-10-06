@@ -598,11 +598,14 @@ public class FriendMemes extends AppCompatActivity {
     }
 
     private void onDiscardButtonClicked() {
+        clearValidationErrors();
+        populateReceivedFriendName();
+        disableEditingAndHideButtons();
+    }
+
+    private void clearValidationErrors() {
         nameFriendLayout.setError(null);
         nameFriendLayout.setErrorEnabled(false);
-        populateReceivedFriendName();
-        // Hide the buttons layout and disable editing for all fields
-        disableEditingAndHideButtons();
     }
 
     private void animateButtons(boolean isVisible) {
