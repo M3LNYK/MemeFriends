@@ -530,26 +530,54 @@ public class FriendMemes extends AppCompatActivity {
         editText.setFocusable(false);
     }
 
+    // SOLID below
+
     private void onSaveButtonClicked() {
-        // Hide the buttons layout and disable editing for all fields
+        String friendName = extractFriendName();
+        if (friendName == null) {
+            return; // Validation failed
+        }
+
+        disableEditingAndHideButtons();
+
+        // Extract meme counts
+        int totalMemes = extractMemeCount(outlinedMemeTotal);
+        int funnyMemes = extractMemeCount(outlinedMemeFunny);
+        int notFunnyMemes = extractMemeCount(outlinedMemeNotFunny);
+
+        // Create an intent with data
+        Intent data = createResultIntent(friendName, totalMemes, funnyMemes, notFunnyMemes);
+
+        // Set the result and finish the activity
+        setResultAndFinish(data);
+    }
+
+    private String extractFriendName() {
         String friendName = Objects.requireNonNull(outlinedFriendName.getText()).toString();
         if (friendName.trim().isEmpty()) {
             nameFriendLayout.setErrorEnabled(true);
             nameFriendLayout.setError("You need to enter a name!");
             Toast.makeText(this, "Friend name can not be empty!", Toast.LENGTH_SHORT).show();
-            return;
+            return null; // Validation failed
         }
         nameFriendLayout.setError(null);
         nameFriendLayout.setErrorEnabled(false);
+        return friendName;
+    }
+
+    private void disableEditingAndHideButtons() {
         disableEditing(outlinedFriendName);
         disableEditing(outlinedMemeTotal);
         disableEditing(outlinedMemeFunny);
         disableEditing(outlinedMemeNotFunny);
         hideButtons();
-        int totalMemes = Integer.parseInt(Objects.requireNonNull(outlinedMemeTotal.getText()).toString());
-        int funnyMemes = Integer.parseInt(Objects.requireNonNull(outlinedMemeFunny.getText()).toString());
-        int notFunnyMemes = Integer.parseInt(Objects.requireNonNull(outlinedMemeNotFunny.getText()).toString());
+    }
 
+    private int extractMemeCount(TextInputEditText editText) {
+        return Integer.parseInt(Objects.requireNonNull(editText.getText()).toString());
+    }
+
+    private Intent createResultIntent(String friendName, int totalMemes, int funnyMemes, int notFunnyMemes) {
         Intent data = new Intent();
         data.putExtra(EXTRA_NAME, friendName);
         data.putExtra(EXTRA_TOTAL_MEMES, totalMemes);
@@ -561,6 +589,10 @@ public class FriendMemes extends AppCompatActivity {
         if (id != -1) {
             data.putExtra(EXTRA_ID, id);
         }
+        return data;
+    }
+
+    private void setResultAndFinish(Intent data) {
         setResult(FriendMemes.RESULT_EDIT, data);
         finish();
     }
@@ -570,11 +602,7 @@ public class FriendMemes extends AppCompatActivity {
         nameFriendLayout.setErrorEnabled(false);
         populateReceivedFriendName();
         // Hide the buttons layout and disable editing for all fields
-        disableEditing(outlinedFriendName);
-        disableEditing(outlinedMemeTotal);
-        disableEditing(outlinedMemeFunny);
-        disableEditing(outlinedMemeNotFunny);
-        hideButtons();
+        disableEditingAndHideButtons();
     }
 
     private void animateButtons(boolean isVisible) {
