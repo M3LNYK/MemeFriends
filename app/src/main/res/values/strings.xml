@@ -22,4 +22,5 @@
     <string name="menu_item_delete_this_friend">Delete friend</string>
     <string name="your_meme_list_is_empty">No memes to display!</string>
     <string name="example_text">Example text</string>
+    <string name="test_chart">Test Chart</string>
 </resources>
