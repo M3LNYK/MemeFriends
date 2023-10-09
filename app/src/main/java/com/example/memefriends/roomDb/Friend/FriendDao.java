@@ -31,5 +31,5 @@ public interface FriendDao {
     void deleteFriendById(int friendId);
 
     @Query("SELECT * FROM `friend-table` WHERE id= :friendId")
-    Friend getFriendById(int friendId);
+    LiveData<Friend> getFriendById(int friendId);
 }

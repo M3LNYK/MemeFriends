@@ -77,7 +77,7 @@ public class FriendRepository {
         new DeleteAllMemesByFriendAsyncTask(memeDao).execute(friendId);
     }
 
-    public Friend getFriendByID(int friendId) {
+    public LiveData<Friend> getFriendByID(int friendId) {
         return friendDao.getFriendById(friendId);
     }
 

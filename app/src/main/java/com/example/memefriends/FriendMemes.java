@@ -27,6 +27,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.memefriends.roomDb.Friend.Friend;
 import com.example.memefriends.roomDb.FriendViewModel;
 import com.example.memefriends.roomDb.Meme;
 import com.example.memefriends.roomDb.MemeAdapter;
@@ -96,8 +97,6 @@ public class FriendMemes extends AppCompatActivity {
 
         settingOnClickListeners(cardFriendInfo);
 
-        populateOutlinedFields();
-
         fabSetClickListeners();
 
         setDivider();
@@ -110,6 +109,14 @@ public class FriendMemes extends AppCompatActivity {
         memeViewModel.getMemesByFriendId(receivedId).observe(this, friendMemes -> {
             memeAdapter.setFriendMemes(friendMemes);
             checkEmptyList(friendMemes);
+        });
+
+        memeViewModel.getFriendById(receivedId).observe(this, friend -> {
+            setTitle(friend.getName() + "'s stats");
+            outlinedFriendName.setText(friend.getName());
+            outlinedMemeTotal.setText(String.valueOf(friend.getTotalMemes()));
+            outlinedMemeFunny.setText(String.valueOf(friend.getFunnyMemes()));
+            outlinedMemeNotFunny.setText(String.valueOf(friend.getNfMemes()));
         });
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
@@ -473,26 +480,6 @@ public class FriendMemes extends AppCompatActivity {
     private void cardClicked() {
         populateReceivedFriendName();
         hideButtons();
-    }
-
-    private void populateOutlinedFields() {
-        int receivedId = getIntent().getIntExtra(EXTRA_ID, -1);
-        String receivedName = getIntent().getStringExtra(EXTRA_NAME);
-        int receivedTM = getIntent().getIntExtra(EXTRA_TOTAL_MEMES, -1);
-        int receivedFM = getIntent().getIntExtra(EXTRA_FUNNY_MEMES, -1);
-        int receivedNFM = getIntent().getIntExtra(EXTRA_NOT_FUNNY_MEMES, -1);
-        setTitle(receivedName + "'s memes stats");
-        outlinedFriendName.setText(receivedName);
-        outlinedMemeTotal.setText(String.valueOf(receivedTM));
-        outlinedMemeFunny.setText(String.valueOf(receivedFM));
-        outlinedMemeNotFunny.setText(String.valueOf(receivedNFM));
-        // Friend a = memeViewModel.getFriendById(receivedId);
-        // setTitle(a.getName() + "'s stats");
-        // outlinedFriendName.setText(a.getName());
-        // outlinedMemeTotal.setText(a.getTotalMemes());
-        // outlinedMemeFunny.setText(a.getFunnyMemes());
-        // outlinedMemeNotFunny.setText(a.getNfMemes());
-        // return a;
     }
 
     private void hideKeyboard() {
