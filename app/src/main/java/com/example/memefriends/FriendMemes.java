@@ -27,8 +27,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.memefriends.roomDb.Friend.Friend;
-import com.example.memefriends.roomDb.Friend.FriendAdapter;
 import com.example.memefriends.roomDb.FriendViewModel;
 import com.example.memefriends.roomDb.Meme;
 import com.example.memefriends.roomDb.MemeAdapter;
@@ -239,7 +237,7 @@ public class FriendMemes extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.menu_item_edit_friend) {
-            enableEditing(outlinedFriendName);
+            setEditingEnabled(outlinedFriendName, true);
             animateButtons(true);
             Toast.makeText(this, "Now you can change friend name", Toast.LENGTH_SHORT).show();
             return true;
@@ -325,15 +323,11 @@ public class FriendMemes extends AppCompatActivity {
             displayAddMemePopup();
             addFunny = newMemeDialog.findViewById(R.id.popup_add_meme_button_add_funny_meme);
             addNotFunny = newMemeDialog.findViewById(R.id.popup_add_meme_button_add_nf_meme);
-
             popupFriendName = newMemeDialog.findViewById(R.id.popup_add_meme_tied_friend_name);
             String receivedName = getIntent().getStringExtra(EXTRA_NAME);
             popupFriendName.setText(receivedName);
-
             popupMemeName = newMemeDialog.findViewById(R.id.popup_add_meme_tied_meme_name);
-
             memeNameLayout = newMemeDialog.findViewById(R.id.popup_add_meme_til_meme_name);
-
             addMemeButtonsListener();
         });
     }
@@ -395,15 +389,19 @@ public class FriendMemes extends AppCompatActivity {
     private Meme getMemeData(boolean funnyCheck, String memeName) {
         // Get the current date and time
         LocalDateTime currentDateTime = LocalDateTime.now();
-
-        // Define a formatter for date and time
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-
-        // Format date and time as strings
-        String date = currentDateTime.format(dateFormatter);
-        String time = currentDateTime.format(timeFormatter);
+        String date = formatAsDate(currentDateTime);
+        String time = formatAsTime(currentDateTime);
         return new Meme(memeName, selectedMemeSource, funnyCheck, receivedId, date, time);
+    }
+
+    private String formatAsDate(LocalDateTime timestamp) {
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return timestamp.format(dateFormatter);
+    }
+
+    private String formatAsTime(LocalDateTime timestamp) {
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        return timestamp.format(timeFormatter);
     }
 
     private void addFunnyMemeToFriend() {
@@ -508,7 +506,7 @@ public class FriendMemes extends AppCompatActivity {
     private void hideButtons() {
         // Hide the buttons layout
         hideKeyboard();
-        disableEditing(outlinedFriendName);
+        setEditingEnabled(outlinedFriendName, false);
         buttonsArea.setVisibility(View.GONE);
     }
 
@@ -517,37 +515,28 @@ public class FriendMemes extends AppCompatActivity {
         outlinedFriendName.setText(receivedName);
     }
 
-    private void enableEditing(TextInputEditText editText) {
-        // Enable editing for the specified TextInputEditText
-        editText.setFocusableInTouchMode(true);
-        editText.setFocusable(true);
-        editText.requestFocus();
-    }
-
-    private void disableEditing(TextInputEditText editText) {
-        // Disable editing for the specified TextInputEditText
-        editText.setFocusableInTouchMode(false);
-        editText.setFocusable(false);
-    }
-
     // SOLID below
+
+    private void setEditingEnabled(TextInputEditText editText, boolean enabled) {
+        editText.setFocusableInTouchMode(enabled);
+        editText.setFocusable(enabled);
+        if (enabled) {
+            editText.requestFocus();
+        }
+    }
 
     private void onSaveButtonClicked() {
         String friendName = extractFriendName();
         if (friendName == null) {
             return; // Validation failed
         }
-
         disableEditingAndHideButtons();
-
         // Extract meme counts
         int totalMemes = extractMemeCount(outlinedMemeTotal);
         int funnyMemes = extractMemeCount(outlinedMemeFunny);
         int notFunnyMemes = extractMemeCount(outlinedMemeNotFunny);
-
         // Create an intent with data
         Intent data = createResultIntent(friendName, totalMemes, funnyMemes, notFunnyMemes);
-
         // Set the result and finish the activity
         setResultAndFinish(data);
     }
@@ -566,10 +555,10 @@ public class FriendMemes extends AppCompatActivity {
     }
 
     private void disableEditingAndHideButtons() {
-        disableEditing(outlinedFriendName);
-        disableEditing(outlinedMemeTotal);
-        disableEditing(outlinedMemeFunny);
-        disableEditing(outlinedMemeNotFunny);
+        setEditingEnabled(outlinedFriendName, false);
+        setEditingEnabled(outlinedMemeTotal, false);
+        setEditingEnabled(outlinedMemeFunny, false);
+        setEditingEnabled(outlinedMemeNotFunny, false);
         hideButtons();
     }
 
@@ -584,7 +573,6 @@ public class FriendMemes extends AppCompatActivity {
         data.putExtra(EXTRA_FUNNY_MEMES, funnyMemes);
         data.putExtra(EXTRA_NOT_FUNNY_MEMES, notFunnyMemes);
         data.putExtra(EXTRA_COLOR, getIntent().getIntExtra(EXTRA_COLOR, -1));
-
         int id = getIntent().getIntExtra(EXTRA_ID, -1);
         if (id != -1) {
             data.putExtra(EXTRA_ID, id);

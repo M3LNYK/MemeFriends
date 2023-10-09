@@ -259,7 +259,7 @@
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Test Chart" />
+                            android:text="@string/test_chart" />
 
                     </LinearLayout>
 
@@ -274,6 +274,7 @@
                             android:id="@+id/test_chart"
                             android:layout_width="match_parent"
                             android:layout_height="200dp" />
+
 
 
                     </LinearLayout>
