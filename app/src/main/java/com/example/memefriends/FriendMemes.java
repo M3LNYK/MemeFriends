@@ -247,25 +247,8 @@ public class FriendMemes extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            Intent data = new Intent();
-            String newName = Objects.requireNonNull(outlinedFriendName.getText()).toString();
-            int newTotalMemes = Integer.parseInt(Objects.requireNonNull(outlinedMemeTotal.getText()).toString());
-            int newFunnyMemes = Integer.parseInt(Objects.requireNonNull(outlinedMemeFunny.getText()).toString());
-            int newNfMemes = Integer.parseInt(Objects.requireNonNull(outlinedMemeNotFunny.getText()).toString());
-            data.putExtra(EXTRA_NAME, newName);
-            data.putExtra(EXTRA_TOTAL_MEMES, newTotalMemes);
-            data.putExtra(EXTRA_FUNNY_MEMES, newFunnyMemes);
-            data.putExtra(EXTRA_NOT_FUNNY_MEMES, newNfMemes);
-            data.putExtra(EXTRA_COLOR, friendColor);
-
-            int id = getIntent().getIntExtra(EXTRA_ID, -1);
-            if (id != -1) {
-                data.putExtra(EXTRA_ID, id);
-            }
-            // Friend afterUpdate = new Friend(newName, newTotalMemes, newFunnyMemes, newNfMemes, friendColor);
-            // memeViewModel.update(afterUpdate);
-            setResult(FriendMemes.RESULT_EDIT, data);
-            finish();
+            onBackPressed(); // This should work as expected
+            return true;
         }
         if (item.getItemId() == R.id.menu_item_edit_friend) {
             setEditingEnabled(outlinedFriendName, true);
@@ -301,8 +284,6 @@ public class FriendMemes extends AppCompatActivity {
         if (id != -1) {
             data.putExtra(EXTRA_ID, id);
         }
-        // Friend afterUpdate = new Friend(newName, newTotalMemes, newFunnyMemes, newNfMemes, friendColor);
-        // memeViewModel.update(afterUpdate);
         setResult(FriendMemes.RESULT_EDIT, data);
 
         super.onBackPressed(); // This line is important to actually navigate back
