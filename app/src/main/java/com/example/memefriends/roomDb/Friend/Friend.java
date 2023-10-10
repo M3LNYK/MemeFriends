@@ -42,6 +42,18 @@ public class Friend {
         this.name = name;
     }
 
+    public void setTotalMemes(int totalMemes) {
+        this.totalMemes = totalMemes;
+    }
+
+    public void setFunnyMemes(int funnyMemes) {
+        this.funnyMemes = funnyMemes;
+    }
+
+    public void setNfMemes(int nfMemes) {
+        this.nfMemes = nfMemes;
+    }
+
     public String getName() {
         return name;
     }
