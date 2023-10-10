@@ -68,7 +68,7 @@ public class FriendMemes extends AppCompatActivity {
     private RelativeLayout emptyMemeList;
     private FriendViewModel memeViewModel;
     private AlertDialog newMemeDialog;
-    private int receivedId;
+    private int receivedId, friendColor;
     private MemeAdapter memeAdapter;
     private String selectedMemeSource = "MemeSource";
     private ChipGroup chipGroup;
@@ -118,6 +118,7 @@ public class FriendMemes extends AppCompatActivity {
                 outlinedMemeTotal.setText(String.valueOf(friend.getTotalMemes()));
                 outlinedMemeFunny.setText(String.valueOf(friend.getFunnyMemes()));
                 outlinedMemeNotFunny.setText(String.valueOf(friend.getNfMemes()));
+                friendColor = friend.getColor();
             }
         });
 
@@ -155,9 +156,9 @@ public class FriendMemes extends AppCompatActivity {
                                 .valueOf(Integer.parseInt(outlinedMemeFunny.getText().toString()) - 1));
                     } else {
                         outlinedMemeNotFunny.setText(String
-                                .valueOf(Integer.parseInt(outlinedMemeNotFunny.getText().toString()) - 1));
+                                .valueOf(Integer.parseInt(Objects.requireNonNull(outlinedMemeNotFunny.getText()).toString()) - 1));
                         outlinedMemeTotal.setText(String
-                                .valueOf(Integer.parseInt(outlinedMemeTotal.getText().toString()) - 1));
+                                .valueOf(Integer.parseInt(Objects.requireNonNull(outlinedMemeTotal.getText()).toString()) - 1));
                     }
                     break;
                 case ItemTouchHelper.RIGHT:
@@ -245,6 +246,27 @@ public class FriendMemes extends AppCompatActivity {
     // Selector of menu items
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            Intent data = new Intent();
+            String newName = Objects.requireNonNull(outlinedFriendName.getText()).toString();
+            int newTotalMemes = Integer.parseInt(Objects.requireNonNull(outlinedMemeTotal.getText()).toString());
+            int newFunnyMemes = Integer.parseInt(Objects.requireNonNull(outlinedMemeFunny.getText()).toString());
+            int newNfMemes = Integer.parseInt(Objects.requireNonNull(outlinedMemeNotFunny.getText()).toString());
+            data.putExtra(EXTRA_NAME, newName);
+            data.putExtra(EXTRA_TOTAL_MEMES, newTotalMemes);
+            data.putExtra(EXTRA_FUNNY_MEMES, newFunnyMemes);
+            data.putExtra(EXTRA_NOT_FUNNY_MEMES, newNfMemes);
+            data.putExtra(EXTRA_COLOR, friendColor);
+
+            int id = getIntent().getIntExtra(EXTRA_ID, -1);
+            if (id != -1) {
+                data.putExtra(EXTRA_ID, id);
+            }
+            // Friend afterUpdate = new Friend(newName, newTotalMemes, newFunnyMemes, newNfMemes, friendColor);
+            // memeViewModel.update(afterUpdate);
+            setResult(FriendMemes.RESULT_EDIT, data);
+            finish();
+        }
         if (item.getItemId() == R.id.menu_item_edit_friend) {
             setEditingEnabled(outlinedFriendName, true);
             animateButtons(true);
@@ -264,18 +286,23 @@ public class FriendMemes extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         // Perform any necessary actions here before going back
-        // For example, you can save data, show a confirmation dialog, etc.
         Intent data = new Intent();
-        data.putExtra(EXTRA_NAME, (outlinedFriendName.getText()).toString());
-        data.putExtra(EXTRA_TOTAL_MEMES, Integer.parseInt(String.valueOf(outlinedMemeTotal.getText())));
-        data.putExtra(EXTRA_FUNNY_MEMES, Integer.parseInt(String.valueOf(outlinedMemeFunny.getText())));
-        data.putExtra(EXTRA_NOT_FUNNY_MEMES, Integer.parseInt(String.valueOf(outlinedMemeNotFunny.getText())));
-        data.putExtra(EXTRA_COLOR, getIntent().getIntExtra(EXTRA_COLOR, -1));
+        String newName = Objects.requireNonNull(outlinedFriendName.getText()).toString();
+        int newTotalMemes = Integer.parseInt(Objects.requireNonNull(outlinedMemeTotal.getText()).toString());
+        int newFunnyMemes = Integer.parseInt(Objects.requireNonNull(outlinedMemeFunny.getText()).toString());
+        int newNfMemes = Integer.parseInt(Objects.requireNonNull(outlinedMemeNotFunny.getText()).toString());
+        data.putExtra(EXTRA_NAME, newName);
+        data.putExtra(EXTRA_TOTAL_MEMES, newTotalMemes);
+        data.putExtra(EXTRA_FUNNY_MEMES, newFunnyMemes);
+        data.putExtra(EXTRA_NOT_FUNNY_MEMES, newNfMemes);
+        data.putExtra(EXTRA_COLOR, friendColor);
 
         int id = getIntent().getIntExtra(EXTRA_ID, -1);
         if (id != -1) {
             data.putExtra(EXTRA_ID, id);
         }
+        // Friend afterUpdate = new Friend(newName, newTotalMemes, newFunnyMemes, newNfMemes, friendColor);
+        // memeViewModel.update(afterUpdate);
         setResult(FriendMemes.RESULT_EDIT, data);
 
         super.onBackPressed(); // This line is important to actually navigate back
@@ -519,15 +546,17 @@ public class FriendMemes extends AppCompatActivity {
         if (friendName == null) {
             return; // Validation failed
         }
-        disableEditingAndHideButtons();
         // Extract meme counts
         int totalMemes = extractMemeCount(outlinedMemeTotal);
         int funnyMemes = extractMemeCount(outlinedMemeFunny);
         int notFunnyMemes = extractMemeCount(outlinedMemeNotFunny);
+        Friend afterUpdate = new Friend(friendName, totalMemes, funnyMemes, notFunnyMemes, friendColor);
+        memeViewModel.update(afterUpdate);
         // Create an intent with data
-        Intent data = createResultIntent(friendName, totalMemes, funnyMemes, notFunnyMemes);
+        // Intent data = createResultIntent(friendName, totalMemes, funnyMemes, notFunnyMemes);
         // Set the result and finish the activity
-        setResultAndFinish(data);
+        // setResultAndFinish(data);
+        disableEditingAndHideButtons();
     }
 
     private String extractFriendName() {
@@ -558,10 +587,10 @@ public class FriendMemes extends AppCompatActivity {
     private Intent createResultIntent(String friendName, int totalMemes, int funnyMemes, int notFunnyMemes) {
         Intent data = new Intent();
         data.putExtra(EXTRA_NAME, friendName);
-        data.putExtra(EXTRA_TOTAL_MEMES, totalMemes);
-        data.putExtra(EXTRA_FUNNY_MEMES, funnyMemes);
-        data.putExtra(EXTRA_NOT_FUNNY_MEMES, notFunnyMemes);
-        data.putExtra(EXTRA_COLOR, getIntent().getIntExtra(EXTRA_COLOR, -1));
+        // data.putExtra(EXTRA_TOTAL_MEMES, totalMemes);
+        // data.putExtra(EXTRA_FUNNY_MEMES, funnyMemes);
+        // data.putExtra(EXTRA_NOT_FUNNY_MEMES, notFunnyMemes);
+        // data.putExtra(EXTRA_COLOR, getIntent().getIntExtra(EXTRA_COLOR, -1));
         int id = getIntent().getIntExtra(EXTRA_ID, -1);
         if (id != -1) {
             data.putExtra(EXTRA_ID, id);
