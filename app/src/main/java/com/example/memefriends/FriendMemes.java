@@ -112,11 +112,13 @@ public class FriendMemes extends AppCompatActivity {
         });
 
         memeViewModel.getFriendById(receivedId).observe(this, friend -> {
-            setTitle(friend.getName() + "'s stats");
-            outlinedFriendName.setText(friend.getName());
-            outlinedMemeTotal.setText(String.valueOf(friend.getTotalMemes()));
-            outlinedMemeFunny.setText(String.valueOf(friend.getFunnyMemes()));
-            outlinedMemeNotFunny.setText(String.valueOf(friend.getNfMemes()));
+            if (friend != null) {
+                setTitle(friend.getName() + "'s stats");
+                outlinedFriendName.setText(friend.getName());
+                outlinedMemeTotal.setText(String.valueOf(friend.getTotalMemes()));
+                outlinedMemeFunny.setText(String.valueOf(friend.getFunnyMemes()));
+                outlinedMemeNotFunny.setText(String.valueOf(friend.getNfMemes()));
+            }
         });
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
