@@ -151,9 +151,9 @@ public class FriendMemes extends AppCompatActivity {
                     memeAdapter.notifyItemRemoved(position);
                     if (tmp.getFunnyMeme()) {
                         outlinedMemeTotal.setText(String
-                                .valueOf(Integer.parseInt(outlinedMemeTotal.getText().toString()) - 1));
+                                .valueOf(Integer.parseInt(Objects.requireNonNull(outlinedMemeTotal.getText()).toString()) - 1));
                         outlinedMemeFunny.setText(String
-                                .valueOf(Integer.parseInt(outlinedMemeFunny.getText().toString()) - 1));
+                                .valueOf(Integer.parseInt(Objects.requireNonNull(outlinedMemeFunny.getText()).toString()) - 1));
                     } else {
                         outlinedMemeNotFunny.setText(String
                                 .valueOf(Integer.parseInt(Objects.requireNonNull(outlinedMemeNotFunny.getText()).toString()) - 1));
@@ -428,25 +428,25 @@ public class FriendMemes extends AppCompatActivity {
         if (memeName.trim().isEmpty() && selectedMemeSource.equals("MemeSource")) {
             memeNameLayout.setErrorEnabled(true);
             memeNameLayout.setError("You need to enter a name!");
-            popupMemeSource.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red_500));
+            Objects.requireNonNull(popupMemeSource).setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red_500));
         } else if (selectedMemeSource.equals("MemeSource")) {
             memeNameLayout.setError(null);
             memeNameLayout.setErrorEnabled(false);
-            popupMemeSource.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red_500));
+            Objects.requireNonNull(popupMemeSource).setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red_500));
         } else if (memeName.trim().isEmpty()) {
             memeNameLayout.setErrorEnabled(true);
             memeNameLayout.setError("You need to enter a name!");
-            popupMemeSource.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.text_default));
+            Objects.requireNonNull(popupMemeSource).setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.text_default));
         } else {
             memeNameLayout.setError(null);
             memeNameLayout.setErrorEnabled(false);
-            popupMemeSource.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.text_default));
+            Objects.requireNonNull(popupMemeSource).setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.text_default));
             Meme tmpMeme = getMemeData(true, memeName);
             memeViewModel.insertMeme(tmpMeme);
             outlinedMemeFunny.setText(String
-                    .valueOf(Integer.parseInt(outlinedMemeFunny.getText().toString()) + 1));
+                    .valueOf(Integer.parseInt(Objects.requireNonNull(outlinedMemeFunny.getText()).toString()) + 1));
             outlinedMemeTotal.setText(String
-                    .valueOf(Integer.parseInt(outlinedMemeTotal.getText().toString()) + 1));
+                    .valueOf(Integer.parseInt(Objects.requireNonNull(outlinedMemeTotal.getText()).toString()) + 1));
             close_popup();
         }
     }
@@ -458,25 +458,25 @@ public class FriendMemes extends AppCompatActivity {
         if (memeName.trim().isEmpty() && selectedMemeSource.equals("MemeSource")) {
             memeNameLayout.setErrorEnabled(true);
             memeNameLayout.setError("You need to enter a name!");
-            popupMemeSource.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red_500));
+            Objects.requireNonNull(popupMemeSource).setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red_500));
         } else if (selectedMemeSource.equals("MemeSource")) {
             memeNameLayout.setError(null);
             memeNameLayout.setErrorEnabled(false);
-            popupMemeSource.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red_500));
+            Objects.requireNonNull(popupMemeSource).setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red_500));
         } else if (memeName.trim().isEmpty()) {
             memeNameLayout.setErrorEnabled(true);
             memeNameLayout.setError("You need to enter a name!");
-            popupMemeSource.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.text_default));
+            Objects.requireNonNull(popupMemeSource).setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.text_default));
         } else {
             memeNameLayout.setError(null);
             memeNameLayout.setErrorEnabled(false);
-            popupMemeSource.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.text_default));
+            Objects.requireNonNull(popupMemeSource).setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.text_default));
             Meme tmpMeme = getMemeData(false, memeName);
             memeViewModel.insertMeme(tmpMeme);
             outlinedMemeNotFunny.setText(String
-                    .valueOf(Integer.parseInt(outlinedMemeNotFunny.getText().toString()) + 1));
+                    .valueOf(Integer.parseInt(Objects.requireNonNull(outlinedMemeNotFunny.getText()).toString()) + 1));
             outlinedMemeTotal.setText(String
-                    .valueOf(Integer.parseInt(outlinedMemeTotal.getText().toString()) + 1));
+                    .valueOf(Integer.parseInt(Objects.requireNonNull(outlinedMemeTotal.getText()).toString()) + 1));
             close_popup();
         }
     }
