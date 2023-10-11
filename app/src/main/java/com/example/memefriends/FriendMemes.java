@@ -119,15 +119,13 @@ public class FriendMemes extends AppCompatActivity {
                 outlinedMemeFunny.setText(String.valueOf(friend.getFunnyMemes()));
                 outlinedMemeNotFunny.setText(String.valueOf(friend.getNfMemes()));
                 friendColor = friend.getColor();
+                pieChart = findViewById(R.id.test_chart);
+                populatePieChart();
             }
         });
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(memeRecyclerView);
-
-        pieChart = findViewById(R.id.test_chart);
-
-        populatePieChart();
 
 
     }
