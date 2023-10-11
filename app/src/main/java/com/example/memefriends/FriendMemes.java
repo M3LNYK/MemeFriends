@@ -338,6 +338,7 @@ public class FriendMemes extends AppCompatActivity {
         TextView supportingPopUpText = dialog.findViewById(R.id.tv_details_text);
         assert supportingPopUpText != null;
         supportingPopUpText.setText("All memes of this friend will be permanently deleted. This action can not be undone.");
+        populatePieChart();
         return true;
     }
 
@@ -399,12 +400,14 @@ public class FriendMemes extends AppCompatActivity {
         addFunny.setOnClickListener(v -> {
             hideKeyboard();
             addFunnyMemeToFriend();
+            populatePieChart();
         });
         addNotFunny.setOnClickListener(v -> {
             // Perform actions when the button in the popup is clicked
             // Pass data
             hideKeyboard();
             addNotFunnyMemeToFriend();
+            populatePieChart();
         });
         selectedMemeSource = "MemeSource";
     }
