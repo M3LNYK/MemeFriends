@@ -181,10 +181,18 @@ public class FriendMemes extends AppCompatActivity {
 
     private void populatePieChart() {
         List<PieEntry> entries = new ArrayList<>();
-        entries.add(new PieEntry(55f, "Funny")); // 55% completed
-        entries.add(new PieEntry(45f, "Not Funny")); // 45% remaining
-
-        // Create a PieDataSet
+        int totalMemes = Integer.parseInt(Objects.requireNonNull(outlinedMemeTotal.getText()).toString());
+        int funnyMemes = Integer.parseInt(Objects.requireNonNull(outlinedMemeFunny.getText()).toString());
+        int nFMemes = Integer.parseInt(Objects.requireNonNull(outlinedMemeNotFunny.getText()).toString());
+        if (totalMemes > 0) {
+            Float funnyPercentage = Float.valueOf(funnyMemes / totalMemes);
+            Float nFPercentage = Float.valueOf(nFMemes / totalMemes);
+            entries.add(new PieEntry(funnyPercentage, "Funny")); // 55% completed
+            entries.add(new PieEntry(nFPercentage, "Not Funny")); // 45% remaining
+        } else {
+            entries.add(new PieEntry(0f, "Funny")); // 55% completed
+            entries.add(new PieEntry(100f, "Not Funny")); // 45% remaining
+        }// Create a PieDataSet
         PieDataSet dataSet = new PieDataSet(entries, "Percent");
         dataSet.setColors(new int[]{R.color.green_500, R.color.red_500}, this);
 
