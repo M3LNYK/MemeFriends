@@ -231,14 +231,17 @@
                 android:layout_marginTop="8dp"
                 style="@style/OutlinedChipStyle"
                 android:text="Some stats"
+                android:visibility="gone"
                 app:chipIcon="@drawable/baseline_show_chart_24"
                 app:layout_constraintTop_toBottomOf="@+id/memeRecyclerView" />
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_friend_pieChart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="9dp"
+                android:visibility="gone"
                 style="?attr/materialCardViewFilledStyle"
                 app:layout_constraintTop_toBottomOf="@+id/chip_friend_stats"
                 app:cardCornerRadius="12dp">
