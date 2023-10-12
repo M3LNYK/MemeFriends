@@ -73,39 +73,25 @@ public class FriendMemes extends AppCompatActivity {
     private String selectedMemeSource = "MemeSource";
     private ChipGroup chipGroup;
     private PieChart pieChart;
+    private MaterialCardView cardFriendInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_memes);
 
-        MaterialCardView cardFriendInfo = findViewById(R.id.cardFriendInfo);
-        outlinedFriendName = findViewById(R.id.tiet_friend_name);
-        outlinedMemeTotal = findViewById(R.id.tied_meme_total);
-        outlinedMemeFunny = findViewById(R.id.tied_meme_funny);
-        outlinedMemeNotFunny = findViewById(R.id.tied_meme_not_funny);
-        buttonsArea = findViewById(R.id.ll_buttons_field);
-        memeRecyclerView = findViewById(R.id.memeRecyclerView);
+        initializeUI();
+        setClickListeners();
+        setUpRecyclerView();
+        observeViewModelData();
 
-        nameFriendLayout = findViewById(R.id.til_friend_name);
-        fabAddMeme = findViewById(R.id.fab_add_meme);
+    }
 
-        emptyMemeList = findViewById(R.id.rl_empty_meme_list);
-
-        saveChange = findViewById(R.id.button_save_change);
-        discardChange = findViewById(R.id.button_discard_change);
-
-        settingOnClickListeners(cardFriendInfo);
-
-        fabSetClickListeners();
-
-        setDivider();
-
-        memeRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        memeAdapter = new MemeAdapter();
-        memeRecyclerView.setAdapter(memeAdapter);
+    private void observeViewModelData() {
+        // Observe ViewModel data
         memeViewModel = new ViewModelProvider(this).get(FriendViewModel.class);
         receivedId = getIntent().getIntExtra(EXTRA_ID, -1);
+
         memeViewModel.getMemesByFriendId(receivedId).observe(this, friendMemes -> {
             memeAdapter.setFriendMemes(friendMemes);
             checkEmptyList(friendMemes);
@@ -116,20 +102,49 @@ public class FriendMemes extends AppCompatActivity {
                 setTitle(friend.getName() + "'s stats");
                 outlinedFriendName.setText(friend.getName());
                 outlinedMemeTotal.setText(String.valueOf(friend.getTotalMemes()));
-                outlinedMemeFunny.setText(String.valueOf(friend.getFunnyMemes()));
-                outlinedMemeNotFunny.setText(String.valueOf(friend.getNfMemes()));
-                friendColor = friend.getColor();
-                pieChart = findViewById(R.id.test_chart);
                 populatePieChart();
             }
         });
-
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
-        itemTouchHelper.attachToRecyclerView(memeRecyclerView);
-
-
     }
 
+    private void setUpRecyclerView() {
+        // Configure and set up the RecyclerView
+        memeRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        memeAdapter = new MemeAdapter();
+        memeRecyclerView.setAdapter(memeAdapter);
+
+        // Attach ItemTouchHelper
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(memeRecyclerView);
+    }
+
+    private void initializeUI() {
+        // Initialize UI components
+        cardFriendInfo = findViewById(R.id.cardFriendInfo);
+        outlinedFriendName = findViewById(R.id.tiet_friend_name);
+        outlinedMemeTotal = findViewById(R.id.tied_meme_total);
+        outlinedMemeFunny = findViewById(R.id.tied_meme_funny);
+        outlinedMemeNotFunny = findViewById(R.id.tied_meme_not_funny);
+        buttonsArea = findViewById(R.id.ll_buttons_field);
+        memeRecyclerView = findViewById(R.id.memeRecyclerView);
+        nameFriendLayout = findViewById(R.id.til_friend_name);
+        fabAddMeme = findViewById(R.id.fab_add_meme);
+        emptyMemeList = findViewById(R.id.rl_empty_meme_list);
+        saveChange = findViewById(R.id.button_save_change);
+        discardChange = findViewById(R.id.button_discard_change);
+        pieChart = findViewById(R.id.test_chart);
+        populatePieChart();
+        setDivider();
+    }
+
+    private void setClickListeners() {
+        // Set click listeners for UI components
+        settingOnClickListeners(cardFriendInfo);
+        fabSetClickListeners();
+    }
+
+    //@TODO check solid
+    //@TODO test
     ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,
             // ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             ItemTouchHelper.LEFT) {
@@ -175,11 +190,12 @@ public class FriendMemes extends AppCompatActivity {
                     .addSwipeLeftLabel("Delete")
                     .create()
                     .decorate();
-
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
         }
     };
 
+    //@TODO check solid populatePieChart()
+    //@TODO test populatePieChart()
     private void populatePieChart() {
         int totalMemes = Integer.parseInt(Objects.requireNonNull(outlinedMemeTotal.getText()).toString());
         int funnyMemes = Integer.parseInt(Objects.requireNonNull(outlinedMemeFunny.getText()).toString());
@@ -217,6 +233,8 @@ public class FriendMemes extends AppCompatActivity {
         pieChart.invalidate();
     }
 
+    //@TODO check solid checkEmptyList()
+    //@TODO test checkEmptyList()
     private void checkEmptyList(List<Meme> friendMemes) {
         if (friendMemes.isEmpty()) {
             emptyMemeList.setVisibility(View.VISIBLE);
