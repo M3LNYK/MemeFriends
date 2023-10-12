@@ -162,6 +162,7 @@ public class FriendMemes extends AppCompatActivity {
                 case ItemTouchHelper.RIGHT:
                     break;
             }
+            populatePieChart();
         }
 
         @Override
@@ -180,38 +181,39 @@ public class FriendMemes extends AppCompatActivity {
     };
 
     private void populatePieChart() {
-        List<PieEntry> entries = new ArrayList<>();
         int totalMemes = Integer.parseInt(Objects.requireNonNull(outlinedMemeTotal.getText()).toString());
         int funnyMemes = Integer.parseInt(Objects.requireNonNull(outlinedMemeFunny.getText()).toString());
-        int nFMemes = Integer.parseInt(Objects.requireNonNull(outlinedMemeNotFunny.getText()).toString());
-        if (totalMemes > 0) {
-            Float funnyPercentage = Float.valueOf(funnyMemes / totalMemes);
-            Float nFPercentage = Float.valueOf(nFMemes / totalMemes);
-            entries.add(new PieEntry(funnyPercentage, "Funny")); // 55% completed
-            entries.add(new PieEntry(nFPercentage, "Not Funny")); // 45% remaining
+
+        float funnyPercentage = totalMemes > 0 ? (float) funnyMemes / totalMemes * 100f : 0f;
+        float notFunnyPercentage = 100f - funnyPercentage;
+
+        List<PieEntry> entries = new ArrayList<>();
+        entries.add(new PieEntry(funnyPercentage, "Funny"));
+        entries.add(new PieEntry(notFunnyPercentage, "Not Funny"));
+
+        // Check if the PieChart already has data, and update it instead of creating a new one.
+        if (pieChart.getData() != null && pieChart.getData().getDataSetCount() > 0) {
+            PieDataSet dataSet = (PieDataSet) pieChart.getData().getDataSetByIndex(0);
+            dataSet.setValues(entries);
+            pieChart.getData().notifyDataChanged();
+            pieChart.notifyDataSetChanged();
         } else {
-            entries.add(new PieEntry(0f, "Funny")); // 55% completed
-            entries.add(new PieEntry(100f, "Not Funny")); // 45% remaining
-        }// Create a PieDataSet
-        PieDataSet dataSet = new PieDataSet(entries, "Percent");
-        dataSet.setColors(new int[]{R.color.green_500, R.color.red_500}, this);
+            // Create a new PieDataSet and PieData if the chart is empty.
+            PieDataSet dataSet = new PieDataSet(entries, "Percent");
+            dataSet.setColors(new int[]{R.color.green_500, R.color.red_500}, this);
 
-        // Create PieData from the dataSet
-        PieData data = new PieData(dataSet);
+            PieData data = new PieData(dataSet);
+            data.setValueTextSize(14f);
+            data.setValueTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
 
-        // Customize the data (e.g., text size, text color)
-        data.setValueTextSize(14f);
-        data.setValueTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+            pieChart.setData(data);
+        }
 
-        // Set the data to the chart
-        pieChart.setData(data);
-
-        // Remove the description label
+        // Customize and refresh the chart
         Description description = new Description();
         description.setText("");
         pieChart.setDescription(description);
 
-        // Refresh the chart
         pieChart.invalidate();
     }
 
