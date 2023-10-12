@@ -37,6 +37,7 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -73,7 +74,8 @@ public class FriendMemes extends AppCompatActivity {
     private String selectedMemeSource = "MemeSource";
     private ChipGroup chipGroup;
     private PieChart pieChart;
-    private MaterialCardView cardFriendInfo;
+    private MaterialCardView cardFriendInfo, cardFriendPieChart;
+    private Chip someStats;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,26 +87,6 @@ public class FriendMemes extends AppCompatActivity {
         setUpRecyclerView();
         observeViewModelData();
 
-    }
-
-    private void observeViewModelData() {
-        // Observe ViewModel data
-        memeViewModel = new ViewModelProvider(this).get(FriendViewModel.class);
-        receivedId = getIntent().getIntExtra(EXTRA_ID, -1);
-
-        memeViewModel.getMemesByFriendId(receivedId).observe(this, friendMemes -> {
-            memeAdapter.setFriendMemes(friendMemes);
-            checkEmptyList(friendMemes);
-        });
-
-        memeViewModel.getFriendById(receivedId).observe(this, friend -> {
-            if (friend != null) {
-                setTitle(friend.getName() + "'s stats");
-                outlinedFriendName.setText(friend.getName());
-                outlinedMemeTotal.setText(String.valueOf(friend.getTotalMemes()));
-                populatePieChart();
-            }
-        });
     }
 
     private void setUpRecyclerView() {
@@ -133,7 +115,9 @@ public class FriendMemes extends AppCompatActivity {
         saveChange = findViewById(R.id.button_save_change);
         discardChange = findViewById(R.id.button_discard_change);
         pieChart = findViewById(R.id.test_chart);
-        populatePieChart();
+        someStats = findViewById(R.id.chip_friend_stats);
+        cardFriendPieChart = findViewById(R.id.card_friend_pieChart);
+        // populatePieChart();
         setDivider();
     }
 
@@ -141,6 +125,29 @@ public class FriendMemes extends AppCompatActivity {
         // Set click listeners for UI components
         settingOnClickListeners(cardFriendInfo);
         fabSetClickListeners();
+    }
+
+    private void observeViewModelData() {
+        // Observe ViewModel data
+        memeViewModel = new ViewModelProvider(this).get(FriendViewModel.class);
+        receivedId = getIntent().getIntExtra(EXTRA_ID, -1);
+
+        memeViewModel.getMemesByFriendId(receivedId).observe(this, friendMemes -> {
+            memeAdapter.setFriendMemes(friendMemes);
+            checkEmptyList(friendMemes);
+        });
+
+        memeViewModel.getFriendById(receivedId).observe(this, friend -> {
+            if (friend != null) {
+                setTitle(friend.getName() + "'s stats");
+                outlinedFriendName.setText(friend.getName());
+                outlinedMemeTotal.setText(String.valueOf(friend.getTotalMemes()));
+                outlinedMemeFunny.setText(String.valueOf(friend.getFunnyMemes()));
+                outlinedMemeNotFunny.setText(String.valueOf(friend.getNfMemes()));
+                friendColor = friend.getColor();
+                populatePieChart();
+            }
+        });
     }
 
     //@TODO check solid
@@ -194,54 +201,61 @@ public class FriendMemes extends AppCompatActivity {
         }
     };
 
-    //@TODO check solid populatePieChart()
     //@TODO test populatePieChart()
     private void populatePieChart() {
-        int totalMemes = Integer.parseInt(Objects.requireNonNull(outlinedMemeTotal.getText()).toString());
-        int funnyMemes = Integer.parseInt(Objects.requireNonNull(outlinedMemeFunny.getText()).toString());
+        if (cardFriendPieChart.getVisibility() != View.GONE) {
+            int totalMemes = Integer.parseInt(Objects.requireNonNull(outlinedMemeTotal.getText()).toString());
+            int funnyMemes = Integer.parseInt(Objects.requireNonNull(outlinedMemeFunny.getText()).toString());
 
-        float funnyPercentage = totalMemes > 0 ? (float) funnyMemes / totalMemes * 100f : 0f;
-        float notFunnyPercentage = 100f - funnyPercentage;
+            float funnyPercentage = totalMemes > 0 ? (float) funnyMemes / totalMemes * 100f : 0f;
+            float notFunnyPercentage = 100f - funnyPercentage;
 
-        List<PieEntry> entries = new ArrayList<>();
-        entries.add(new PieEntry(funnyPercentage, "Funny"));
-        entries.add(new PieEntry(notFunnyPercentage, "Not Funny"));
+            List<PieEntry> entries = new ArrayList<>();
+            entries.add(new PieEntry(funnyPercentage, "Funny"));
+            entries.add(new PieEntry(notFunnyPercentage, "Not Funny"));
 
-        // Check if the PieChart already has data, and update it instead of creating a new one.
-        if (pieChart.getData() != null && pieChart.getData().getDataSetCount() > 0) {
-            PieDataSet dataSet = (PieDataSet) pieChart.getData().getDataSetByIndex(0);
-            dataSet.setValues(entries);
-            pieChart.getData().notifyDataChanged();
-            pieChart.notifyDataSetChanged();
-        } else {
-            // Create a new PieDataSet and PieData if the chart is empty.
-            PieDataSet dataSet = new PieDataSet(entries, "Percent");
-            dataSet.setColors(new int[]{R.color.green_500, R.color.red_500}, this);
+            // Check if the PieChart already has data, and update it instead of creating a new one.
+            if (pieChart.getData() != null && pieChart.getData().getDataSetCount() > 0) {
+                PieDataSet dataSet = (PieDataSet) pieChart.getData().getDataSetByIndex(0);
+                dataSet.setValues(entries);
+                pieChart.getData().notifyDataChanged();
+                pieChart.notifyDataSetChanged();
+            } else {
+                // Create a new PieDataSet and PieData if the chart is empty.
+                PieDataSet dataSet = new PieDataSet(entries, "%");
+                dataSet.setColors(new int[]{R.color.green_500, R.color.red_500}, this);
 
-            PieData data = new PieData(dataSet);
-            data.setValueTextSize(14f);
-            data.setValueTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
+                PieData data = new PieData(dataSet);
+                data.setValueTextSize(14f);
+                data.setValueTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
 
-            pieChart.setData(data);
+                pieChart.setData(data);
+            }
+
+
+            // Customize and refresh the chart
+            Description description = new Description();
+            description.setText("");
+            pieChart.setDescription(description);
+
+            pieChart.invalidate();
         }
-
-        // Customize and refresh the chart
-        Description description = new Description();
-        description.setText("");
-        pieChart.setDescription(description);
-
-        pieChart.invalidate();
     }
 
-    //@TODO check solid checkEmptyList()
     //@TODO test checkEmptyList()
     private void checkEmptyList(List<Meme> friendMemes) {
+        //  Add check for stats
         if (friendMemes.isEmpty()) {
             emptyMemeList.setVisibility(View.VISIBLE);
             memeRecyclerView.setVisibility(View.GONE);
+            someStats.setVisibility(View.GONE);
+            cardFriendPieChart.setVisibility(View.GONE);
         } else {
             emptyMemeList.setVisibility(View.GONE);
             memeRecyclerView.setVisibility(View.VISIBLE);
+            someStats.setVisibility(View.VISIBLE);
+            cardFriendPieChart.setVisibility(View.VISIBLE);
+
         }
     }
 
