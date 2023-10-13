@@ -203,43 +203,34 @@ public class FriendMemes extends AppCompatActivity {
 
     //@TODO test populatePieChart()
     private void populatePieChart() {
-        if (cardFriendPieChart.getVisibility() != View.GONE) {
-            int totalMemes = Integer.parseInt(Objects.requireNonNull(outlinedMemeTotal.getText()).toString());
-            int funnyMemes = Integer.parseInt(Objects.requireNonNull(outlinedMemeFunny.getText()).toString());
+        int totalMemes = Integer.parseInt(Objects.requireNonNull(outlinedMemeTotal.getText()).toString());
+        int funnyMemes = Integer.parseInt(Objects.requireNonNull(outlinedMemeFunny.getText()).toString());
 
-            float funnyPercentage = totalMemes > 0 ? (float) funnyMemes / totalMemes * 100f : 0f;
-            float notFunnyPercentage = 100f - funnyPercentage;
+        float funnyPercentage = totalMemes > 0 ? (float) funnyMemes / totalMemes * 100f : 0f;
+        float notFunnyPercentage = 100f - funnyPercentage;
 
-            List<PieEntry> entries = new ArrayList<>();
-            entries.add(new PieEntry(funnyPercentage, "Funny"));
-            entries.add(new PieEntry(notFunnyPercentage, "Not Funny"));
+        List<PieEntry> entries = new ArrayList<>();
+        entries.add(new PieEntry(funnyPercentage, "Funny"));
+        entries.add(new PieEntry(notFunnyPercentage, "Not Funny"));
 
-            // Check if the PieChart already has data, and update it instead of creating a new one.
-            if (pieChart.getData() != null && pieChart.getData().getDataSetCount() > 0) {
-                PieDataSet dataSet = (PieDataSet) pieChart.getData().getDataSetByIndex(0);
-                dataSet.setValues(entries);
-                pieChart.getData().notifyDataChanged();
-                pieChart.notifyDataSetChanged();
-            } else {
-                // Create a new PieDataSet and PieData if the chart is empty.
-                PieDataSet dataSet = new PieDataSet(entries, "%");
-                dataSet.setColors(new int[]{R.color.green_500, R.color.red_500}, this);
+        // Create a new PieDataSet and PieData.
+        PieDataSet dataSet = new PieDataSet(entries, "%");
+        dataSet.setColors(new int[]{R.color.green_500, R.color.red_500}, this);
 
-                PieData data = new PieData(dataSet);
-                data.setValueTextSize(14f);
-                data.setValueTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
+        PieData data = new PieData(dataSet);
+        data.setValueTextSize(14f);
+        data.setValueTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
 
-                pieChart.setData(data);
-            }
+        // Set the data to the chart
+        pieChart.setData(data);
 
+        // Customize and refresh the chart
+        Description description = new Description();
+        description.setText("");
+        pieChart.setDescription(description);
 
-            // Customize and refresh the chart
-            Description description = new Description();
-            description.setText("");
-            pieChart.setDescription(description);
-
-            pieChart.invalidate();
-        }
+        // Refresh the chart
+        pieChart.invalidate();
     }
 
     //@TODO test checkEmptyList()
