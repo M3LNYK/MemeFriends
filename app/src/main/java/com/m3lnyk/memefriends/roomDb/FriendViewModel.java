@@ -1,4 +1,4 @@
-package com.example.memefriends.roomDb;
+package com.m3lnyk.memefriends.roomDb;
 
 import android.app.Application;
 
@@ -6,8 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.example.memefriends.roomDb.Friend.Friend;
-import com.example.memefriends.roomDb.Friend.FriendRepository;
+import com.m3lnyk.memefriends.roomDb.Friend.Friend;
+import com.m3lnyk.memefriends.roomDb.Friend.FriendRepository;
 
 import java.util.List;
 

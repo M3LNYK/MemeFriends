@@ -1,11 +1,11 @@
-package com.example.memefriends.roomDb;
+package com.m3lnyk.memefriends.roomDb;
 
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import com.example.memefriends.roomDb.Friend.Friend;
+import com.m3lnyk.memefriends.roomDb.Friend.Friend;
 
 //import java.util.Date;
 

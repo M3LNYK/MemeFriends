@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.memefriends'
+    namespace 'com.m3lnyk.memefriends'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.example.memefriends"
+        applicationId "com.m3lnyk.memefriends"
         minSdk 29
         targetSdk 34
         versionCode 1

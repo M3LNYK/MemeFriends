@@ -1,4 +1,4 @@
-package com.example.memefriends;
+package com.m3lnyk.memefriends;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -27,10 +27,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.memefriends.roomDb.Friend.Friend;
-import com.example.memefriends.roomDb.FriendViewModel;
-import com.example.memefriends.roomDb.Friend.FriendAdapter;
-import com.example.memefriends.roomDb.Friend.GroupedFriend;
+import com.m3lnyk.memefriends.roomDb.Friend.Friend;
+import com.m3lnyk.memefriends.roomDb.FriendViewModel;
+import com.m3lnyk.memefriends.roomDb.Friend.FriendAdapter;
+import com.m3lnyk.memefriends.roomDb.Friend.GroupedFriend;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.BaseTransientBottomBar;

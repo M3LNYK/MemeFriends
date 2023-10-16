@@ -1,4 +1,4 @@
-package com.example.memefriends;
+package com.m3lnyk.memefriends;
 
 import android.content.Context;
 

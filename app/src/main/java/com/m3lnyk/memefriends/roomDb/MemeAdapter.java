@@ -1,4 +1,4 @@
-package com.example.memefriends.roomDb;
+package com.m3lnyk.memefriends.roomDb;
 
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -10,9 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.memefriends.R;
-import com.example.memefriends.roomDb.Friend.Friend;
-import com.google.android.material.textfield.TextInputEditText;
+import com.m3lnyk.memefriends.R;
+import com.m3lnyk.memefriends.roomDb.Friend.Friend;
 
 import java.util.ArrayList;
 import java.util.List;

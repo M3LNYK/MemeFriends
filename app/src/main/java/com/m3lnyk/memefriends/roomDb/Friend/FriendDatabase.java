@@ -1,4 +1,4 @@
-package com.example.memefriends.roomDb.Friend;
+package com.m3lnyk.memefriends.roomDb.Friend;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -9,8 +9,8 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.example.memefriends.roomDb.Meme;
-import com.example.memefriends.roomDb.MemeDao;
+import com.m3lnyk.memefriends.roomDb.Meme;
+import com.m3lnyk.memefriends.roomDb.MemeDao;
 
 @Database(entities = {Friend.class, Meme.class}, version = 4)
 public abstract class FriendDatabase extends RoomDatabase {

@@ -1,8 +1,8 @@
-package com.example.memefriends;
+package com.m3lnyk.memefriends;
 
 import static org.junit.Assert.*;
 
-import com.example.memefriends.roomDb.Friend.Friend;
+import com.m3lnyk.memefriends.roomDb.Friend.Friend;
 
 import org.junit.Before;
 import org.junit.Test;

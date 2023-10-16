@@ -1,4 +1,4 @@
-package com.example.memefriends;
+package com.m3lnyk.memefriends;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -27,10 +27,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.memefriends.roomDb.Friend.Friend;
-import com.example.memefriends.roomDb.FriendViewModel;
-import com.example.memefriends.roomDb.Meme;
-import com.example.memefriends.roomDb.MemeAdapter;
+import com.m3lnyk.memefriends.roomDb.Friend.Friend;
+import com.m3lnyk.memefriends.roomDb.FriendViewModel;
+import com.m3lnyk.memefriends.roomDb.Meme;
+import com.m3lnyk.memefriends.roomDb.MemeAdapter;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.PieData;

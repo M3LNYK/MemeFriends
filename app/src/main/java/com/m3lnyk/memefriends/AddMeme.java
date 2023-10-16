@@ -1,4 +1,4 @@
-package com.example.memefriends;
+package com.m3lnyk.memefriends;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 
-import com.example.memefriends.roomDb.FriendViewModel;
+import com.m3lnyk.memefriends.roomDb.FriendViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class AddMeme extends AppCompatActivity {

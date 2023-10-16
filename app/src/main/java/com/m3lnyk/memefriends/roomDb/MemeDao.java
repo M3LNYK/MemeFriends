@@ -1,4 +1,4 @@
-package com.example.memefriends.roomDb;
+package com.m3lnyk.memefriends.roomDb;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;

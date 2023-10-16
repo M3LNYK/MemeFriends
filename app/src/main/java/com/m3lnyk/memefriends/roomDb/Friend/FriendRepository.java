@@ -1,12 +1,12 @@
-package com.example.memefriends.roomDb.Friend;
+package com.m3lnyk.memefriends.roomDb.Friend;
 
 import android.app.Application;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.memefriends.roomDb.Meme;
-import com.example.memefriends.roomDb.MemeDao;
+import com.m3lnyk.memefriends.roomDb.Meme;
+import com.m3lnyk.memefriends.roomDb.MemeDao;
 
 import java.util.List;
 

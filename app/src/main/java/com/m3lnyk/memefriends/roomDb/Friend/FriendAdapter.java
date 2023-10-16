@@ -1,10 +1,5 @@
-package com.example.memefriends.roomDb.Friend;
+package com.m3lnyk.memefriends.roomDb.Friend;
 
-import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.InsetDrawable;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +7,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.memefriends.R;
+import com.m3lnyk.memefriends.R;
 
 import java.util.ArrayList;
 import java.util.List;
