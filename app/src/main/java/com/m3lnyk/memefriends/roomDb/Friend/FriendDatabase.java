@@ -1,6 +1,7 @@
 package com.m3lnyk.memefriends.roomDb.Friend;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.AsyncTask;
 
 import androidx.annotation.NonNull;
@@ -50,9 +51,10 @@ public abstract class FriendDatabase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            friendDao.insert(new Friend("Test 1", 0, 0, 0, 0));
-            friendDao.insert(new Friend("Test 2", 0, 0, 0, 1));
-            friendDao.insert(new Friend("Test 3", 1, 1, 0, 2));
+            int colorBlack = Color.rgb(0,0,0);
+            friendDao.insert(new Friend("Test 1", 0, 0, 0, colorBlack));
+            friendDao.insert(new Friend("Test 2", 0, 0, 0, colorBlack));
+            friendDao.insert(new Friend("Test 3", 1, 1, 0, colorBlack));
             return null;
         }
     }
