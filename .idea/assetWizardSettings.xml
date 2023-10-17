@@ -338,7 +338,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="file:/D:/Apps/Android_SDK/icons/material/materialicons/show_chart/baseline_show_chart_24.xml" />
+                                      <entry key="url" value="file:/D:/Apps/Android_SDK/icons/material/materialicons/share/baseline_share_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -348,7 +348,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="baseline_show_chart_24" />
+                            <entry key="outputName" value="baseline_share_24" />
                             <entry key="sourceFile" value="E:\SomeCode\MemeFriends" />
                           </map>
                         </option>
