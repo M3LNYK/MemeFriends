@@ -26,4 +26,5 @@
     <string name="test_chart">Test Chart</string>
     <string name="pie_chart_name">Overall ratio</string>
     <string name="fab_add_friend_meme_description">Add meme to Friend Stats</string>
+    <string name="more_stats_soon">More stats will be available soon!</string>
 </resources>
