@@ -218,8 +218,12 @@ public class FriendMemes extends AppCompatActivity {
         dataSet.setColors(new int[]{R.color.green_500, R.color.red_500}, this);
 
         PieData data = new PieData(dataSet);
-        data.setValueTextSize(14f);
+        data.setValueTextSize(16f);
         data.setValueTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
+        pieChart.setUsePercentValues(true);
+        pieChart.setDrawEntryLabels(true);
+        pieChart.setEntryLabelColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
+        pieChart.setEntryLabelTextSize(10f);
 
         // Set the data to the chart
         pieChart.setData(data);
