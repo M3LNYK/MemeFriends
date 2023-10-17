@@ -297,6 +297,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:text="3"
+                                android:textColor="@color/green_500"
                                 android:textSize="46sp" />
 
                             <TextView
@@ -305,6 +306,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:text="10"
+                                android:textColor="@color/blue_500"
                                 android:textSize="24sp" />
 
                             <View
