@@ -333,6 +333,7 @@
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/baseline_add_fab" />
+        app:srcCompat="@drawable/baseline_add_fab"
+        android:contentDescription="@string/fab_add_friend_meme_description" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
