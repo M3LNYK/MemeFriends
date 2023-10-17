@@ -50,6 +50,10 @@
     <color name="custom_purple_a400">#5E35B1</color>
     <color name="custom_purple_a700">#6200EA</color>
 
+    <color name="custom_blue_320">#64B5F6</color>
+    <color name="custom_blue_310">#4FC3F7</color>
+    <color name="custom_blue_300">#4DD0E1</color>
+    <color name="custom_blue_400">#42A5F5</color>
 
     <color name="seed">#0754BC</color>
     <color name="md_theme_light_primary">#1559C1</color>
