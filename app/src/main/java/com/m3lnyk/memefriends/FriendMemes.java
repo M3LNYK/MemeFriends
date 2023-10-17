@@ -76,6 +76,7 @@ public class FriendMemes extends AppCompatActivity {
     private PieChart pieChart;
     private MaterialCardView cardFriendInfo, cardFriendPieChart;
     private Chip someStats;
+    private TextView textViewFunnyMemes, textViewOverallMemes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +118,8 @@ public class FriendMemes extends AppCompatActivity {
         pieChart = findViewById(R.id.test_chart);
         someStats = findViewById(R.id.chip_friend_stats);
         cardFriendPieChart = findViewById(R.id.card_friend_pieChart);
+        textViewFunnyMemes = findViewById(R.id.text_view_funny_memes);
+        textViewOverallMemes = findViewById(R.id.text_view_overall_memes);
         // populatePieChart();
         setDivider();
     }
@@ -234,7 +237,13 @@ public class FriendMemes extends AppCompatActivity {
         pieChart.setDescription(description);
 
         // Refresh the chart
+        populateScore(totalMemes, funnyMemes);
         pieChart.invalidate();
+    }
+
+    private void populateScore(int totalMemes, int funnyMemes) {
+        textViewOverallMemes.setText(String.valueOf(totalMemes));
+        textViewFunnyMemes.setText(String.valueOf(funnyMemes));
     }
 
     //@TODO test checkEmptyList()
