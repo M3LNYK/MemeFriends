@@ -160,9 +160,9 @@
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_friend_memes"
+                style="@style/OutlinedChipStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/OutlinedChipStyle"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
                 android:text="Last memes"
@@ -212,21 +212,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxHeight="400dp"
-                    android:scrollbarStyle="insideInset"
                     android:nestedScrollingEnabled="false"
-                    tools:listitem="@layout/list_item_memes"
-                    android:visibility="gone"/>
+                    android:scrollbarStyle="insideInset"
+                    android:visibility="gone"
+                    tools:listitem="@layout/list_item_memes" />
 
 
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_friend_stats"
+                style="@style/OutlinedChipStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
-                style="@style/OutlinedChipStyle"
                 android:text="Some stats"
                 android:visibility="gone"
                 app:chipIcon="@drawable/baseline_show_chart_24"
@@ -234,14 +234,14 @@
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_friend_pieChart"
+                style="?attr/materialCardViewFilledStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="9dp"
                 android:visibility="gone"
-                style="?attr/materialCardViewFilledStyle"
-                app:layout_constraintTop_toBottomOf="@+id/chip_friend_stats"
-                app:cardCornerRadius="12dp">
+                app:cardCornerRadius="12dp"
+                app:layout_constraintTop_toBottomOf="@+id/chip_friend_stats">
 
 
                 <LinearLayout
@@ -259,23 +259,61 @@
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/test_chart" />
+                            android:text="@string/pie_chart_name" />
 
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/linear_layout_pie_chart"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="16dp">
-                        <!-- Chart should be here -->
+                        android:layout_height="250dp"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="16dp"
+                        android:paddingVertical="8dp">
 
                         <com.github.mikephil.charting.charts.PieChart
                             android:id="@+id/test_chart"
                             android:layout_width="match_parent"
-                            android:layout_height="200dp" />
+                            android:layout_height="match_parent"
+                            android:layout_weight="1" />
 
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="3"
+                            android:orientation="vertical"
+                            android:padding="16dp"
+                            android:paddingVertical="8dp">
 
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:layout_gravity="center"
+                                android:layout_weight="1" />
+
+                            <TextView
+                                android:id="@+id/textView2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:text="3"
+                                android:textSize="46sp" />
+
+                            <TextView
+                                android:id="@+id/textView3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:text="10"
+                                android:textSize="24sp" />
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:layout_gravity="center"
+                                android:layout_weight="1" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
