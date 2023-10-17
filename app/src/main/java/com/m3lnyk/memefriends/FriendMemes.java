@@ -74,7 +74,7 @@ public class FriendMemes extends AppCompatActivity {
     private String selectedMemeSource = "MemeSource";
     private ChipGroup chipGroup;
     private PieChart pieChart;
-    private MaterialCardView cardFriendInfo, cardFriendPieChart;
+    private MaterialCardView cardFriendInfo, cardFriendPieChart, cardMoreSoon;
     private Chip someStats;
     private TextView textViewFunnyMemes, textViewOverallMemes;
 
@@ -120,6 +120,7 @@ public class FriendMemes extends AppCompatActivity {
         cardFriendPieChart = findViewById(R.id.card_friend_pieChart);
         textViewFunnyMemes = findViewById(R.id.text_view_funny_memes);
         textViewOverallMemes = findViewById(R.id.text_view_overall_memes);
+        cardMoreSoon = findViewById(R.id.card_more_coming_soon);
         // populatePieChart();
         setDivider();
     }
@@ -254,12 +255,13 @@ public class FriendMemes extends AppCompatActivity {
             memeRecyclerView.setVisibility(View.GONE);
             someStats.setVisibility(View.GONE);
             cardFriendPieChart.setVisibility(View.GONE);
+            cardMoreSoon.setVisibility(View.GONE);
         } else {
             emptyMemeList.setVisibility(View.GONE);
             memeRecyclerView.setVisibility(View.VISIBLE);
             someStats.setVisibility(View.VISIBLE);
             cardFriendPieChart.setVisibility(View.VISIBLE);
-
+            cardMoreSoon.setVisibility(View.VISIBLE);
         }
     }
 
