@@ -323,6 +323,45 @@
 
             </com.google.android.material.card.MaterialCardView>
 
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_more_coming_soon"
+                style="?attr/materialCardViewFilledStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="9dp"
+                app:cardCornerRadius="12dp"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/card_friend_pieChart">
+
+                <RelativeLayout
+                    android:id="@+id/rl_more_coming_soon"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <ImageView
+                        android:id="@+id/image_view_timer"
+                        android:layout_width="256px"
+                        android:layout_height="256px"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="12dp"
+                        android:src="@drawable/baseline_timer_24" />
+
+                    <TextView
+                        android:id="@+id/text_view_more_stats_soon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/image_view_timer"
+                        android:layout_centerHorizontal="true"
+                        android:layout_margin="16dp"
+                        android:text="@string/more_stats_soon"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:visibility="visible" />
+
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+
         </LinearLayout>
     </ScrollView>
 
