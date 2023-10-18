@@ -401,6 +401,9 @@ public class FriendsList extends AppCompatActivity {
                 return true;
             }
         }
+        if (item.getItemId() == R.id.menu_item_help){
+            startActivity(new Intent(this, Help.class));
+        }
         return super.onOptionsItemSelected(item);
     }
 
