@@ -12,6 +12,9 @@
         android:theme="@style/Theme.MemeFriends"
         tools:targetApi="31">
         <activity
+            android:name=".Help"
+            android:exported="false" />
+        <activity
             android:name=".AddMeme"
             android:exported="false" />
         <activity
@@ -19,13 +22,14 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".FriendMemes"
             android:exported="true"
-            android:parentActivityName=".FriendsList"/>
+            android:parentActivityName=".FriendsList" />
     </application>
 
 </manifest>
