@@ -16,6 +16,8 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:orientation="vertical"
+            android:clickable="true"
+            android:focusable="true"
             android:padding="16dp">
 
             <TextView
@@ -44,7 +46,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ll_Guide"
+            android:id="@+id/ll_guide"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:orientation="vertical"
@@ -80,6 +82,7 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/tv_version_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1.0.0"
