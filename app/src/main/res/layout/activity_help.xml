@@ -99,7 +99,7 @@
                 android:id="@+id/textViewLicense"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Licensed under the MIT License"
+                android:text="Licensed under the Apache License, Version 2.0"
                 android:textColor="@color/black_light"/>
         </LinearLayout>
     </LinearLayout>
