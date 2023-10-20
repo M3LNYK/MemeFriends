@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.application'
+//    id 'com.google.android.gms.oss-licenses-plugin'
 }
 
 android {
@@ -46,9 +47,6 @@ dependencies {
 
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
 
-    // Implementation of on swipe show icon and color
-    implementation 'it.xabaras.android:recyclerview-swipedecorator:1.4'
-
     // Local unit tests
     testImplementation "androidx.test.espresso:espresso-core:3.5.1"
     testImplementation "junit:junit:4.13.2"
@@ -58,6 +56,12 @@ dependencies {
 
     // Instrumentation tests - add later
 
+    // Implementation of on swipe show icon and color
+    implementation 'it.xabaras.android:recyclerview-swipedecorator:1.4'
+
     //MPAndroidChart
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    // oss-licenses
+//    implementation 'com.google.android.gms:play-services-oss-licenses:17.0.1'
 }
