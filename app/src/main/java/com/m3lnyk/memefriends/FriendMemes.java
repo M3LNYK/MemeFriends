@@ -413,26 +413,19 @@ public class FriendMemes extends AppCompatActivity {
 
     private void memeSource() {
         int chipId = chipGroup.getCheckedChipId();
-        switch (chipId) {
-            case R.id.popup_add_meme_chip_instagram:
-                // Handle option 1 selection
-                selectedMemeSource = "Instagram";
-                break;
-            case R.id.popup_add_meme_chip_twitter:
-                selectedMemeSource = "Twitter";
-                break;
-            case R.id.popup_add_meme_chip_reddit:
-                selectedMemeSource = "Reddit";
-                break;
-            case R.id.popup_add_meme_chip_9gag:
-                selectedMemeSource = "9Gag";
-                break;
-            case R.id.popup_add_meme_chip_tiktok:
-                selectedMemeSource = "TikTok";
-                break;
-            case R.id.popup_add_meme_chip_other:
-                selectedMemeSource = "Other";
-                break;
+        if (chipId == R.id.popup_add_meme_chip_instagram) {
+            // Handle option 1 selection
+            selectedMemeSource = "Instagram";
+        } else if (chipId == R.id.popup_add_meme_chip_twitter) {
+            selectedMemeSource = "Twitter";
+        } else if (chipId == R.id.popup_add_meme_chip_reddit) {
+            selectedMemeSource = "Reddit";
+        } else if (chipId == R.id.popup_add_meme_chip_9gag) {
+            selectedMemeSource = "9Gag";
+        } else if (chipId == R.id.popup_add_meme_chip_tiktok) {
+            selectedMemeSource = "TikTok";
+        } else if (chipId == R.id.popup_add_meme_chip_other) {
+            selectedMemeSource = "Other";
         }
     }
 
