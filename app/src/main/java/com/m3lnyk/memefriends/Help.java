@@ -41,6 +41,11 @@ public class Help extends AppCompatActivity {
         licenses.setOnClickListener(view -> onLicensesClicked());
         guide.setOnClickListener(view -> onGuideClicked());
         sourceCode.setOnClickListener(view -> onSourceCodeClicked());
+        versionNum.setOnClickListener(view -> onVersionNumClicked());
+    }
+
+    private void onVersionNumClicked() {
+        Toast.makeText(this, "everything went well:)", Toast.LENGTH_SHORT).show();
     }
 
     private void onSourceCodeClicked() {
