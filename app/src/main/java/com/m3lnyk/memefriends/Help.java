@@ -2,6 +2,8 @@ package com.m3lnyk.memefriends;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -36,6 +38,24 @@ public class Help extends AppCompatActivity {
 
     private void setClickListeners() {
         contactDev.setOnClickListener(view -> onContactDevClicked());
+        licenses.setOnClickListener(view -> onLicensesClicked());
+        guide.setOnClickListener(view -> onGuideClicked());
+        sourceCode.setOnClickListener(view -> onSourceCodeClicked());
+    }
+
+    private void onSourceCodeClicked() {
+        // Toast.makeText(this, "Should open link to github", Toast.LENGTH_SHORT).show();
+        Uri uri = Uri.parse("https://github.com/M3LNYK"); // missing 'http://' will cause crashed
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
+    }
+
+    private void onGuideClicked() {
+        Toast.makeText(this, "Clicked Guide", Toast.LENGTH_SHORT).show();
+    }
+
+    private void onLicensesClicked() {
+        Toast.makeText(this, "Clicked Licenses", Toast.LENGTH_SHORT).show();
     }
 
     private void onContactDevClicked() {
