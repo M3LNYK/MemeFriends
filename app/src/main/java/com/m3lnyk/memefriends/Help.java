@@ -51,7 +51,7 @@ public class Help extends AppCompatActivity {
 
     private void onSourceCodeClicked() {
         // Change link to project
-        Uri uri = Uri.parse("https://github.com/M3LNYK");
+        Uri uri = Uri.parse("https://github.com/M3LNYK/MemeFriends");
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         startActivity(intent);
     }
