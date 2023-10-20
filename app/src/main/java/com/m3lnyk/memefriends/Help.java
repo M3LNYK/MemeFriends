@@ -25,6 +25,7 @@ public class Help extends AppCompatActivity {
 
         initializeUi();
         setClickListeners();
+
     }
 
     private void initializeUi() {
@@ -49,8 +50,8 @@ public class Help extends AppCompatActivity {
     }
 
     private void onSourceCodeClicked() {
-        // Toast.makeText(this, "Should open link to github", Toast.LENGTH_SHORT).show();
-        Uri uri = Uri.parse("https://github.com/M3LNYK"); // missing 'http://' will cause crashed
+        // Change link to project
+        Uri uri = Uri.parse("https://github.com/M3LNYK");
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         startActivity(intent);
     }
@@ -64,6 +65,9 @@ public class Help extends AppCompatActivity {
     }
 
     private void onContactDevClicked() {
-        Toast.makeText(this, "Contact Dev Clicked", Toast.LENGTH_SHORT).show();
+        // Toast.makeText(this, "Contact Dev Clicked", Toast.LENGTH_SHORT).show();
+        Uri uri = Uri.parse("https://github.com/M3LNYK");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
     }
 }
