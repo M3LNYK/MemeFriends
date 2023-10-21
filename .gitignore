@@ -1,5 +1,6 @@
 #built application files
 *.apk
+*.arr
 *.ap_
 *.aab
                            
@@ -12,7 +13,14 @@
 # generated files
 bin/
 gen/
-                            
+out/
+# Uncomment the following line in case you need and you don't have the release build type files in your app
+# release/
+
+# gradle files
+.gradle
+build/
+
 # Local configuration file (sdk path, etc)
 local.properties
                         
@@ -26,8 +34,7 @@ Thumbs.db
 *.iml
 .idea
 #.idea/workspace.xml - remove # and delete .idea if it better suit your needs.
-.gradle
-build/
+
 .navigation
 captures/
 output.json 
@@ -40,4 +47,3 @@ obj/
 test_layout.xml
 test_list_item.xml
 test_card_graph.xml
-/.idea/
