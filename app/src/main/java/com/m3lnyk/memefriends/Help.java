@@ -65,6 +65,7 @@ public class Help extends AppCompatActivity {
     private void onLicensesClicked() {
         // Toast.makeText(this, "Clicked Licenses", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(this, OssLicensesMenuActivity.class));
+        // new OpenSourceLicensesDialog().showLicenses(this);
     }
 
     private void onContactDevClicked() {
