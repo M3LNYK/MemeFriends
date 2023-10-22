@@ -77,7 +77,7 @@ public class FriendMemes extends AppCompatActivity {
     private PieChart pieChart;
     private MaterialCardView cardFriendInfo, cardFriendPieChart, cardMoreSoon;
     private Chip someStats;
-    private TextView textViewFunnyMemes, textViewOverallMemes;
+    private TextView textViewFunnyMemes, textViewOverallMemes, popupMemeSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,29 +89,45 @@ public class FriendMemes extends AppCompatActivity {
         setUpRecyclerView();
         observeViewModelData();
 
+        setupOnBackPressedHandler();
+
+    }
+
+    private void setupOnBackPressedHandler() {
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             public void handleOnBackPressed() {
-                // Back is pressed... Finishing the activity
-                Intent data = new Intent();
-                String newName = Objects.requireNonNull(outlinedFriendName.getText()).toString();
-                int newTotalMemes = Integer.parseInt(Objects.requireNonNull(outlinedMemeTotal.getText()).toString());
-                int newFunnyMemes = Integer.parseInt(Objects.requireNonNull(outlinedMemeFunny.getText()).toString());
-                int newNfMemes = Integer.parseInt(Objects.requireNonNull(outlinedMemeNotFunny.getText()).toString());
-                data.putExtra(EXTRA_NAME, newName);
-                data.putExtra(EXTRA_TOTAL_MEMES, newTotalMemes);
-                data.putExtra(EXTRA_FUNNY_MEMES, newFunnyMemes);
-                data.putExtra(EXTRA_NOT_FUNNY_MEMES, newNfMemes);
-                data.putExtra(EXTRA_COLOR, friendColor);
-
-                int id = getIntent().getIntExtra(EXTRA_ID, -1);
-                if (id != -1) {
-                    data.putExtra(EXTRA_ID, id);
-                }
-                setResult(FriendMemes.RESULT_EDIT, data);
-                finish();
+                handleBackButtonPress();
             }
         });
+    }
 
+    private void handleBackButtonPress() {
+        Intent data = createResultIntent();
+        setResult(FriendMemes.RESULT_EDIT, data);
+        finish();
+    }
+
+    private Intent createResultIntent() {
+        Intent data = new Intent();
+        data.putExtra(EXTRA_NAME, getTextValue(outlinedFriendName));
+        data.putExtra(EXTRA_TOTAL_MEMES, getIntValue(outlinedMemeTotal));
+        data.putExtra(EXTRA_FUNNY_MEMES, getIntValue(outlinedMemeFunny));
+        data.putExtra(EXTRA_NOT_FUNNY_MEMES, getIntValue(outlinedMemeNotFunny));
+        data.putExtra(EXTRA_COLOR, friendColor);
+
+        int id = getIntent().getIntExtra(EXTRA_ID, -1);
+        if (id != -1) {
+            data.putExtra(EXTRA_ID, id);
+        }
+        return data;
+    }
+
+    private String getTextValue(TextInputEditText editText) {
+        return Objects.requireNonNull(editText.getText()).toString();
+    }
+
+    private int getIntValue(TextInputEditText editText) {
+        return Integer.parseInt(getTextValue(editText));
     }
 
     private void setUpRecyclerView() {
@@ -178,8 +194,6 @@ public class FriendMemes extends AppCompatActivity {
         });
     }
 
-    //@TODO check solid
-    //@TODO test
     ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,
             // ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             ItemTouchHelper.LEFT) {
@@ -190,29 +204,7 @@ public class FriendMemes extends AppCompatActivity {
 
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-            int position = viewHolder.getBindingAdapterPosition();
-            Meme tmp;
-            switch (direction) {
-                case ItemTouchHelper.LEFT:
-                    tmp = memeAdapter.getMemeAt(position);
-                    memeViewModel.deleteMeme(memeAdapter.getMemeAt(position));
-                    memeAdapter.notifyItemRemoved(position);
-                    if (tmp.getFunnyMeme()) {
-                        outlinedMemeTotal.setText(String
-                                .valueOf(Integer.parseInt(Objects.requireNonNull(outlinedMemeTotal.getText()).toString()) - 1));
-                        outlinedMemeFunny.setText(String
-                                .valueOf(Integer.parseInt(Objects.requireNonNull(outlinedMemeFunny.getText()).toString()) - 1));
-                    } else {
-                        outlinedMemeNotFunny.setText(String
-                                .valueOf(Integer.parseInt(Objects.requireNonNull(outlinedMemeNotFunny.getText()).toString()) - 1));
-                        outlinedMemeTotal.setText(String
-                                .valueOf(Integer.parseInt(Objects.requireNonNull(outlinedMemeTotal.getText()).toString()) - 1));
-                    }
-                    break;
-                case ItemTouchHelper.RIGHT:
-                    break;
-            }
-            populatePieChart();
+            handleLeftSwipe(viewHolder.getBindingAdapterPosition());
         }
 
         @Override
@@ -229,6 +221,25 @@ public class FriendMemes extends AppCompatActivity {
         }
     };
 
+    private void handleLeftSwipe(int position) {
+        Meme memeToDelete = memeAdapter.getMemeAt(position);
+        memeViewModel.deleteMeme(memeToDelete);
+        memeAdapter.notifyItemRemoved(position);
+
+        int totalMemes = Integer.parseInt(Objects.requireNonNull(outlinedMemeTotal.getText()).toString());
+        int funnyMemes = Integer.parseInt(Objects.requireNonNull(outlinedMemeFunny.getText()).toString());
+        int notFunnyMemes = totalMemes - funnyMemes;
+
+        if (memeToDelete.getFunnyMeme()) {
+            funnyMemes--;
+        } else {
+            notFunnyMemes--;
+        }
+
+        updateFriendMemesStats(funnyMemes, notFunnyMemes);
+        populatePieChart();
+    }
+
     //@TODO test populatePieChart()
     private void populatePieChart() {
         int totalMemes = Integer.parseInt(Objects.requireNonNull(outlinedMemeTotal.getText()).toString());
@@ -241,29 +252,37 @@ public class FriendMemes extends AppCompatActivity {
         entries.add(new PieEntry(funnyPercentage, "Funny"));
         entries.add(new PieEntry(notFunnyPercentage, "Not Funny"));
 
-        // Create a new PieDataSet and PieData.
+        PieData data = createPieData(entries);
+        customizePieChart(pieChart);
+
+        // Set the data to the chart
+        pieChart.setData(data);
+
+        // Refresh the chart
+        populateScore(totalMemes, funnyMemes);
+        pieChart.invalidate();
+    }
+
+    private PieData createPieData(List<PieEntry> entries) {
         PieDataSet dataSet = new PieDataSet(entries, "%");
         dataSet.setColors(new int[]{R.color.green_500, R.color.red_500}, this);
 
         PieData data = new PieData(dataSet);
         data.setValueTextSize(16f);
         data.setValueTextColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
+
         pieChart.setUsePercentValues(true);
         pieChart.setDrawEntryLabels(true);
         pieChart.setEntryLabelColor(ContextCompat.getColor(getApplicationContext(), R.color.black));
         pieChart.setEntryLabelTextSize(10f);
 
-        // Set the data to the chart
-        pieChart.setData(data);
+        return data;
+    }
 
-        // Customize and refresh the chart
+    private void customizePieChart(PieChart chart) {
         Description description = new Description();
         description.setText("");
-        pieChart.setDescription(description);
-
-        // Refresh the chart
-        populateScore(totalMemes, funnyMemes);
-        pieChart.invalidate();
+        chart.setDescription(description);
     }
 
     private void populateScore(int totalMemes, int funnyMemes) {
@@ -271,22 +290,20 @@ public class FriendMemes extends AppCompatActivity {
         textViewFunnyMemes.setText(String.valueOf(funnyMemes));
     }
 
-    //@TODO test checkEmptyList()
+    private void updateUIVisibility(boolean isEmpty) {
+        int emptyVisibility = isEmpty ? View.VISIBLE : View.GONE;
+        int dataVisibility = isEmpty ? View.GONE : View.VISIBLE;
+
+        emptyMemeList.setVisibility(emptyVisibility);
+        memeRecyclerView.setVisibility(dataVisibility);
+        someStats.setVisibility(dataVisibility);
+        cardFriendPieChart.setVisibility(dataVisibility);
+        cardMoreSoon.setVisibility(dataVisibility);
+    }
+
     private void checkEmptyList(List<Meme> friendMemes) {
-        //  Add check for stats
-        if (friendMemes.isEmpty()) {
-            emptyMemeList.setVisibility(View.VISIBLE);
-            memeRecyclerView.setVisibility(View.GONE);
-            someStats.setVisibility(View.GONE);
-            cardFriendPieChart.setVisibility(View.GONE);
-            cardMoreSoon.setVisibility(View.GONE);
-        } else {
-            emptyMemeList.setVisibility(View.GONE);
-            memeRecyclerView.setVisibility(View.VISIBLE);
-            someStats.setVisibility(View.VISIBLE);
-            cardFriendPieChart.setVisibility(View.VISIBLE);
-            cardMoreSoon.setVisibility(View.VISIBLE);
-        }
+        boolean isEmpty = friendMemes.isEmpty();
+        updateUIVisibility(isEmpty);
     }
 
     private void settingOnClickListeners(MaterialCardView cardFriendInfo) {
@@ -313,75 +330,97 @@ public class FriendMemes extends AppCompatActivity {
         return true;
     }
 
-    // Selector of menu items
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            // onBackPressed(); // This should work as expected
-            getOnBackPressedDispatcher().onBackPressed();
+            handleHomeMenuItem();
             return true;
-        }
-        if (item.getItemId() == R.id.menu_item_edit_friend) {
-            setEditingEnabled(outlinedFriendName, true);
-            animateButtons();
-            Toast.makeText(this, "Now you can change friend name", Toast.LENGTH_SHORT).show();
+        } else if (item.getItemId() == R.id.menu_item_edit_friend) {
+            handleEditFriendMenuItem();
             return true;
+        } else if (item.getItemId() == R.id.menu_item_delete_friend) {
+            return handleDeleteFriendMenuItem();
+        } else if (item.getItemId() == R.id.menu_item_delete_all_memes) {
+            return handleDeleteAllMemesMenuItem();
+        } else {
+            return super.onOptionsItemSelected(item);
         }
-        if (item.getItemId() == R.id.menu_item_delete_friend) {
-            // Toast.makeText(this, "Delete friend", Toast.LENGTH_SHORT).show();
-            return menu_item_delete_friend();
-        }
-        if (item.getItemId() == R.id.menu_item_delete_all_memes) {
-            return menu_item_delete_all_memes();
-        }
-        return super.onOptionsItemSelected(item);
     }
 
-    private boolean menu_item_delete_friend() {
+    private void handleHomeMenuItem() {
+        // This should work as expected
+        getOnBackPressedDispatcher().onBackPressed();
+    }
+
+    private void handleEditFriendMenuItem() {
+        setEditingEnabled(outlinedFriendName, true);
+        animateButtons();
+        Toast.makeText(this, "Now you can change friend name", Toast.LENGTH_SHORT).show();
+    }
+
+    private boolean handleDeleteFriendMenuItem() {
+        showDeleteFriendConfirmationDialog();
+        return true;
+    }
+
+    private void showDeleteFriendConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final View addMemePopupView = getLayoutInflater().inflate(R.layout.popup_delete_confirm, null);
+
         builder.setView(addMemePopupView)
                 .setTitle("Delete friend?")
-                .setPositiveButton("YES", (dialog, which) -> {
-                    // Handle user input
-                    Toast.makeText(FriendMemes.this, "Confirmed deletion", Toast.LENGTH_SHORT).show();
-                    Intent resultIntent = new Intent();
-                    resultIntent.putExtra("deletedFriendId", receivedId); // Pass the deleted friend ID
-                    setResult(RESULT_OK, resultIntent);
-                    finish();
-                })
+                .setPositiveButton("YES", (dialog, which) -> handleDeleteFriendConfirmed())
                 .setNegativeButton("NO", (dialog, which) -> dialog.dismiss());
+
         AlertDialog dialog = builder.create();
         dialog.show();
         TextView supportingPopUpText = dialog.findViewById(R.id.tv_details_text);
         assert supportingPopUpText != null;
         supportingPopUpText.setText(R.string.warning_friend_del_mes);
+    }
+
+    private void handleDeleteFriendConfirmed() {
+        // Handle user input
+        Toast.makeText(FriendMemes.this, "Confirmed deletion", Toast.LENGTH_SHORT).show();
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra("deletedFriendId", receivedId); // Pass the deleted friend ID
+        setResult(RESULT_OK, resultIntent);
+        finish();
+    }
+
+    private boolean handleDeleteAllMemesMenuItem() {
+        showDeleteAllMemesConfirmationDialog();
         return true;
     }
 
-
-    private boolean menu_item_delete_all_memes() {
+    private void showDeleteAllMemesConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final View addMemePopupView = getLayoutInflater().inflate(R.layout.popup_delete_confirm, null);
+
         builder.setView(addMemePopupView)
                 .setTitle("Delete all memes?")
-                .setPositiveButton("YES", (dialog, which) -> {
-                    // Handle user input
-                    Toast.makeText(FriendMemes.this, "Confirmed deletion", Toast.LENGTH_SHORT).show();
-                    memeViewModel.deleteAllMemes();
-                    // Update friend meme's stats
-                    outlinedMemeFunny.setText(String.valueOf(0));
-                    outlinedMemeTotal.setText(String.valueOf(0));
-                    outlinedMemeNotFunny.setText(String.valueOf(0));
-                })
+                .setPositiveButton("YES", (dialog, which) -> handleDeleteAllMemesConfirmed())
                 .setNegativeButton("NO", (dialog, which) -> dialog.dismiss());
+
         AlertDialog dialog = builder.create();
         dialog.show();
         TextView supportingPopUpText = dialog.findViewById(R.id.tv_details_text);
         assert supportingPopUpText != null;
         supportingPopUpText.setText(R.string.warning_all_memes_del_mes);
+    }
+
+    private void handleDeleteAllMemesConfirmed() {
+        // Handle user input
+        Toast.makeText(FriendMemes.this, "Confirmed deletion", Toast.LENGTH_SHORT).show();
+        memeViewModel.deleteAllMemes();
+        updateFriendMemesStats(0, 0);
         populatePieChart();
-        return true;
+    }
+
+    private void updateFriendMemesStats(int funnyMemes, int notFunnyMemes) {
+        outlinedMemeFunny.setText(String.valueOf(funnyMemes));
+        outlinedMemeNotFunny.setText(String.valueOf(notFunnyMemes));
+        outlinedMemeTotal.setText(String.valueOf(funnyMemes + notFunnyMemes));
     }
 
     private void fabSetClickListeners() {
@@ -405,18 +444,18 @@ public class FriendMemes extends AppCompatActivity {
                 .setTitle("Add meme");
         newMemeDialog = builder.create();
         newMemeDialog.show();
+        // Initialize popupMemeSource
+        popupMemeSource = newMemeDialog.findViewById(R.id.popup_add_meme_tv_meme_source);
         chipGroupInit();
     }
 
     private void chipGroupInit() {
         chipGroup = newMemeDialog.findViewById(R.id.popup_add_meme_cg_meme_source);
-        // chipGroup.check(chipGroup.getChildAt(0).getId());
     }
 
     private void memeSource() {
         int chipId = chipGroup.getCheckedChipId();
         if (chipId == R.id.popup_add_meme_chip_instagram) {
-            // Handle option 1 selection
             selectedMemeSource = "Instagram";
         } else if (chipId == R.id.popup_add_meme_chip_twitter) {
             selectedMemeSource = "Twitter";
@@ -465,64 +504,54 @@ public class FriendMemes extends AppCompatActivity {
         return timestamp.format(timeFormatter);
     }
 
-    private void addFunnyMemeToFriend() {
+    private void addMemeToFriend(boolean isFunny) {
         String memeName = String.valueOf(popupMemeName.getText());
         memeSource();
-        TextView popupMemeSource = newMemeDialog.findViewById(R.id.popup_add_meme_tv_meme_source);
-        if (memeName.trim().isEmpty() && selectedMemeSource.equals("MemeSource")) {
-            memeNameLayout.setErrorEnabled(true);
-            memeNameLayout.setError("You need to enter a name!");
-            Objects.requireNonNull(popupMemeSource).setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red_500));
-        } else if (selectedMemeSource.equals("MemeSource")) {
-            memeNameLayout.setError(null);
-            memeNameLayout.setErrorEnabled(false);
-            Objects.requireNonNull(popupMemeSource).setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red_500));
-        } else if (memeName.trim().isEmpty()) {
-            memeNameLayout.setErrorEnabled(true);
-            memeNameLayout.setError("You need to enter a name!");
-            Objects.requireNonNull(popupMemeSource).setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.text_default));
+
+        boolean nameIsEmpty = memeName.trim().isEmpty();
+        boolean sourceIsMemeSource = selectedMemeSource.equals("MemeSource");
+
+        if (nameIsEmpty && sourceIsMemeSource) {
+            handleValidationError("You need to enter a name!", R.color.red_500);
+        } else if (sourceIsMemeSource) {
+            handleValidationError(null, R.color.red_500);
+        } else if (nameIsEmpty) {
+            handleValidationError("You need to enter a name!", R.color.text_default);
         } else {
-            memeNameLayout.setError(null);
-            memeNameLayout.setErrorEnabled(false);
-            Objects.requireNonNull(popupMemeSource).setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.text_default));
-            Meme tmpMeme = getMemeData(true, memeName);
-            memeViewModel.insertMeme(tmpMeme);
-            outlinedMemeFunny.setText(String
-                    .valueOf(Integer.parseInt(Objects.requireNonNull(outlinedMemeFunny.getText()).toString()) + 1));
-            outlinedMemeTotal.setText(String
-                    .valueOf(Integer.parseInt(Objects.requireNonNull(outlinedMemeTotal.getText()).toString()) + 1));
-            close_popup();
+            handleValidationError(null, R.color.text_default);
+            Meme tmpMeme = getMemeData(isFunny, memeName);
+            insertMemeAndUpdateStats(tmpMeme, isFunny);
         }
     }
 
-    private void addNotFunnyMemeToFriend() {
-        String memeName = String.valueOf(popupMemeName.getText());
-        memeSource();
-        TextView popupMemeSource = newMemeDialog.findViewById(R.id.popup_add_meme_tv_meme_source);
-        if (memeName.trim().isEmpty() && selectedMemeSource.equals("MemeSource")) {
-            memeNameLayout.setErrorEnabled(true);
-            memeNameLayout.setError("You need to enter a name!");
-            Objects.requireNonNull(popupMemeSource).setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red_500));
-        } else if (selectedMemeSource.equals("MemeSource")) {
-            memeNameLayout.setError(null);
-            memeNameLayout.setErrorEnabled(false);
-            Objects.requireNonNull(popupMemeSource).setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red_500));
-        } else if (memeName.trim().isEmpty()) {
-            memeNameLayout.setErrorEnabled(true);
-            memeNameLayout.setError("You need to enter a name!");
-            Objects.requireNonNull(popupMemeSource).setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.text_default));
+    private void insertMemeAndUpdateStats(Meme meme, boolean isFunny) {
+        memeViewModel.insertMeme(meme);
+        int currentTotalMemes = Integer.parseInt(Objects.requireNonNull(outlinedMemeTotal.getText()).toString());
+        int currentFunnyMemes = Integer.parseInt(Objects.requireNonNull(outlinedMemeFunny.getText()).toString());
+        int currentNotFunnyMemes = Integer.parseInt(Objects.requireNonNull(outlinedMemeNotFunny.getText()).toString());
+
+        if (isFunny) {
+            outlinedMemeFunny.setText(String.valueOf(currentFunnyMemes + 1));
         } else {
-            memeNameLayout.setError(null);
-            memeNameLayout.setErrorEnabled(false);
-            Objects.requireNonNull(popupMemeSource).setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.text_default));
-            Meme tmpMeme = getMemeData(false, memeName);
-            memeViewModel.insertMeme(tmpMeme);
-            outlinedMemeNotFunny.setText(String
-                    .valueOf(Integer.parseInt(Objects.requireNonNull(outlinedMemeNotFunny.getText()).toString()) + 1));
-            outlinedMemeTotal.setText(String
-                    .valueOf(Integer.parseInt(Objects.requireNonNull(outlinedMemeTotal.getText()).toString()) + 1));
-            close_popup();
+            outlinedMemeNotFunny.setText(String.valueOf(currentNotFunnyMemes + 1));
         }
+
+        outlinedMemeTotal.setText(String.valueOf(currentTotalMemes + 1));
+        close_popup();
+    }
+
+    private void handleValidationError(String errorMessage, int textColor) {
+        memeNameLayout.setErrorEnabled(errorMessage != null);
+        memeNameLayout.setError(errorMessage);
+        Objects.requireNonNull(popupMemeSource).setTextColor(ContextCompat.getColor(getApplicationContext(), textColor));
+    }
+
+    private void addFunnyMemeToFriend() {
+        addMemeToFriend(true);
+    }
+
+    private void addNotFunnyMemeToFriend() {
+        addMemeToFriend(false);
     }
 
     public void close_popup() {
@@ -577,10 +606,6 @@ public class FriendMemes extends AppCompatActivity {
         int notFunnyMemes = extractMemeCount(outlinedMemeNotFunny);
         Friend afterUpdate = new Friend(friendName, totalMemes, funnyMemes, notFunnyMemes, friendColor);
         memeViewModel.update(afterUpdate);
-        // Create an intent with data
-        // Intent data = createResultIntent(friendName, totalMemes, funnyMemes, notFunnyMemes);
-        // Set the result and finish the activity
-        // setResultAndFinish(data);
         disableEditingAndHideButtons();
     }
 
