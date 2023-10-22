@@ -1,5 +1,6 @@
 package com.m3lnyk.memefriends.roomDb.Friend;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,20 +12,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.m3lnyk.memefriends.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<Friend> friends = new ArrayList<>();
     private OnItemClickListener listener;
 
     // Added for groups
     private List<GroupedFriend> groupedFriends;
     private static final int VIEW_TYPE_HEADER = 0;
     private static final int VIEW_TYPE_ITEM = 1;
-
-    private static int insetStart, insetEnd;
 
 
     @NonNull
@@ -105,10 +102,7 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         return VIEW_TYPE_ITEM;
     }
 
-    public boolean isHeaderPosition(int position) {
-        return position >= 0 && position < groupedFriends.size() && groupedFriends.get(position).isHeaderVisible();
-    }
-
+    @SuppressLint("NotifyDataSetChanged")
     public void setFriends(List<GroupedFriend> groupedFriends) {
         this.groupedFriends = groupedFriends;
         notifyDataSetChanged();
@@ -132,10 +126,10 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     public class FriendViewHolder extends RecyclerView.ViewHolder {
-        private ImageView imageView;
-        private TextView friendName;
-        private TextView avatarName;
-        private View divider;
+        private final ImageView imageView;
+        private final TextView friendName;
+        private final TextView avatarName;
+        private final View divider;
 
         public FriendViewHolder(View itemView) {
             super(itemView);
@@ -144,19 +138,16 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             avatarName = itemView.findViewById(R.id.textView_friend_avatar_text);
             divider = itemView.findViewById(R.id.list_item_divider_view); // Replace with your divider view's ID
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int position = getBindingAdapterPosition();
-                    if (listener != null && position != RecyclerView.NO_POSITION) {
-                        int groupPosition = getGroupPosition(position);
-                        int friendPosition = getFriendPosition(position);
-                        if (groupPosition >= 0 && groupPosition < groupedFriends.size() && friendPosition >= 0) {
-                            GroupedFriend groupedFriend = groupedFriends.get(groupPosition);
-                            List<Friend> friends = groupedFriend.getFriends();
-                            if (friendPosition < friends.size()) {
-                                listener.onItemClick(friends.get(friendPosition));
-                            }
+            itemView.setOnClickListener(view -> {
+                int position = getBindingAdapterPosition();
+                if (listener != null && position != RecyclerView.NO_POSITION) {
+                    int groupPosition = getGroupPosition(position);
+                    int friendPosition = getFriendPosition(position);
+                    if (groupPosition >= 0 && groupPosition < groupedFriends.size() && friendPosition >= 0) {
+                        GroupedFriend groupedFriend = groupedFriends.get(groupPosition);
+                        List<Friend> friends = groupedFriend.getFriends();
+                        if (friendPosition < friends.size()) {
+                            listener.onItemClick(friends.get(friendPosition));
                         }
                     }
                 }
@@ -168,14 +159,13 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         int headerPosition = getHeaderPosition(position);
         if (headerPosition >= 0 && headerPosition < groupedFriends.size()) {
             GroupedFriend groupedFriend = groupedFriends.get(headerPosition);
-            char firstLetter = groupedFriend.getFirstLetter();
-            return firstLetter;
+            return groupedFriend.getFirstLetter();
         } else {
             return '\0';
         }
     }
 
-    class HeaderViewHolder extends RecyclerView.ViewHolder {
+    static class HeaderViewHolder extends RecyclerView.ViewHolder {
         TextView headerTextView;
 
         HeaderViewHolder(View itemView) {
@@ -224,10 +214,6 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             }
         }
         return -1; // Return -1 if position is not found (handle error condition)
-    }
-
-    public List<Friend> getFriends() {
-        return friends;
     }
 
     // Helper method to get the position of the friend within its group in the groupedFriends list
