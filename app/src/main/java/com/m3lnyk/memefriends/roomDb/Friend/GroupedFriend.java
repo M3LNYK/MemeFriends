@@ -3,8 +3,8 @@ package com.m3lnyk.memefriends.roomDb.Friend;
 import java.util.List;
 
 public class GroupedFriend {
-    private char firstLetter;
-    private List<Friend> friends;
+    private final char firstLetter;
+    private final List<Friend> friends;
 
     private boolean isHeaderVisible;
 
