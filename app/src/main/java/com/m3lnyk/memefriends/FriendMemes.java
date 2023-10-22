@@ -1,15 +1,5 @@
 package com.m3lnyk.memefriends;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
@@ -27,10 +17,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.m3lnyk.memefriends.roomDb.Friend.Friend;
-import com.m3lnyk.memefriends.roomDb.FriendViewModel;
-import com.m3lnyk.memefriends.roomDb.Meme;
-import com.m3lnyk.memefriends.roomDb.MemeAdapter;
+import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.PieData;
@@ -42,6 +39,10 @@ import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.m3lnyk.memefriends.roomDb.Friend.Friend;
+import com.m3lnyk.memefriends.roomDb.FriendViewModel;
+import com.m3lnyk.memefriends.roomDb.Meme;
+import com.m3lnyk.memefriends.roomDb.MemeAdapter;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -87,6 +88,29 @@ public class FriendMemes extends AppCompatActivity {
         setClickListeners();
         setUpRecyclerView();
         observeViewModelData();
+
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            public void handleOnBackPressed() {
+                // Back is pressed... Finishing the activity
+                Intent data = new Intent();
+                String newName = Objects.requireNonNull(outlinedFriendName.getText()).toString();
+                int newTotalMemes = Integer.parseInt(Objects.requireNonNull(outlinedMemeTotal.getText()).toString());
+                int newFunnyMemes = Integer.parseInt(Objects.requireNonNull(outlinedMemeFunny.getText()).toString());
+                int newNfMemes = Integer.parseInt(Objects.requireNonNull(outlinedMemeNotFunny.getText()).toString());
+                data.putExtra(EXTRA_NAME, newName);
+                data.putExtra(EXTRA_TOTAL_MEMES, newTotalMemes);
+                data.putExtra(EXTRA_FUNNY_MEMES, newFunnyMemes);
+                data.putExtra(EXTRA_NOT_FUNNY_MEMES, newNfMemes);
+                data.putExtra(EXTRA_COLOR, friendColor);
+
+                int id = getIntent().getIntExtra(EXTRA_ID, -1);
+                if (id != -1) {
+                    data.putExtra(EXTRA_ID, id);
+                }
+                setResult(FriendMemes.RESULT_EDIT, data);
+                finish();
+            }
+        });
 
     }
 
@@ -293,12 +317,13 @@ public class FriendMemes extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            onBackPressed(); // This should work as expected
+            // onBackPressed(); // This should work as expected
+            getOnBackPressedDispatcher().onBackPressed();
             return true;
         }
         if (item.getItemId() == R.id.menu_item_edit_friend) {
             setEditingEnabled(outlinedFriendName, true);
-            animateButtons(true);
+            animateButtons();
             Toast.makeText(this, "Now you can change friend name", Toast.LENGTH_SHORT).show();
             return true;
         }
@@ -310,29 +335,6 @@ public class FriendMemes extends AppCompatActivity {
             return menu_item_delete_all_memes();
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onBackPressed() {
-        // Perform any necessary actions here before going back
-        Intent data = new Intent();
-        String newName = Objects.requireNonNull(outlinedFriendName.getText()).toString();
-        int newTotalMemes = Integer.parseInt(Objects.requireNonNull(outlinedMemeTotal.getText()).toString());
-        int newFunnyMemes = Integer.parseInt(Objects.requireNonNull(outlinedMemeFunny.getText()).toString());
-        int newNfMemes = Integer.parseInt(Objects.requireNonNull(outlinedMemeNotFunny.getText()).toString());
-        data.putExtra(EXTRA_NAME, newName);
-        data.putExtra(EXTRA_TOTAL_MEMES, newTotalMemes);
-        data.putExtra(EXTRA_FUNNY_MEMES, newFunnyMemes);
-        data.putExtra(EXTRA_NOT_FUNNY_MEMES, newNfMemes);
-        data.putExtra(EXTRA_COLOR, friendColor);
-
-        int id = getIntent().getIntExtra(EXTRA_ID, -1);
-        if (id != -1) {
-            data.putExtra(EXTRA_ID, id);
-        }
-        setResult(FriendMemes.RESULT_EDIT, data);
-
-        super.onBackPressed(); // This line is important to actually navigate back
     }
 
     private boolean menu_item_delete_friend() {
@@ -353,7 +355,7 @@ public class FriendMemes extends AppCompatActivity {
         dialog.show();
         TextView supportingPopUpText = dialog.findViewById(R.id.tv_details_text);
         assert supportingPopUpText != null;
-        supportingPopUpText.setText("This friend will be permanently deleted. This action can not be undone.");
+        supportingPopUpText.setText(R.string.warning_friend_del_mes);
         return true;
     }
 
@@ -377,7 +379,7 @@ public class FriendMemes extends AppCompatActivity {
         dialog.show();
         TextView supportingPopUpText = dialog.findViewById(R.id.tv_details_text);
         assert supportingPopUpText != null;
-        supportingPopUpText.setText("All memes of this friend will be permanently deleted. This action can not be undone.");
+        supportingPopUpText.setText(R.string.warning_all_memes_del_mes);
         populatePieChart();
         return true;
     }
@@ -607,25 +609,6 @@ public class FriendMemes extends AppCompatActivity {
         return Integer.parseInt(Objects.requireNonNull(editText.getText()).toString());
     }
 
-    private Intent createResultIntent(String friendName, int totalMemes, int funnyMemes, int notFunnyMemes) {
-        Intent data = new Intent();
-        data.putExtra(EXTRA_NAME, friendName);
-        // data.putExtra(EXTRA_TOTAL_MEMES, totalMemes);
-        // data.putExtra(EXTRA_FUNNY_MEMES, funnyMemes);
-        // data.putExtra(EXTRA_NOT_FUNNY_MEMES, notFunnyMemes);
-        // data.putExtra(EXTRA_COLOR, getIntent().getIntExtra(EXTRA_COLOR, -1));
-        int id = getIntent().getIntExtra(EXTRA_ID, -1);
-        if (id != -1) {
-            data.putExtra(EXTRA_ID, id);
-        }
-        return data;
-    }
-
-    private void setResultAndFinish(Intent data) {
-        setResult(FriendMemes.RESULT_EDIT, data);
-        finish();
-    }
-
     private void onDiscardButtonClicked() {
         clearValidationErrors();
         populateReceivedFriendName();
@@ -637,15 +620,15 @@ public class FriendMemes extends AppCompatActivity {
         nameFriendLayout.setErrorEnabled(false);
     }
 
-    private void animateButtons(boolean isVisible) {
-        if (isVisible) {
-            buttonsArea.setVisibility(View.VISIBLE);
-            Animation dropDownAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.button_drop_down);
-            buttonsArea.startAnimation(dropDownAnimation);
-        } else {
-            Animation dropUpAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.button_drop_up);
-            buttonsArea.startAnimation(dropUpAnimation);
-            buttonsArea.setVisibility(View.GONE);
-        }
+    private void animateButtons() {
+        // if (true) {
+        buttonsArea.setVisibility(View.VISIBLE);
+        Animation dropDownAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.button_drop_down);
+        buttonsArea.startAnimation(dropDownAnimation);
+        // } else {
+        //     Animation dropUpAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.button_drop_up);
+        //     buttonsArea.startAnimation(dropUpAnimation);
+        //     buttonsArea.setVisibility(View.GONE);
+        // }
     }
 }
