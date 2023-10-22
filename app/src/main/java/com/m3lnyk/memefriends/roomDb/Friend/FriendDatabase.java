@@ -32,7 +32,7 @@ public abstract class FriendDatabase extends RoomDatabase {
         return instance;
     }
 
-    private static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback() {
+    private static final RoomDatabase.Callback roomCallback = new RoomDatabase.Callback() {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
@@ -41,20 +41,18 @@ public abstract class FriendDatabase extends RoomDatabase {
     };
 
     private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void> {
-        private FriendDao friendDao;
-        private MemeDao memeDao;
+        private final FriendDao friendDao;
 
         private PopulateDbAsyncTask(FriendDatabase friendDatabase) {
             friendDao = friendDatabase.friendDao();
-            memeDao = friendDatabase.memeDao();
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
             int colorBlack = Color.rgb(0,0,0);
-            friendDao.insert(new Friend("Test 1", 0, 0, 0, colorBlack));
-            friendDao.insert(new Friend("Test 2", 0, 0, 0, colorBlack));
-            friendDao.insert(new Friend("Test 3", 1, 1, 0, colorBlack));
+            friendDao.insert(new Friend("Example Friend 1", 0, 0, 0, colorBlack));
+            friendDao.insert(new Friend("Example Friend 2", 0, 0, 0, colorBlack));
+            friendDao.insert(new Friend("Example Friend 3", 1, 1, 0, colorBlack));
             return null;
         }
     }
