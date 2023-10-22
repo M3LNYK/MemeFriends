@@ -12,10 +12,10 @@ import java.util.List;
 
 public class FriendRepository {
 
-    private FriendDao friendDao;
-    private MemeDao memeDao;
-    private LiveData<List<Friend>> allFriends;
-    private LiveData<List<Meme>> allMemes;
+    private final FriendDao friendDao;
+    private final MemeDao memeDao;
+    private final LiveData<List<Friend>> allFriends;
+    private final LiveData<List<Meme>> allMemes;
 
     public FriendRepository(Application application) {
         FriendDatabase database = FriendDatabase.getInstance(application);
@@ -83,7 +83,7 @@ public class FriendRepository {
 
 
     private static class InsertFriendAsyncTask extends AsyncTask<Friend, Void, Void> {
-        private FriendDao friendDao;
+        private final FriendDao friendDao;
 
         private InsertFriendAsyncTask(FriendDao friendDao) {
             this.friendDao = friendDao;
@@ -97,7 +97,7 @@ public class FriendRepository {
     }
 
     private static class UpdateFriendAsyncTask extends AsyncTask<Friend, Void, Void> {
-        private FriendDao friendDao;
+        private final FriendDao friendDao;
 
         private UpdateFriendAsyncTask(FriendDao friendDao) {
             this.friendDao = friendDao;
@@ -111,7 +111,7 @@ public class FriendRepository {
     }
 
     private static class DeleteFriendAsyncTask extends AsyncTask<Friend, Void, Void> {
-        private FriendDao friendDao;
+        private final FriendDao friendDao;
 
         private DeleteFriendAsyncTask(FriendDao friendDao) {
             this.friendDao = friendDao;
@@ -125,7 +125,7 @@ public class FriendRepository {
     }
 
     private static class DeleteFriendByIdAsyncTask extends AsyncTask<Integer, Void, Void> {
-        private FriendDao friendDao;
+        private final FriendDao friendDao;
 
         private DeleteFriendByIdAsyncTask(FriendDao friendDao) {
             this.friendDao = friendDao;
@@ -139,7 +139,7 @@ public class FriendRepository {
     }
 
     private static class DeleteAllFriendsAsyncTask extends AsyncTask<Void, Void, Void> {
-        private FriendDao friendDao;
+        private final FriendDao friendDao;
 
         private DeleteAllFriendsAsyncTask(FriendDao friendDao) {
             this.friendDao = friendDao;
@@ -154,7 +154,7 @@ public class FriendRepository {
 
     private static class InsertMemeAsyncTask extends AsyncTask<Meme, Void, Void> {
 
-        private MemeDao memeDao;
+        private final MemeDao memeDao;
 
         private InsertMemeAsyncTask(MemeDao memeDao) {
             this.memeDao = memeDao;
@@ -168,7 +168,7 @@ public class FriendRepository {
     }
 
     private static class UpdateMemeAsyncTask extends AsyncTask<Meme, Void, Void> {
-        private MemeDao memeDao;
+        private final MemeDao memeDao;
 
         private UpdateMemeAsyncTask(MemeDao memeDao) {
             this.memeDao = memeDao;
@@ -182,7 +182,7 @@ public class FriendRepository {
     }
 
     private static class DeleteMemeAsyncTask extends AsyncTask<Meme, Void, Void> {
-        private MemeDao memeDao;
+        private final MemeDao memeDao;
 
         private DeleteMemeAsyncTask(MemeDao memeDao) {
             this.memeDao = memeDao;
@@ -196,7 +196,7 @@ public class FriendRepository {
     }
 
     private static class DeleteAllMemesAsyncTask extends AsyncTask<Void, Void, Void> {
-        private MemeDao memeDao;
+        private final MemeDao memeDao;
 
         private DeleteAllMemesAsyncTask(MemeDao memeDao) {
             this.memeDao = memeDao;
@@ -210,7 +210,7 @@ public class FriendRepository {
     }
 
     private static class DeleteAllMemesByFriendAsyncTask extends AsyncTask<Integer, Void, Void> {
-        private MemeDao memeDao;
+        private final MemeDao memeDao;
 
         private DeleteAllMemesByFriendAsyncTask(MemeDao memeDao) {
             this.memeDao = memeDao;
