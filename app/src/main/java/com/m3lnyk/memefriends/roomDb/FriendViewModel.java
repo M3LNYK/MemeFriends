@@ -12,9 +12,9 @@ import com.m3lnyk.memefriends.roomDb.Friend.FriendRepository;
 import java.util.List;
 
 public class FriendViewModel extends AndroidViewModel {
-    private FriendRepository repository;
-    private LiveData<List<Friend>> allFriends;
-    private LiveData<List<Meme>> allMemes;
+    private final FriendRepository repository;
+    private final LiveData<List<Friend>> allFriends;
+    private final LiveData<List<Meme>> allMemes;
     private LiveData<List<Meme>> memesByFriendId;
 
 
