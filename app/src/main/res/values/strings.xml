@@ -32,4 +32,5 @@
     <string name="funny_acronym">F</string>
     <string name="warning_friend_del_mes">This friend will be permanently deleted. This action can not be undone.</string>
     <string name="warning_all_memes_del_mes">All memes of this friend will be permanently deleted. This action can not be undone.</string>
+    <string name="warning_all_friends_del_mes">All friends will be permanently deleted. This action can not be undone.</string>
 </resources>
