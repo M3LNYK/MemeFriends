@@ -1,5 +1,6 @@
 package com.m3lnyk.memefriends.roomDb;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,15 +12,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.m3lnyk.memefriends.R;
-import com.m3lnyk.memefriends.roomDb.Friend.Friend;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MemeAdapter extends RecyclerView.Adapter<MemeAdapter.MemeHolder> {
-    private List<Meme> memes = new ArrayList<>();
     private List<Meme> friendMemes = new ArrayList<>();
-    private Friend tmpFriend;
 
     @NonNull
     @Override
@@ -37,10 +35,10 @@ public class MemeAdapter extends RecyclerView.Adapter<MemeAdapter.MemeHolder> {
         holder.textViewDate.setText(currentMeme.getCreatedDate());
         holder.textViewMemeSource.setText(currentMeme.getMemeSource());
         if (currentMeme.getFunnyMeme()){
-            holder.textViewMemeStatus.setText("F");
+            holder.textViewMemeStatus.setText(R.string.funny_acronym);
             holder.imageViewMemeColor.setBackgroundColor(Color.rgb(46,125, 50));
         } else {
-            holder.textViewMemeStatus.setText("NF");
+            holder.textViewMemeStatus.setText(R.string.not_funny_acronym);
             holder.imageViewMemeColor.setBackgroundColor(Color.rgb(198,40, 40));
         }
     }
@@ -50,11 +48,7 @@ public class MemeAdapter extends RecyclerView.Adapter<MemeAdapter.MemeHolder> {
         return friendMemes.size();
     }
 
-    public void setAllMemes(List<Meme> memes) {
-        this.memes = memes;
-        notifyDataSetChanged();
-    }
-
+    @SuppressLint("NotifyDataSetChanged")
     public void setFriendMemes(List<Meme> friendMemes) {
         this.friendMemes = friendMemes;
         notifyDataSetChanged();
@@ -68,9 +62,12 @@ public class MemeAdapter extends RecyclerView.Adapter<MemeAdapter.MemeHolder> {
         }
     }
 
-    class MemeHolder extends RecyclerView.ViewHolder {
-        private TextView textViewMemeName, textViewDate, textViewMemeStatus, textViewMemeSource;
-        private ImageView imageViewMemeColor;
+    static class MemeHolder extends RecyclerView.ViewHolder {
+        private final TextView textViewMemeName;
+        private final TextView textViewDate;
+        private final TextView textViewMemeStatus;
+        private final TextView textViewMemeSource;
+        private final ImageView imageViewMemeColor;
 
         public MemeHolder(@NonNull View itemView) {
             super(itemView);
