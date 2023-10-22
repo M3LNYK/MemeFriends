@@ -427,7 +427,8 @@ public class FriendsList extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
         TextView supportingPopUpText = dialog.findViewById(R.id.tv_details_text);
-        supportingPopUpText.setText("All friends will be permanently deleted. This action can not be undone.");
+        assert supportingPopUpText != null;
+        supportingPopUpText.setText(R.string.warning_all_friends_del_mes);
     }
 
     private List<GroupedFriend> groupFriendsByLetter(List<Friend> friends) {
