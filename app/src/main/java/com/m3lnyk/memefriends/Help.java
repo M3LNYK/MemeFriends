@@ -13,7 +13,7 @@ import com.google.android.gms.oss.licenses.OssLicensesMenuActivity;
 
 public class Help extends AppCompatActivity {
 
-    int versionCode = BuildConfig.VERSION_CODE;
+    // int versionCode = BuildConfig.VERSION_CODE;
     String versionName = BuildConfig.VERSION_NAME;
 
     TextView versionNum;
