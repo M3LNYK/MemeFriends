@@ -30,4 +30,6 @@
     <string name="more_stats_soon">More stats will be available soon!</string>
     <string name="not_funny_acronym">NF</string>
     <string name="funny_acronym">F</string>
+    <string name="warning_friend_del_mes">This friend will be permanently deleted. This action can not be undone.</string>
+    <string name="warning_all_memes_del_mes">All memes of this friend will be permanently deleted. This action can not be undone.</string>
 </resources>
