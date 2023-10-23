@@ -51,7 +51,7 @@ public class Help extends AppCompatActivity {
         Toast.makeText(this, "everything went well:)", Toast.LENGTH_SHORT).show();
     }
 
-    private void onSourceCodeClicked() {
+    void onSourceCodeClicked() {
         // Change link to project
         Uri uri = Uri.parse("https://github.com/M3LNYK/MemeFriends");
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
