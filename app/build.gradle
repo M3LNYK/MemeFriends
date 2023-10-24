@@ -36,6 +36,15 @@ android {
 
 dependencies {
 
+    def mockkVersion = "1.13.8"
+
+    def androidXTestVersion0 = "1.5.0"
+    def testRunnerVersion = "1.5.2"
+    def testRulesVersion = "1.5.0"
+    def testJunitVersion = "1.1.5"
+    def espressoVersion = "3.5.1"
+    def truthVersion = "1.5.0"
+
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.10.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
@@ -48,18 +57,40 @@ dependencies {
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
 
     // Local unit tests
-    testImplementation "androidx.test:core:1.5.0"
+    testImplementation "androidx.test:core:$androidXTestVersion0"
     testImplementation "junit:junit:4.13.2"
     testImplementation "androidx.arch.core:core-testing:2.2.0"
-    testImplementation "androidx.test.espresso:espresso-core:3.5.1"
+    testImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
     testImplementation "com.google.truth:truth:1.1.5"
-    testImplementation "io.mockk:mockk:1.13.8"
+    testImplementation "io.mockk:mockk:$mockkVersion"
 
-    // Instrumentation tests - add later
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    // Instrumentation tests
+    // Assertions
+    androidTestImplementation "androidx.test.ext:junit:$testJunitVersion"
+    androidTestImplementation "androidx.test.ext:truth:$truthVersion"
 
+    //  Core Library
+    androidTestImplementation "androidx.test:core:$androidXTestVersion0"
 
+    // AndroidJUnitRunner and JUnit Rules 
+    androidTestImplementation "androidx.test:runner:$testRunnerVersion"
+    androidTestImplementation "androidx.test:rules:$testRulesVersion"
+
+    // Espresso dependencies
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-intents:$espressoVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-accessibility:$espressoVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-web:$espressoVersion"
+    androidTestImplementation "androidx.test.espresso.idling:idling-concurrent:$espressoVersion"
+
+    // The following Espresso dependency can be either "implementation",
+    // or "androidTestImplementation", depending on whether you want the
+    // dependency to appear on your APK’"s compile classpath or the test APK
+    // classpath.
+    androidTestImplementation "androidx.test.espresso:espresso-idling-resource:$espressoVersion"
+
+    //  OTHER
 
     // Implementation of on swipe show icon and color
     implementation 'it.xabaras.android:recyclerview-swipedecorator:1.4'
