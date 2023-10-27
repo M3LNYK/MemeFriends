@@ -14,6 +14,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.List;
+
 @RunWith(AndroidJUnit4.class)
 public class FriendDatabaseTest{
 
@@ -38,6 +40,25 @@ public class FriendDatabaseTest{
         friendDao.insert(friend);
         Friend res = friendDao.getFriendById(0).getValue();
         assertThat(res == friend);
+    }
+
+    @Test
+    public void updateFriend(){
+        Friend friend = new Friend("A2", 5, 3, 2, 99);
+        friendDao.insert(friend);
+        Friend friendChanged = new Friend("A3", 5, 3, 2, 99);
+        friendDao.update(friendChanged);
+        Friend res = friendDao.getFriendById(0).getValue();
+        assertThat(res != friend);
+    }
+
+    @Test
+    public void deleteFriend(){
+        Friend friend = new Friend("A4", 5, 3, 2, 99);
+        friendDao.insert(friend);
+        friendDao.deleteFriendById(0);
+        List<Friend> res = friendDao.getAllFriends().getValue();
+        assertThat(res == null);
     }
 
 }
