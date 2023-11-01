@@ -187,7 +187,7 @@ public class FriendsList extends AppCompatActivity {
         fabReaction.setOnClickListener(view -> {
             //  Here, new window w add meme should be opened
             addNewMemeActivityStart();
-            Toast.makeText(FriendsList.this, "This is not implemented yet", Toast.LENGTH_SHORT).show();
+            Toast.makeText(FriendsList.this, "This feature is not implemented yet", Toast.LENGTH_SHORT).show();
         });
 
         fabFriend.setOnClickListener(view -> addNewFriendDialog());
