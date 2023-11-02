@@ -44,12 +44,13 @@ dependencies {
     def testJunitVersion = "1.1.5"
     def espressoVersion = "3.5.1"
     def truthVersion = "1.5.0"
+    def navigationVersion = "2.7.5"
 
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.10.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.navigation:navigation-fragment:2.7.4'
-    implementation 'androidx.navigation:navigation-ui:2.7.4'
+    implementation "androidx.navigation:navigation-fragment:$navigationVersion"
+    implementation "androidx.navigation:navigation-ui:$navigationVersion"
     implementation 'androidx.room:room-common:2.6.0'
     implementation 'androidx.room:room-runtime:2.6.0'
     annotationProcessor 'androidx.room:room-compiler:2.6.0'
