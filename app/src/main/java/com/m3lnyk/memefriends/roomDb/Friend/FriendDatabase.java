@@ -52,7 +52,7 @@ public abstract class FriendDatabase extends RoomDatabase {
             int colorBlack = Color.rgb(0,0,0);
             friendDao.insert(new Friend("Example Friend 1", 0, 0, 0, colorBlack));
             friendDao.insert(new Friend("Example Friend 2", 0, 0, 0, colorBlack));
-            friendDao.insert(new Friend("Example Friend 3", 1, 1, 0, colorBlack));
+            friendDao.insert(new Friend("Example Friend 3", 0, 0, 0, colorBlack));
             return null;
         }
     }
