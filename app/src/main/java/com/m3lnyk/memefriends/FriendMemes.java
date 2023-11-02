@@ -109,6 +109,13 @@ public class FriendMemes extends AppCompatActivity {
 
     private Intent createResultIntent() {
         Intent data = new Intent();
+        String friendName = extractFriendName();
+        if (friendName == null) {
+            // Validation failed
+            data.putExtra(EXTRA_NAME, getIntent().getStringExtra(EXTRA_NAME));
+        } else{
+            data.putExtra(EXTRA_NAME, getTextValue(outlinedFriendName));
+        }
         data.putExtra(EXTRA_TOTAL_MEMES, getIntValue(outlinedMemeTotal));
         data.putExtra(EXTRA_FUNNY_MEMES, getIntValue(outlinedMemeFunny));
         data.putExtra(EXTRA_NOT_FUNNY_MEMES, getIntValue(outlinedMemeNotFunny));
@@ -118,11 +125,7 @@ public class FriendMemes extends AppCompatActivity {
         if (id != -1) {
             data.putExtra(EXTRA_ID, id);
         }
-        if(getTextValue(outlinedFriendName).equals(null)){
-            // Toast.makeText(this, "Aha, empty name", Toast.LENGTH_SHORT).show();
-            System.out.println("Aha, empty name caught!");
-            data.putExtra(EXTRA_NAME, getIntent().getStringExtra(EXTRA_NAME));
-        }
+
         return data;
     }
 
