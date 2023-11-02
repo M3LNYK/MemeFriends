@@ -13,7 +13,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.m3lnyk.memefriends.roomDb.Meme;
 import com.m3lnyk.memefriends.roomDb.MemeDao;
 
-@Database(entities = {Friend.class, Meme.class}, version = 4)
+@Database(entities = {Friend.class, Meme.class}, version = 6)
 public abstract class FriendDatabase extends RoomDatabase {
 
     private static FriendDatabase instance;
