@@ -65,6 +65,7 @@
                             android:layout_height="wrap_content"
                             android:clickable="false"
                             android:focusable="false"
+                            android:textColor="?attr/colorOnSurface"
                             android:inputType="textPersonName" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -84,6 +85,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="9"
                             android:textSize="16sp"
+                            android:textColor="?attr/colorOnSurface"
                             android:text="Total Memes:" />
 
                         <TextView
@@ -92,6 +94,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textSize="16sp"
+                            android:textColor="?attr/colorOnSurface"
                             android:text="0" />
                     </LinearLayout>
 
@@ -109,6 +112,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="9"
                             android:textSize="16sp"
+                            android:textColor="?attr/colorOnSurface"
                             android:text="Funny memes:" />
 
                         <TextView
@@ -117,6 +121,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textSize="16sp"
+                            android:textColor="?attr/colorOnSurface"
                             android:text="0" />
                     </LinearLayout>
 
@@ -134,6 +139,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="9"
                             android:textSize="16sp"
+                            android:textColor="?attr/colorOnSurface"
                             android:text="Not funny memes:" />
 
                         <TextView
@@ -142,6 +148,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textSize="16sp"
+                            android:textColor="?attr/colorOnSurface"
                             android:text="0" />
                     </LinearLayout>
 
