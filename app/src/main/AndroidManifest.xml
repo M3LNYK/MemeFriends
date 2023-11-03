@@ -13,21 +13,21 @@
         tools:targetApi="34">
         <activity
             android:name=".IntroActivity"
-            android:exported="false"
-            android:label="MyCustomIntro"
-            android:parentActivityName=".FriendsList"/>
+            android:exported="true"
+            android:label="MyCustomIntro">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".Help"
             android:exported="false"
             android:parentActivityName=".FriendsList" />
         <activity
             android:name=".FriendsList"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:exported="false">
         </activity>
         <activity
             android:name=".FriendMemes"
