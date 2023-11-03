@@ -12,12 +12,14 @@
         android:theme="@style/Theme.MemeFriends"
         tools:targetApi="34">
         <activity
-            android:name=".Help"
+            android:name=".IntroActivity"
             android:exported="false"
+            android:label="MyCustomIntro"
             android:parentActivityName=".FriendsList"/>
         <activity
-            android:name=".AddMeme"
-            android:exported="false" />
+            android:name=".Help"
+            android:exported="false"
+            android:parentActivityName=".FriendsList" />
         <activity
             android:name=".FriendsList"
             android:exported="true">
