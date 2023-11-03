@@ -50,7 +50,7 @@
 
 
     <style name="Custom.TextInputEditText.OutlinedBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="boxStrokeColor">@color/black_light</item>
+        <item name="boxStrokeColor">@color/md_theme_light_outline</item>
 <!--        <item name="mtrl_textinput_default_box_stroke_color"></item>-->
     </style>
 
