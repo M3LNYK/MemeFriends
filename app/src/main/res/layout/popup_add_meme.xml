@@ -9,43 +9,53 @@
 
 
     <!-- FRIEND SELECTION FIELD -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/popup_add_meme_til_friend_selection"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+    <LinearLayout
+        android:id="@+id/popup_add_meme_ll_friend_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="16dp"
-        android:hint="Selected friend"
+        android:layout_margin="16dp"
+        android:background="@drawable/custom_ll_border"
+        android:clickable="false"
+        android:padding="16dp"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="16dp">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/popup_add_meme_tied_friend_name"
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:clickable="false"
-            android:focusable="false"
-            android:inputType="textPersonName" />
+            android:layout_weight="3"
+            android:text="Friend:"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="16sp" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+        <TextView
+            android:id="@+id/popup_add_meme_tv_friend_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="7"
+            android:text="Lando"
+            android:textAlignment="textEnd"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="16sp" />
+    </LinearLayout>
 
     <!-- MEME NAME TEXT FIELD -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/popup_add_meme_til_meme_name"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Custom.TextInputEditText.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="16dp"
         android:hint="@string/label_meme_name"
         app:endIconMode="clear_text"
-        app:layout_constraintTop_toBottomOf="@+id/popup_add_meme_til_friend_selection">
+        app:layout_constraintTop_toBottomOf="@+id/popup_add_meme_ll_friend_name">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/popup_add_meme_tied_meme_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="?attr/colorOnSurface"
             android:inputType="textPersonName" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -54,6 +64,7 @@
         android:id="@+id/popup_add_meme_tv_meme_source"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="?attr/colorOnSurface"
         android:text="Select meme source:"
         app:layout_constraintTop_toBottomOf="@id/popup_add_meme_til_meme_name"
         android:paddingStart="16dp"
