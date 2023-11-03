@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -226,34 +225,6 @@ public class FriendsList extends AppCompatActivity {
                         }
                     }
                 });
-
-        if (appGetFirstTimeRun() == 0) {
-            Intent myIntent = new Intent(FriendsList.this, IntroActivity.class);
-            FriendsList.this.startActivity(myIntent);
-        }
-
-    }
-
-    private int appGetFirstTimeRun() {
-        // Check if App Start First Time
-        SharedPreferences appPreferences = getSharedPreferences("MyAPP", 0);
-        int appCurrentBuildVersion = BuildConfig.VERSION_CODE;
-        int appLastBuildVersion = appPreferences.getInt("app_first_time", 0);
-
-        // Log.d("appPreferences", "app_first_time = " + appLastBuildVersion);
-
-        if (appLastBuildVersion == appCurrentBuildVersion) {
-            return 1; // ya has iniciado la appp alguna vez
-
-        } else {
-            appPreferences.edit().putInt("app_first_time",
-                    appCurrentBuildVersion).apply();
-            if (appLastBuildVersion == 0) {
-                return 0; // es la primera vez
-            } else {
-                return 2; // es una versión nueva
-            }
-        }
     }
 
     private int findLastHeaderInAdapter(int firstVisibleItemPosition) {
