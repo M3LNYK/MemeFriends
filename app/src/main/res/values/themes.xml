@@ -47,4 +47,11 @@
 
     <style name="Theme.MemeFriends.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="Theme.MemeFriends.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+    <style name="Custom.TextInputEditText.OutlinedBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/black_light</item>
+<!--        <item name="mtrl_textinput_default_box_stroke_color"></item>-->
+    </style>
+
 </resources>
