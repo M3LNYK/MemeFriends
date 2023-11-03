@@ -153,11 +153,8 @@ public class FriendMemes extends AppCompatActivity {
         // Initialize UI components
         cardFriendInfo = findViewById(R.id.cardFriendInfo);
         outlinedFriendName = findViewById(R.id.tiet_friend_name);
-        // outlinedMemeTotal = findViewById(R.id.tied_meme_total);
         friendTotalMemes = findViewById(R.id.tv_total_memes);
-        // outlinedMemeFunny = findViewById(R.id.tied_meme_funny);
         friendFunnyMemes = findViewById(R.id.tv_funny_memes);
-        // outlinedMemeNotFunny = findViewById(R.id.tied_meme_not_funny);
         friendNotFunnyMemes = findViewById(R.id.tv_not_funny_memes);
         buttonsArea = findViewById(R.id.ll_buttons_field);
         memeRecyclerView = findViewById(R.id.memeRecyclerView);
@@ -172,7 +169,6 @@ public class FriendMemes extends AppCompatActivity {
         textViewFunnyMemes = findViewById(R.id.text_view_funny_memes);
         textViewOverallMemes = findViewById(R.id.text_view_overall_memes);
         cardMoreSoon = findViewById(R.id.card_more_coming_soon);
-        // populatePieChart();
         setDivider();
     }
 
@@ -196,7 +192,6 @@ public class FriendMemes extends AppCompatActivity {
             if (friend != null) {
                 setTitle(friend.getName() + "'s stats");
                 outlinedFriendName.setText(friend.getName());
-                // outlinedMemeTotal.setText(String.valueOf(friend.getTotalMemes()));
                 friendTotalMemes.setText(String.valueOf(friend.getTotalMemes()));
                 friendFunnyMemes.setText(String.valueOf(friend.getFunnyMemes()));
                 friendNotFunnyMemes.setText(String.valueOf(friend.getNfMemes()));
@@ -618,7 +613,7 @@ public class FriendMemes extends AppCompatActivity {
         int notFunnyMemes = extractMemeCount(friendNotFunnyMemes);
         Friend afterUpdate = new Friend(friendName, totalMemes, funnyMemes, notFunnyMemes, friendColor);
         memeViewModel.update(afterUpdate);
-        disableEditingAndHideButtons();
+        hideButtons();
     }
 
     private String extractFriendName() {
@@ -634,14 +629,6 @@ public class FriendMemes extends AppCompatActivity {
         return friendName;
     }
 
-    private void disableEditingAndHideButtons() {
-        // setEditingEnabled(outlinedFriendName, false);
-        // setEditingEnabled(outlinedMemeTotal, false);
-        // setEditingEnabled(outlinedMemeFunny, false);
-        // setEditingEnabled(outlinedMemeNotFunny, false);
-        hideButtons();
-    }
-
     private int extractMemeCount(TextView editText) {
         return Integer.parseInt(editText.getText().toString());
     }
@@ -649,7 +636,7 @@ public class FriendMemes extends AppCompatActivity {
     private void onDiscardButtonClicked() {
         clearValidationErrors();
         populateReceivedFriendName();
-        disableEditingAndHideButtons();
+        hideButtons();
     }
 
     private void clearValidationErrors() {
