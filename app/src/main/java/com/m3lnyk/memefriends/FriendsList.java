@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -225,6 +226,34 @@ public class FriendsList extends AppCompatActivity {
                         }
                     }
                 });
+
+        if (appGetFirstTimeRun() == 0) {
+            Intent myIntent = new Intent(FriendsList.this, IntroActivity.class);
+            FriendsList.this.startActivity(myIntent);
+        }
+
+    }
+
+    private int appGetFirstTimeRun() {
+        // Check if App Start First Time
+        SharedPreferences appPreferences = getSharedPreferences("MyAPP", 0);
+        int appCurrentBuildVersion = BuildConfig.VERSION_CODE;
+        int appLastBuildVersion = appPreferences.getInt("app_first_time", 0);
+
+        // Log.d("appPreferences", "app_first_time = " + appLastBuildVersion);
+
+        if (appLastBuildVersion == appCurrentBuildVersion) {
+            return 1; // ya has iniciado la appp alguna vez
+
+        } else {
+            appPreferences.edit().putInt("app_first_time",
+                    appCurrentBuildVersion).apply();
+            if (appLastBuildVersion == 0) {
+                return 0; // es la primera vez
+            } else {
+                return 2; // es una versión nueva
+            }
+        }
     }
 
     private int findLastHeaderInAdapter(int firstVisibleItemPosition) {
@@ -401,13 +430,13 @@ public class FriendsList extends AppCompatActivity {
                 return true;
             }
         }
-        if (item.getItemId() == R.id.menu_item_help){
+        if (item.getItemId() == R.id.menu_item_help) {
             startActivity(new Intent(this, Help.class));
         }
-        if (item.getItemId() == R.id.menu_item_settings){
+        if (item.getItemId() == R.id.menu_item_settings) {
             Toast.makeText(this, "Not implemented yet", Toast.LENGTH_SHORT).show();
         }
-        if (item.getItemId() == R.id.menu_item_rate_app){
+        if (item.getItemId() == R.id.menu_item_rate_app) {
             Toast.makeText(this, "Rate app", Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
