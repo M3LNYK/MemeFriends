@@ -60,8 +60,7 @@ public class FriendMemes extends AppCompatActivity {
     public static final String EXTRA_NOT_FUNNY_MEMES = "com.memefriends.EXTRA_NOT_FUNNY_MEMES";
     public static final String EXTRA_COLOR = "com.memefriends.EXTRA_COLOR";
     private static final int RESULT_EDIT = 10;
-    private TextInputEditText outlinedFriendName, outlinedMemeTotal, outlinedMemeFunny, outlinedMemeNotFunny,
-            popupFriendName, popupMemeName;
+    private TextInputEditText outlinedFriendName, popupMemeName;
     private TextInputLayout nameFriendLayout, memeNameLayout;
     private LinearLayout buttonsArea;
     private FloatingActionButton fabAddMeme;
@@ -78,7 +77,8 @@ public class FriendMemes extends AppCompatActivity {
     private MaterialCardView cardFriendInfo, cardFriendPieChart, cardMoreSoon;
     private Chip someStats;
     private TextView textViewFunnyMemes, textViewOverallMemes, popupMemeSource,
-                friendTotalMemes, friendFunnyMemes, friendNotFunnyMemes;
+                friendTotalMemes, friendFunnyMemes, friendNotFunnyMemes,
+                popupFriendName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -440,7 +440,7 @@ public class FriendMemes extends AppCompatActivity {
             displayAddMemePopup();
             addFunny = newMemeDialog.findViewById(R.id.popup_add_meme_button_add_funny_meme);
             addNotFunny = newMemeDialog.findViewById(R.id.popup_add_meme_button_add_nf_meme);
-            popupFriendName = newMemeDialog.findViewById(R.id.popup_add_meme_tied_friend_name);
+            popupFriendName = newMemeDialog.findViewById(R.id.popup_add_meme_tv_friend_name);
             String receivedName = getIntent().getStringExtra(EXTRA_NAME);
             popupFriendName.setText(receivedName);
             popupMemeName = newMemeDialog.findViewById(R.id.popup_add_meme_tied_meme_name);
