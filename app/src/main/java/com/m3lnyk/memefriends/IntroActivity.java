@@ -8,16 +8,17 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.github.appintro.AppIntro;
+import com.github.appintro.AppIntro2;
 import com.github.appintro.AppIntroFragment;
 import com.github.appintro.AppIntroPageTransformerType;
 
-public class IntroActivity extends AppIntro {
+public class IntroActivity extends AppIntro2 {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        checkIfFirstRun();
+        // checkIfFirstRun();
+        createFirstTimeSlideScreen();
     }
 
     private void checkIfFirstRun() {
@@ -33,7 +34,7 @@ public class IntroActivity extends AppIntro {
 
     private void createFirstTimeSlideScreen() {
         addSlide(AppIntroFragment.createInstance("Welcome!",
-                "This is a demo example in java of AppIntro library, with a custom background on each slide!",
+                "This is a demo app MemeFriends. App is written in Java and is supposed to show how(or not) your friends are :)",
                 R.drawable.ic_slide1,
                 R.color.appintro_example_orange
         ));
@@ -82,8 +83,6 @@ public class IntroActivity extends AppIntro {
         // Dhow/hide ALL buttons
         setButtonsEnabled(true);
 
-        // Enable Vibration
-        // setVibrate(true);
     }
 
     @Override
