@@ -35,15 +35,11 @@ public class IntroActivity extends AppIntro2 {
 
     private void createFirstTimeSlideScreen() {
         addSlideWelcome();
-
-        String title2 = "Add friends";
-        String description2 = "Using round button in the right corner you can add friends to your list.";
-        int pic2 = R.drawable.add_friend_simple_longer;
-        addSlideToIntro(title2, description2, pic2);
+        slide2();
 
         String title3 = "Delete friends";
-        String description3 = "The library offers a lot of customization, while keeping it simple for those that like simple.";
-        int pic3 = R.drawable.add_friend_simple_longer;
+        String description3 = "By swiping left you can delete friend and all memes added to this user. Please be advised that this action can not be undone!";
+        int pic3 = R.drawable.delete_friend_simple_longer;
         addSlideToIntro(title3, description3, pic3);
 
 
@@ -86,6 +82,13 @@ public class IntroActivity extends AppIntro2 {
 
         customizeCarouselParam();
 
+    }
+
+    private void slide2() {
+        String title2 = "Add friends";
+        String description2 = "Using round button in the right corner you can add friends to your list.";
+        int pic2 = R.drawable.add_friend_simple_longer;
+        addSlideToIntro(title2, description2, pic2);
     }
 
     private void addSlideToIntro(String title, String description, int picture) {
