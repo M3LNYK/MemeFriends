@@ -2,17 +2,22 @@ package com.m3lnyk.memefriends;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.github.appintro.AppIntro;
+import com.github.appintro.AppIntro2;
 import com.github.appintro.AppIntroFragment;
 import com.github.appintro.AppIntroPageTransformerType;
+import com.github.appintro.model.SliderPage;
 
-public class IntroActivity extends AppIntro {
+public class IntroActivity extends AppIntro2 {
+
+    private int backGroundColor;
+    private int fontColor;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,66 +58,59 @@ public class IntroActivity extends AppIntro {
     }
 
     private void createFirstTimeSlideScreen() {
-        addSlide(AppIntroFragment.createInstance("Welcome!",
-                "This is a demo app MemeFriends. App is written in Java and is supposed to show how(or not) your friends are :)",
-                R.drawable.ic_slide1,
-                R.color.appintro_example_orange
-        ));
+        addSlideWelcome();
 
-        addSlide(AppIntroFragment.createInstance(
-                "Add Friends",
-                "Using round button in the right corner you can add friends to your list.",
-                R.drawable.ic_slide2,
-                R.color.appintro_example_lime
-        ));
+        String title2 = "Add friends";
+        String description2 = "Using round button in the right corner you can add friends to your list.";
+        int pic2 = R.drawable.add_friend_simple_longer;
+        addSlideToIntro(title2, description2, pic2);
 
-        addSlide(AppIntroFragment.createInstance(
-                "Delete friends",
-                "The library offers a lot of customization, while keeping it simple for those that like simple.",
-                R.drawable.ic_slide3,
-                R.color.appintro_example_blue
-        ));
+        String title3 = "Delete friends";
+        String description3 = "The library offers a lot of customization, while keeping it simple for those that like simple.";
+        int pic3 = R.drawable.add_friend_simple_longer;
+        addSlideToIntro(title3, description3, pic3);
+
 
         addSlide(AppIntroFragment.createInstance(
                 "Add memes",
                 "The library offers a lot of customization, while keeping it simple for those that like simple.",
-                R.drawable.ic_slide3,
+                R.drawable.pic_mini_logo,
                 R.color.appintro_example_blue
         ));
 
         addSlide(AppIntroFragment.createInstance(
                 "Delete meme",
                 "The library offers a lot of customization, while keeping it simple for those that like simple.",
-                R.drawable.ic_slide3,
+                R.drawable.pic_mini_logo,
                 R.color.appintro_example_blue
-        ));
+                ));
 
         addSlide(AppIntroFragment.createInstance(
                 "Edit friend name",
                 "The library offers a lot of customization, while keeping it simple for those that like simple.",
-                R.drawable.ic_slide3,
+                R.drawable.pic_mini_logo,
                 R.color.appintro_example_blue
         ));
 
         addSlide(AppIntroFragment.createInstance(
                 "Help and guide",
                 "The library offers a lot of customization, while keeping it simple for those that like simple.",
-                R.drawable.ic_slide3,
+                R.drawable.pic_mini_logo,
                 R.color.appintro_example_blue
         ));
 
         addSlide(AppIntroFragment.createInstance(
                 "Rate app!",
                 "The library offers a lot of customization, while keeping it simple for those that like simple.",
-                R.drawable.ic_slide3,
+                R.drawable.pic_mini_logo,
                 R.color.appintro_example_blue
         ));
 
         addSlide(AppIntroFragment.createInstance(
                 "Explore",
                 "Feel free to explore the rest of the library demo!",
-                R.drawable.ic_slide4,
-                R.color.appintro_example_blue_gray
+                R.drawable.pic_mini_logo
+                // R.color.appintro_example_blue_gray
         ));
 
         customizeCarouselParam();
@@ -143,7 +141,7 @@ public class IntroActivity extends AppIntro {
         setSystemBackButtonLocked(true);
 
         // Activate wizard mode (Some aesthetic changes)
-        // setWizardMode(true);
+        setWizardMode(true);
 
         // Enable immersive mode (no status and nav bar)
         setImmersiveMode();
@@ -153,6 +151,7 @@ public class IntroActivity extends AppIntro {
 
         // Dhow/hide ALL buttons
         setButtonsEnabled(true);
+    }
 
     private void addSlideWelcome() {
         SliderPage slide1 = new SliderPage();
