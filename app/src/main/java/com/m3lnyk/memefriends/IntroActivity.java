@@ -138,6 +138,15 @@ public class IntroActivity extends AppIntro {
         // Dhow/hide ALL buttons
         setButtonsEnabled(true);
 
+    private void addSlideWelcome() {
+        SliderPage slide1 = new SliderPage();
+        slide1.setTitle("Welcome!");
+        slide1.setDescription("This is a demo app MemeFriends. App is written in Java and is supposed to show how(or not) your friends are :)");
+        slide1.setTitleColorRes(R.color.md_theme_light_onTertiaryContainer);
+        slide1.setDescriptionColorRes(R.color.md_theme_light_onTertiaryContainer);
+        slide1.setImageDrawable(R.drawable.pic_mini_logo);
+        slide1.setBackgroundColorRes(R.color.appIntro_slide1_color);
+        addSlide(AppIntroFragment.createInstance(slide1));
     }
 
     @Override
