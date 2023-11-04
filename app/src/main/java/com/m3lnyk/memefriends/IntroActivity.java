@@ -115,6 +115,22 @@ public class IntroActivity extends AppIntro {
                 R.color.appintro_example_blue_gray
         ));
 
+        customizeCarouselParam();
+
+    }
+
+    private void addSlideToIntro(String title, String description, int picture) {
+        SliderPage slide = new SliderPage();
+        slide.setDescriptionColorRes(fontColor);
+        slide.setTitleColorRes(fontColor);
+        slide.setBackgroundColorRes(backGroundColor);
+        slide.setTitle(title);
+        slide.setDescription(description);
+        slide.setImageDrawable(picture);
+        addSlide(AppIntroFragment.createInstance(slide));
+    }
+
+    private void customizeCarouselParam() {
         // Fade Transition
         setTransformer(AppIntroPageTransformerType.Fade.INSTANCE);
 
