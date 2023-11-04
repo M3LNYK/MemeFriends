@@ -8,11 +8,11 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.github.appintro.AppIntro2;
+import com.github.appintro.AppIntro;
 import com.github.appintro.AppIntroFragment;
 import com.github.appintro.AppIntroPageTransformerType;
 
-public class IntroActivity extends AppIntro2 {
+public class IntroActivity extends AppIntro {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,14 +40,49 @@ public class IntroActivity extends AppIntro2 {
         ));
 
         addSlide(AppIntroFragment.createInstance(
-                "Clean App Intros",
-                "This library offers developers the ability to add clean app intros at the start of their apps.",
+                "Add Friends",
+                "Using round button in the right corner you can add friends to your list.",
                 R.drawable.ic_slide2,
                 R.color.appintro_example_lime
         ));
 
         addSlide(AppIntroFragment.createInstance(
-                "Simple, yet Customizable",
+                "Delete friends",
+                "The library offers a lot of customization, while keeping it simple for those that like simple.",
+                R.drawable.ic_slide3,
+                R.color.appintro_example_blue
+        ));
+
+        addSlide(AppIntroFragment.createInstance(
+                "Add memes",
+                "The library offers a lot of customization, while keeping it simple for those that like simple.",
+                R.drawable.ic_slide3,
+                R.color.appintro_example_blue
+        ));
+
+        addSlide(AppIntroFragment.createInstance(
+                "Delete meme",
+                "The library offers a lot of customization, while keeping it simple for those that like simple.",
+                R.drawable.ic_slide3,
+                R.color.appintro_example_blue
+        ));
+
+        addSlide(AppIntroFragment.createInstance(
+                "Edit friend name",
+                "The library offers a lot of customization, while keeping it simple for those that like simple.",
+                R.drawable.ic_slide3,
+                R.color.appintro_example_blue
+        ));
+
+        addSlide(AppIntroFragment.createInstance(
+                "Help and guide",
+                "The library offers a lot of customization, while keeping it simple for those that like simple.",
+                R.drawable.ic_slide3,
+                R.color.appintro_example_blue
+        ));
+
+        addSlide(AppIntroFragment.createInstance(
+                "Rate app!",
                 "The library offers a lot of customization, while keeping it simple for those that like simple.",
                 R.drawable.ic_slide3,
                 R.color.appintro_example_blue
@@ -72,7 +107,7 @@ public class IntroActivity extends AppIntro2 {
         setSystemBackButtonLocked(true);
 
         // Activate wizard mode (Some aesthetic changes)
-        setWizardMode(true);
+        // setWizardMode(true);
 
         // Enable immersive mode (no status and nav bar)
         setImmersiveMode();
