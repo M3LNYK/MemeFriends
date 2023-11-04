@@ -2,7 +2,6 @@ package com.m3lnyk.memefriends;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -16,34 +15,11 @@ import com.github.appintro.model.SliderPage;
 
 public class IntroActivity extends AppIntro2 {
 
-    private int backGroundColor;
-    private int fontColor;
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        checkIfDark();
         // checkIfFirstRun();
         createFirstTimeSlideScreen();
-    }
-
-    private void checkIfDark() {
-        int nightModeFlags =
-                getApplicationContext().getResources().getConfiguration().uiMode &
-                        Configuration.UI_MODE_NIGHT_MASK;
-        switch (nightModeFlags) {
-            case Configuration.UI_MODE_NIGHT_YES:
-                backGroundColor = R.color.md_theme_dark_primaryContainer;
-                fontColor = R.color.md_theme_dark_onPrimaryContainer;
-
-            case Configuration.UI_MODE_NIGHT_NO:
-                backGroundColor = R.color.md_theme_light_primaryContainer;
-                fontColor = R.color.md_theme_light_onPrimaryContainer;
-
-            default:
-                backGroundColor = R.color.md_theme_dark_tertiaryContainer;
-                fontColor = R.color.md_theme_dark_onTertiaryContainer;
-        }
     }
 
     private void checkIfFirstRun() {
@@ -74,43 +50,38 @@ public class IntroActivity extends AppIntro2 {
         addSlide(AppIntroFragment.createInstance(
                 "Add memes",
                 "The library offers a lot of customization, while keeping it simple for those that like simple.",
-                R.drawable.pic_mini_logo,
-                R.color.appintro_example_blue
+                R.drawable.pic_mini_logo
         ));
 
         addSlide(AppIntroFragment.createInstance(
                 "Delete meme",
                 "The library offers a lot of customization, while keeping it simple for those that like simple.",
-                R.drawable.pic_mini_logo,
-                R.color.appintro_example_blue
-                ));
+                R.drawable.pic_mini_logo
+        ));
 
         addSlide(AppIntroFragment.createInstance(
                 "Edit friend name",
                 "The library offers a lot of customization, while keeping it simple for those that like simple.",
-                R.drawable.pic_mini_logo,
-                R.color.appintro_example_blue
+                R.drawable.pic_mini_logo
         ));
 
         addSlide(AppIntroFragment.createInstance(
                 "Help and guide",
                 "The library offers a lot of customization, while keeping it simple for those that like simple.",
-                R.drawable.pic_mini_logo,
-                R.color.appintro_example_blue
+                R.drawable.pic_mini_logo
         ));
 
         addSlide(AppIntroFragment.createInstance(
                 "Rate app!",
                 "The library offers a lot of customization, while keeping it simple for those that like simple.",
-                R.drawable.pic_mini_logo,
-                R.color.appintro_example_blue
+                R.drawable.pic_mini_logo
         ));
 
         addSlide(AppIntroFragment.createInstance(
                 "Explore",
                 "Feel free to explore the rest of the library demo!",
                 R.drawable.pic_mini_logo
-                // R.color.appintro_example_blue_gray
+                //  _gray
         ));
 
         customizeCarouselParam();
@@ -119,9 +90,9 @@ public class IntroActivity extends AppIntro2 {
 
     private void addSlideToIntro(String title, String description, int picture) {
         SliderPage slide = new SliderPage();
-        slide.setDescriptionColorRes(fontColor);
-        slide.setTitleColorRes(fontColor);
-        slide.setBackgroundColorRes(backGroundColor);
+        slide.setDescriptionColorRes(R.color.md_theme_dark_onTertiaryContainer);
+        slide.setTitleColorRes(R.color.md_theme_dark_onTertiaryContainer);
+        slide.setBackgroundColorRes(R.color.md_theme_dark_tertiaryContainer);
         slide.setTitle(title);
         slide.setDescription(description);
         slide.setImageDrawable(picture);
@@ -160,7 +131,7 @@ public class IntroActivity extends AppIntro2 {
         slide1.setTitleColorRes(R.color.md_theme_light_onTertiaryContainer);
         slide1.setDescriptionColorRes(R.color.md_theme_light_onTertiaryContainer);
         slide1.setImageDrawable(R.drawable.pic_mini_logo);
-        slide1.setBackgroundColorRes(R.color.appIntro_slide1_color);
+        slide1.setBackgroundColorRes(R.color.md_theme_light_tertiaryContainer);
         addSlide(AppIntroFragment.createInstance(slide1));
     }
 
