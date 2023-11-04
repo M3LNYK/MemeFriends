@@ -17,8 +17,28 @@ public class IntroActivity extends AppIntro {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        checkIfDark();
         // checkIfFirstRun();
         createFirstTimeSlideScreen();
+    }
+
+    private void checkIfDark() {
+        int nightModeFlags =
+                getApplicationContext().getResources().getConfiguration().uiMode &
+                        Configuration.UI_MODE_NIGHT_MASK;
+        switch (nightModeFlags) {
+            case Configuration.UI_MODE_NIGHT_YES:
+                backGroundColor = R.color.md_theme_dark_primaryContainer;
+                fontColor = R.color.md_theme_dark_onPrimaryContainer;
+
+            case Configuration.UI_MODE_NIGHT_NO:
+                backGroundColor = R.color.md_theme_light_primaryContainer;
+                fontColor = R.color.md_theme_light_onPrimaryContainer;
+
+            default:
+                backGroundColor = R.color.md_theme_dark_tertiaryContainer;
+                fontColor = R.color.md_theme_dark_onTertiaryContainer;
+        }
     }
 
     private void checkIfFirstRun() {
