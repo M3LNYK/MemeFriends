@@ -120,12 +120,5 @@
 
     <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">#757780</color>
 
-    <!--    AppIntro demo colors-->
-    <color name="appintro_example_orange">#EF6C00</color>
-    <color name="appintro_example_lime">#CDDC39</color>
-    <color name="appintro_example_blue">#448AFF</color>
-    <color name="appintro_example_blue_gray">#607D8B</color>
-
-    <color name="appIntro_slide1_color">#B4EBD7</color>
 
 </resources>
