@@ -255,13 +255,13 @@ public class FriendsList extends AppCompatActivity {
                         deletedFriend = adapter.getFriendAt(position);
                         friendViewModel.delete(adapter.getFriendAt(position));
                         adapter.notifyItemRemoved(position);
-                        Snackbar.make(recyclerView, "Deleted friend: " + deletedFriend.getName(), BaseTransientBottomBar.LENGTH_LONG)
-                                .setAction("Undo", view -> {
-                                    friendViewModel.insert(deletedFriend);
-                                    // Below caused index out of bounds exception error
-                                    // adapter.notifyItemInserted(position);
-                                })
-                                .show();
+                        // Snackbar.make(recyclerView, "Deleted friend: " + deletedFriend.getName(), BaseTransientBottomBar.LENGTH_LONG)
+                        //         .setAction("Undo", view -> {
+                        //             friendViewModel.insert(deletedFriend);
+                        //             // Below caused index out of bounds exception error
+                        //             // adapter.notifyItemInserted(position);
+                        //         })
+                        //         .show();
 
                         break;
                     case ItemTouchHelper.RIGHT:
