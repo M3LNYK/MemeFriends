@@ -18,7 +18,17 @@ public class IntroActivity extends AppIntro2 {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        checkIfFirstRun();
+        checkIfFromApp();
+    }
+
+    private void checkIfFromApp() {
+        if (getIntent().getBooleanExtra("fromApp", false)) {
+            // Activity was launched from within your app
+            createFirstTimeSlideScreen();
+        } else {
+            // Activity was launched by something else (external intent, system, etc.)
+            checkIfFirstRun();
+        }
     }
 
     private void checkIfFirstRun() {
