@@ -14,7 +14,7 @@
         <activity
             android:name=".IntroActivity"
             android:exported="true"
-            android:label="MyCustomIntro">
+            android:label="MemeFriends">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
