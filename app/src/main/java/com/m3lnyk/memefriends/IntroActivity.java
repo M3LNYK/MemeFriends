@@ -65,8 +65,7 @@ public class IntroActivity extends AppIntro2 {
 
         String title6 = "Help and source code";
         String description6 = "This guide as well as source is available from 'Help' menu option on the main screen.";
-        // @TODO
-        int pic6 = R.drawable.pic_mini_logo;
+        int pic6 = R.drawable.menu_location_simple_longer;
         addSlideToIntro(title6, description6, pic6);
 
         // Slide 7
