@@ -18,8 +18,7 @@ public class IntroActivity extends AppIntro2 {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // checkIfFirstRun();
-        createFirstTimeSlideScreen();
+        checkIfFirstRun();
     }
 
     private void checkIfFirstRun() {
