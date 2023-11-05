@@ -55,41 +55,22 @@ public class IntroActivity extends AppIntro2 {
         int pic4 = R.drawable.add_meme_simple_longer;
         addSlideToIntro(title4, description4, pic4);
 
+        // Slide 5
+        String title5 = "Delete meme"; // In future change to access all memes
+        String description5 = "To delete meme you also need to swipe it from friend you added it to.";
+        int pic5 = R.drawable.add_meme_simple_longer;
+        addSlideToIntro(title5, description5, pic5);
+
         addSlide(AppIntroFragment.createInstance(
-                "Add memes",
+                "Help and source code",
                 "The library offers a lot of customization, while keeping it simple for those that like simple.",
                 R.drawable.pic_mini_logo
         ));
 
         addSlide(AppIntroFragment.createInstance(
-                "Delete meme",
-                "The library offers a lot of customization, while keeping it simple for those that like simple.",
+                "Explore and rate app!",
+                "Feel free to explore the rest of the app and I would appreciate your feedback on it! :D",
                 R.drawable.pic_mini_logo
-        ));
-
-        addSlide(AppIntroFragment.createInstance(
-                "Edit friend name",
-                "The library offers a lot of customization, while keeping it simple for those that like simple.",
-                R.drawable.pic_mini_logo
-        ));
-
-        addSlide(AppIntroFragment.createInstance(
-                "Help and guide",
-                "The library offers a lot of customization, while keeping it simple for those that like simple.",
-                R.drawable.pic_mini_logo
-        ));
-
-        addSlide(AppIntroFragment.createInstance(
-                "Rate app!",
-                "The library offers a lot of customization, while keeping it simple for those that like simple.",
-                R.drawable.pic_mini_logo
-        ));
-
-        addSlide(AppIntroFragment.createInstance(
-                "Explore",
-                "Feel free to explore the rest of the library demo!",
-                R.drawable.pic_mini_logo
-                //  _gray
         ));
 
         customizeCarouselParam();
