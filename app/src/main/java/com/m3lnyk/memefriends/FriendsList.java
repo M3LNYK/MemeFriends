@@ -74,6 +74,7 @@ public class FriendsList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         setupUI();
         setupAdapter();
         getFirstGroupLetterForChip();
@@ -252,8 +253,6 @@ public class FriendsList extends AppCompatActivity {
 
         chipGroupLetter = findViewById(R.id.chipGroupLetter);
         chipGroupLetter.setText(String.valueOf(currentGroupLetter));
-
-
         // Set up animations
         setupAnimations();
     }
