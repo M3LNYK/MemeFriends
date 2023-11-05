@@ -34,18 +34,26 @@ public class IntroActivity extends AppIntro2 {
     }
 
     private void createFirstTimeSlideScreen() {
+        // Slide 1
         addSlideWelcome();
 
+        // Slide 2
         String title2 = "Add friends";
         String description2 = "Using round button in the right corner you can add friends to your list.";
         int pic2 = R.drawable.add_friend_simple_longer;
         addSlideToIntro(title2, description2, pic2);
 
+        // Slide 3
         String title3 = "Delete friends";
         String description3 = "By swiping left you can delete friend and all memes added to this user. Please be advised that this action can not be undone!";
         int pic3 = R.drawable.delete_friend_simple_longer;
         addSlideToIntro(title3, description3, pic3);
 
+        // Slide 4
+        String title4 = "Add memes";
+        String description4 = "To add meme you need to tap on user and tap on big button at the bottom right corner. Green button will add meme as funny, red - not funny(NF meme).";
+        int pic4 = R.drawable.add_meme_simple_longer;
+        addSlideToIntro(title4, description4, pic4);
 
         addSlide(AppIntroFragment.createInstance(
                 "Add memes",
