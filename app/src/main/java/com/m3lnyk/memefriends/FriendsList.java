@@ -1,5 +1,6 @@
 package com.m3lnyk.memefriends;
 
+import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -33,8 +34,6 @@ import com.m3lnyk.memefriends.roomDb.Friend.FriendAdapter;
 import com.m3lnyk.memefriends.roomDb.Friend.GroupedFriend;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
@@ -75,68 +74,77 @@ public class FriendsList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_friends_list);
-
-        fabAdd = findViewById(R.id.fab_add);
-        fabReaction = findViewById(R.id.add_reaction_fab);
-        fabFriend = findViewById(R.id.add_person_fab);
-
-        rotateOpen = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_open_animation);
-        rotateClose = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_close_animation);
-        fromBottom = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.from_bottom_anim);
-        toBottom = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.to_bottom_anim);
-        fadeOutAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_out_animation);
-        fabFadeOutAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_to_top_fade_out);
-
-        textFriend = findViewById(R.id.add_person_text);
-        textReaction = findViewById(R.id.add_reaction_text);
-
-        emptyLayout = findViewById(R.id.emptyList_layout);
-        friendTextView = findViewById(R.id.textView_friends);
-
-        fabToTop = findViewById(R.id.to_top_fab);
-
-        recyclerView = findViewById(R.id.friends_listview);
-        linearLayoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(linearLayoutManager);
-
-
-        adapter = new FriendAdapter();
-        recyclerView.setAdapter(adapter);
-
-        chipGroupLetter = findViewById(R.id.chipGroupLetter);
-        chipGroupLetter.setText(String.valueOf(currentGroupLetter));
-        //  Get the first group letter from the adapter and display it in the chip
+        setupUI();
+        setupAdapter();
         getFirstGroupLetterForChip();
+        setupViewModel();
+        setupEventListeners();
+        registerActivityResultHandler();
+        setupRecyclerView();
 
+    }
 
-        friendViewModel = new ViewModelProvider(this).get(FriendViewModel.class);
-        friendViewModel.getAllFriends().observe(this, friends -> {
-            List<GroupedFriend> groupedFriends = groupFriendsByLetter(friends);
-            adapter.setFriends(groupedFriends);
-            checkEmptyList(friends);
+    private void registerActivityResultHandler() {
+        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), this::handleResult);
+    }
 
-            StringBuilder groupLetters = new StringBuilder();
-            for (GroupedFriend groupedFriend : groupedFriends) {
-                groupLetters.append(groupedFriend.getFirstLetter());
+    // Method dedicated to handling various results
+    private void handleResult(ActivityResult result) {
+        if (result.getResultCode() == RESULT_EDIT) {
+            // Handle editing result
+            // Extract and process the data
+            Intent data = result.getData();
+            assert data != null;
+            int id = data.getIntExtra(FriendMemes.EXTRA_ID, -1);
+            if (id == -1) {
+                Toast.makeText(this, "Friend can not be updated!", Toast.LENGTH_SHORT).show();
+                return;
             }
-        });
+            String name = data.getStringExtra(FriendMemes.EXTRA_NAME);
+            int totalMemes = data.getIntExtra(FriendMemes.EXTRA_TOTAL_MEMES, -1);
+            int funnyMemes = data.getIntExtra(FriendMemes.EXTRA_FUNNY_MEMES, -1);
+            int notFunnyMemes = data.getIntExtra(FriendMemes.EXTRA_NOT_FUNNY_MEMES, -1);
+            int color = data.getIntExtra(FriendMemes.EXTRA_COLOR, -1);
 
+            Friend friend = new Friend(name, totalMemes, funnyMemes, notFunnyMemes, color);
+            friend.setId(id);
+            friendViewModel.update(friend);
+        } else if (result.getResultCode() == RESULT_OK) {
+            // Handle OK result
+            // Extract and process the data or trigger a deletion
+            Intent data = result.getData();
+            if (data != null && data.hasExtra("deletedFriendId")) {
+                int deletedFriendId = data.getIntExtra("deletedFriendId", -1);
+                if (deletedFriendId != -1) {
+                    // Delete the friend from the list
+                    friendViewModel.deleteFriendById(deletedFriendId);
+                }
+            }
+        }
+    }
+
+    private void setupEventListeners() {
+        fabToTop.setOnClickListener(view -> onTopButtonClicked());
+        fabAdd.setOnClickListener(view -> onAddButtonClicked());
+        fabFriend.setOnClickListener(view -> addNewFriendDialog());
+        fabReaction.setOnClickListener(view -> {
+            //  Here, new window w add meme should be opened
+            addNewMemeActivityStart();
+            Toast.makeText(FriendsList.this, "This feature is not implemented yet", Toast.LENGTH_SHORT).show();
+        });
+    }
+
+    private void setupRecyclerView() {
+        attachItemTouchHelper();
+        setupScrollListener();
+    }
+
+    private void attachItemTouchHelper() {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
+    }
 
-        adapter.setOnItemClickListener(friend -> {
-            //  We clicked on friend
-            Intent intent = new Intent(FriendsList.this, FriendMemes.class);
-            intent.putExtra(EXTRA_ID, friend.getId());
-            intent.putExtra(EXTRA_NAME, friend.getName());
-            intent.putExtra(EXTRA_TOTAL_MEMES, friend.getTotalMemes());
-            intent.putExtra(EXTRA_FUNNY_MEMES, friend.getFunnyMemes());
-            intent.putExtra(EXTRA_NOT_FUNNY_MEMES, friend.getNfMemes());
-            intent.putExtra(EXTRA_COLOR, friend.getColor());
-            activityResultLauncher.launch(intent);
-        });
-
+    private void setupScrollListener() {
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
@@ -179,52 +187,75 @@ public class FriendsList extends AppCompatActivity {
                 }
             }
         });
+    }
 
-        fabToTop.setOnClickListener(view -> onTopButtonClicked());
+    private void setupViewModel() {
+        friendViewModel = new ViewModelProvider(this).get(FriendViewModel.class);
+        friendViewModel.getAllFriends().observe(this, friends -> {
+            List<GroupedFriend> groupedFriends = groupFriendsByLetter(friends);
+            adapter.setFriends(groupedFriends);
+            checkEmptyList(friends);
 
-        fabAdd.setOnClickListener(view -> onAddButtonClicked());
-
-        fabReaction.setOnClickListener(view -> {
-            //  Here, new window w add meme should be opened
-            addNewMemeActivityStart();
-            Toast.makeText(FriendsList.this, "This feature is not implemented yet", Toast.LENGTH_SHORT).show();
+            StringBuilder groupLetters = new StringBuilder();
+            for (GroupedFriend groupedFriend : groupedFriends) {
+                groupLetters.append(groupedFriend.getFirstLetter());
+            }
         });
+    }
 
-        fabFriend.setOnClickListener(view -> addNewFriendDialog());
+    private void setupAdapter() {
+        linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        adapter = new FriendAdapter();
+        recyclerView.setAdapter(adapter);
 
-        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    // Handle the activity result in the callback
-                    if (result.getResultCode() == RESULT_EDIT) {
-                        Intent data = result.getData();
-                        assert data != null;
-                        int id = data.getIntExtra(FriendMemes.EXTRA_ID, -1);
-                        if (id == -1) {
-                            Toast.makeText(this, "Friend can not be updated!", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        String name = data.getStringExtra(FriendMemes.EXTRA_NAME);
-                        int totalMemes = data.getIntExtra(FriendMemes.EXTRA_TOTAL_MEMES, -1);
-                        int funnyMemes = data.getIntExtra(FriendMemes.EXTRA_FUNNY_MEMES, -1);
-                        int notFunnyMemes = data.getIntExtra(FriendMemes.EXTRA_NOT_FUNNY_MEMES, -1);
-                        int color = data.getIntExtra(FriendMemes.EXTRA_COLOR, -1);
+        adapter.setOnItemClickListener(friend -> {
+            //  We clicked on friend
+            Intent intent = new Intent(FriendsList.this, FriendMemes.class);
+            intent.putExtra(EXTRA_ID, friend.getId());
+            intent.putExtra(EXTRA_NAME, friend.getName());
+            intent.putExtra(EXTRA_TOTAL_MEMES, friend.getTotalMemes());
+            intent.putExtra(EXTRA_FUNNY_MEMES, friend.getFunnyMemes());
+            intent.putExtra(EXTRA_NOT_FUNNY_MEMES, friend.getNfMemes());
+            intent.putExtra(EXTRA_COLOR, friend.getColor());
+            activityResultLauncher.launch(intent);
+        });
+    }
 
-                        Friend friend = new Friend(name, totalMemes, funnyMemes, notFunnyMemes, color);
-                        friend.setId(id);
-                        friendViewModel.update(friend);
-                        // Toast.makeText(this, "Friend updated!", Toast.LENGTH_SHORT).show();
-                    }
-                    if (result.getResultCode() == RESULT_OK) {
-                        Intent data = result.getData();
-                        if (data != null && data.hasExtra("deletedFriendId")) {
-                            int deletedFriendId = data.getIntExtra("deletedFriendId", -1);
-                            if (deletedFriendId != -1) {
-                                // Delete the friend from the list
-                                friendViewModel.deleteFriendById(deletedFriendId);
-                            }
-                        }
-                    }
-                });
+    private void setupAnimations() {
+        rotateOpen = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_open_animation);
+        rotateClose = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_close_animation);
+        fromBottom = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.from_bottom_anim);
+        toBottom = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.to_bottom_anim);
+        fadeOutAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_out_animation);
+        fabFadeOutAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_to_top_fade_out);
+    }
+
+    private void setupUI() {
+        setContentView(R.layout.activity_friends_list);
+
+        // Find views
+        fabAdd = findViewById(R.id.fab_add);
+        fabReaction = findViewById(R.id.add_reaction_fab);
+        fabFriend = findViewById(R.id.add_person_fab);
+
+        // Find and set text
+        textFriend = findViewById(R.id.add_person_text);
+        textReaction = findViewById(R.id.add_reaction_text);
+
+        fabToTop = findViewById(R.id.to_top_fab);
+
+        recyclerView = findViewById(R.id.friends_listview);
+
+        emptyLayout = findViewById(R.id.emptyList_layout);
+        friendTextView = findViewById(R.id.textView_friends);
+
+        chipGroupLetter = findViewById(R.id.chipGroupLetter);
+        chipGroupLetter.setText(String.valueOf(currentGroupLetter));
+
+
+        // Set up animations
+        setupAnimations();
     }
 
     private int findLastHeaderInAdapter(int firstVisibleItemPosition) {
@@ -346,7 +377,7 @@ public class FriendsList extends AppCompatActivity {
         }
     }
 
-    //    Method v2 to add popUp
+    // Method v2 to add popUp
     public void addNewFriendDialog() {
         AlertDialog.Builder myDialogBuilder = new AlertDialog.Builder(this);
         final View addFriendPopupView = getLayoutInflater().inflate(R.layout.popup_add_friend, null);
