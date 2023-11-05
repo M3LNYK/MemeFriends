@@ -59,7 +59,10 @@ public class Help extends AppCompatActivity {
     }
 
     private void onGuideClicked() {
-        Toast.makeText(this, "Clicked Guide", Toast.LENGTH_SHORT).show();
+        // Toast.makeText(this, "Clicked Guide", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, IntroActivity.class);
+        intent.putExtra("fromApp", true); // Add an extra to indicate it's launched from within your app
+        startActivity(intent);
     }
 
     private void onLicensesClicked() {
