@@ -60,8 +60,7 @@ public class IntroActivity extends AppIntro2 {
         // Slide 5
         String title5 = "Delete meme"; // In future change to access all memes
         String description5 = "To delete meme you also need to swipe it from friend you added it to.";
-        // @TODO
-        int pic5 = R.drawable.add_meme_simple_longer;
+        int pic5 = R.drawable.delete_meme_simple_longer;
         addSlideToIntro(title5, description5, pic5);
 
         String title6 = "Help and source code";
