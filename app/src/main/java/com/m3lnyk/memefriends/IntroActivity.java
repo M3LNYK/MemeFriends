@@ -35,7 +35,9 @@ public class IntroActivity extends AppIntro2 {
 
     private void createFirstTimeSlideScreen() {
         // Slide 1
-        addSlideWelcome();
+        String title1 = "Welcome!";
+        String description1 = "This is a demo app MemeFriends. App is written in Java and is supposed to show how(or not) your friends are :)";
+        addSpecialSlide(title1, description1);
 
         // Slide 2
         String title2 = "Add friends";
@@ -67,11 +69,10 @@ public class IntroActivity extends AppIntro2 {
                 R.drawable.pic_mini_logo
         ));
 
-        addSlide(AppIntroFragment.createInstance(
-                "Explore and rate app!",
-                "Feel free to explore the rest of the app and I would appreciate your feedback on it! :D",
-                R.drawable.pic_mini_logo
-        ));
+        // Slide 7
+        String title7 = "Explore and rate app!";
+        String description7 = "Feel free to explore the rest of the app and I would appreciate your feedback on it! :D";
+        addSpecialSlide(title7, description7);
 
         customizeCarouselParam();
 
@@ -113,15 +114,15 @@ public class IntroActivity extends AppIntro2 {
         setButtonsEnabled(true);
     }
 
-    private void addSlideWelcome() {
-        SliderPage slide1 = new SliderPage();
-        slide1.setTitle("Welcome!");
-        slide1.setDescription("This is a demo app MemeFriends. App is written in Java and is supposed to show how(or not) your friends are :)");
-        slide1.setTitleColorRes(R.color.md_theme_light_onTertiaryContainer);
-        slide1.setDescriptionColorRes(R.color.md_theme_light_onTertiaryContainer);
-        slide1.setImageDrawable(R.drawable.pic_mini_logo);
-        slide1.setBackgroundColorRes(R.color.md_theme_light_tertiaryContainer);
-        addSlide(AppIntroFragment.createInstance(slide1));
+    private void addSpecialSlide(String title, String description) {
+        SliderPage slide = new SliderPage();
+        slide.setTitle(title);
+        slide.setDescription(description);
+        slide.setTitleColorRes(R.color.md_theme_light_onTertiaryContainer);
+        slide.setDescriptionColorRes(R.color.md_theme_light_onTertiaryContainer);
+        slide.setBackgroundColorRes(R.color.md_theme_light_tertiaryContainer);
+        slide.setImageDrawable(R.drawable.pic_mini_logo);
+        addSlide(AppIntroFragment.createInstance(slide));
     }
 
     @Override
