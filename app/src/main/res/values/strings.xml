@@ -47,4 +47,8 @@
     <string name="funny_memes">Funny memes:</string>
     <string name="not_funny_memes">Not funny memes:</string>
     <string name="menu_item_delete_all_memes">Delete all memes</string>
+    <string name="fab_description_to_add_friend_to_your_list">This adds friend to your list</string>
+    <string name="fab_description_to_add_items">This enables options to add items</string>
+    <string name="image_description_friend_list_empty">Image showing your friend list is empty</string>
+    <string name="fab_to_top_description">Button appears when you scroll for faster navigation to top.</string>
 </resources>
