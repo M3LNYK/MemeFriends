@@ -87,29 +87,29 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_reaction_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:visibility="invisible"
-        app:fabSize="mini"
-        app:layout_constraintBottom_toTopOf="@+id/fab_add"
-        app:layout_constraintEnd_toEndOf="@+id/fab_add"
-        app:layout_constraintStart_toStartOf="@+id/fab_add"
-        app:srcCompat="@drawable/baseline_add_reaction_24" />
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/add_reaction_fab"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginBottom="24dp"-->
+<!--        android:visibility="invisible"-->
+<!--        app:fabSize="mini"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/fab_add"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/fab_add"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/fab_add"-->
+<!--        app:srcCompat="@drawable/baseline_add_reaction_24" />-->
 
-    <!-- Action name text for the add reaction button -->
-    <TextView
-        android:id="@+id/add_reaction_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="@string/add_reaction"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/add_reaction_fab"
-        app:layout_constraintEnd_toStartOf="@+id/add_reaction_fab"
-        app:layout_constraintTop_toTopOf="@+id/add_reaction_fab" />
+<!--    &lt;!&ndash; Action name text for the add reaction button &ndash;&gt;-->
+<!--    <TextView-->
+<!--        android:id="@+id/add_reaction_text"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginEnd="8dp"-->
+<!--        android:text="@string/add_reaction"-->
+<!--        android:visibility="invisible"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/add_reaction_fab"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/add_reaction_fab"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/add_reaction_fab" />-->
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -119,9 +119,9 @@
         android:layout_marginBottom="16dp"
         android:visibility="invisible"
         app:fabSize="mini"
-        app:layout_constraintBottom_toTopOf="@+id/add_reaction_fab"
-        app:layout_constraintEnd_toEndOf="@+id/add_reaction_fab"
-        app:layout_constraintStart_toStartOf="@+id/add_reaction_fab"
+        app:layout_constraintBottom_toTopOf="@+id/fab_add"
+        app:layout_constraintEnd_toEndOf="@+id/fab_add"
+        app:layout_constraintStart_toStartOf="@+id/fab_add"
         app:srcCompat="@drawable/baseline_person_add_24" />
 
     <!-- Action name text for the add friend button -->

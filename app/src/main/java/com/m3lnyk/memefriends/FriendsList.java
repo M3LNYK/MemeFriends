@@ -128,11 +128,11 @@ public class FriendsList extends AppCompatActivity {
         fabToTop.setOnClickListener(view -> onTopButtonClicked());
         fabAdd.setOnClickListener(view -> onAddButtonClicked());
         fabFriend.setOnClickListener(view -> addNewFriendDialog());
-        fabReaction.setOnClickListener(view -> {
-            //  Here, new window w add meme should be opened
-            addNewMemeActivityStart();
-            Toast.makeText(FriendsList.this, "This feature is not implemented yet", Toast.LENGTH_SHORT).show();
-        });
+        // fabReaction.setOnClickListener(view -> {
+        //     //  Here, new window w add meme should be opened
+        //     addNewMemeActivityStart();
+        //     Toast.makeText(FriendsList.this, "This feature is not implemented yet", Toast.LENGTH_SHORT).show();
+        // });
     }
 
     private void setupRecyclerView() {
@@ -237,12 +237,12 @@ public class FriendsList extends AppCompatActivity {
 
         // Find views
         fabAdd = findViewById(R.id.fab_add);
-        fabReaction = findViewById(R.id.add_reaction_fab);
+        // fabReaction = findViewById(R.id.add_reaction_fab);
         fabFriend = findViewById(R.id.add_person_fab);
 
         // Find and set text
         textFriend = findViewById(R.id.add_person_text);
-        textReaction = findViewById(R.id.add_reaction_text);
+        // textReaction = findViewById(R.id.add_reaction_text);
 
         fabToTop = findViewById(R.id.to_top_fab);
 
@@ -347,15 +347,15 @@ public class FriendsList extends AppCompatActivity {
 
     private void setAnimation(Boolean clicked) {
         if (!clicked) {
-            fabReaction.startAnimation(fromBottom);
+            // fabReaction.startAnimation(fromBottom);
+            // textReaction.startAnimation(fromBottom);
             fabFriend.startAnimation(fromBottom);
-            textReaction.startAnimation(fromBottom);
             textFriend.startAnimation(fromBottom);
             fabAdd.startAnimation(rotateOpen);
         } else {
-            fabReaction.startAnimation(toBottom);
+            // fabReaction.startAnimation(toBottom);
+            // textReaction.startAnimation(toBottom);
             fabFriend.startAnimation(toBottom);
-            textReaction.startAnimation(toBottom);
             textFriend.startAnimation(toBottom);
             fabAdd.startAnimation(rotateClose);
         }
@@ -364,14 +364,14 @@ public class FriendsList extends AppCompatActivity {
 
     private void setVisibility(Boolean clicked) {
         if (!clicked) {
-            fabReaction.setVisibility(View.VISIBLE);
+            // fabReaction.setVisibility(View.VISIBLE);
+            // textReaction.setVisibility(View.VISIBLE);
             fabFriend.setVisibility(View.VISIBLE);
-            textReaction.setVisibility(View.VISIBLE);
             textFriend.setVisibility(View.VISIBLE);
         } else {
-            fabReaction.setVisibility(View.INVISIBLE);
+            // fabReaction.setVisibility(View.INVISIBLE);
+            // textReaction.setVisibility(View.INVISIBLE);
             fabFriend.setVisibility(View.INVISIBLE);
-            textReaction.setVisibility(View.INVISIBLE);
             textFriend.setVisibility(View.INVISIBLE);
         }
     }
