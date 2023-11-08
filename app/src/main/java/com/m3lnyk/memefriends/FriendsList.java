@@ -434,12 +434,12 @@ public class FriendsList extends AppCompatActivity {
         if (item.getItemId() == R.id.menu_item_help) {
             startActivity(new Intent(this, Help.class));
         }
-        if (item.getItemId() == R.id.menu_item_settings) {
-            Toast.makeText(this, "Not implemented yet", Toast.LENGTH_SHORT).show();
-        }
-        if (item.getItemId() == R.id.menu_item_rate_app) {
-            Toast.makeText(this, "Rate app", Toast.LENGTH_SHORT).show();
-        }
+        // if (item.getItemId() == R.id.menu_item_settings) {
+        //     Toast.makeText(this, "Not implemented yet", Toast.LENGTH_SHORT).show();
+        // }
+        // if (item.getItemId() == R.id.menu_item_rate_app) {
+        //     Toast.makeText(this, "Rate app", Toast.LENGTH_SHORT).show();
+        // }
         return super.onOptionsItemSelected(item);
     }
 

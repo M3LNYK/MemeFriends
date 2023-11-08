@@ -5,14 +5,14 @@
         android:id="@+id/menu_item_delete_all_friends"
         android:title="@string/menu_item_delete_all_friends"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/menu_item_rate_app"
-        android:title="@string/menu_item_rate_app"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/menu_item_settings"
-        android:title="@string/menu_item_settings"
-        app:showAsAction="never" />
+<!--    <item-->
+<!--        android:id="@+id/menu_item_rate_app"-->
+<!--        android:title="@string/menu_item_rate_app"-->
+<!--        app:showAsAction="never" />-->
+<!--    <item-->
+<!--        android:id="@+id/menu_item_settings"-->
+<!--        android:title="@string/menu_item_settings"-->
+<!--        app:showAsAction="never" />-->
     <item
         android:id="@+id/menu_item_help"
         android:title="@string/menu_item_help"
