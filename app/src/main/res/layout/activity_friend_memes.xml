@@ -188,6 +188,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
+                android:clickable="false"
+                android:focusable="false"
                 android:text="Last memes"
                 app:chipIcon="@drawable/baseline_list_24"
                 app:layout_constraintTop_toBottomOf="@+id/cardFriendInfo" />
@@ -252,6 +254,8 @@
                 android:layout_marginTop="8dp"
                 android:text="Some stats"
                 android:visibility="gone"
+                android:clickable="false"
+                android:focusable="false"
                 app:chipIcon="@drawable/baseline_show_chart_24"
                 app:layout_constraintTop_toBottomOf="@+id/memeRecyclerView" />
 

@@ -247,7 +247,6 @@ public class FriendMemes extends AppCompatActivity {
         populatePieChart();
     }
 
-    //@TODO test populatePieChart()
     private void populatePieChart() {
         int totalMemes = Integer.parseInt(Objects.requireNonNull(friendTotalMemes.getText()).toString());
         int funnyMemes = Integer.parseInt(Objects.requireNonNull(friendFunnyMemes.getText()).toString());
