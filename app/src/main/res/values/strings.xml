@@ -46,4 +46,5 @@
     <string name="textview_placeholder_zero">0</string>
     <string name="funny_memes">Funny memes:</string>
     <string name="not_funny_memes">Not funny memes:</string>
+    <string name="menu_item_delete_all_memes">Delete all memes</string>
 </resources>
