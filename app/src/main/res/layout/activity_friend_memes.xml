@@ -30,7 +30,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Friend Info"
+                    android:text="@string/friend_info"
                     android:textAppearance="?attr/textAppearanceHeadline3" />
 
             </androidx.cardview.widget.CardView>
@@ -54,9 +54,10 @@
                         style="@style/Custom.TextInputEditText.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Friend name"
+                        android:hint="@string/friend_name"
                         app:endIconMode="clear_text"
                         android:layout_marginVertical="4dp"
+                        android:textColorHint="?attr/colorOnSurface"
                         app:errorEnabled="false">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -86,7 +87,7 @@
                             android:layout_weight="9"
                             android:textSize="16sp"
                             android:textColor="?attr/colorOnSurface"
-                            android:text="Total Memes:" />
+                            android:text="@string/total_memes" />
 
                         <TextView
                             android:id="@+id/tv_total_memes"
@@ -95,7 +96,7 @@
                             android:layout_weight="1"
                             android:textSize="16sp"
                             android:textColor="?attr/colorOnSurface"
-                            android:text="0" />
+                            android:text="@string/textview_placeholder_zero" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -113,7 +114,7 @@
                             android:layout_weight="9"
                             android:textSize="16sp"
                             android:textColor="?attr/colorOnSurface"
-                            android:text="Funny memes:" />
+                            android:text="@string/funny_memes" />
 
                         <TextView
                             android:id="@+id/tv_funny_memes"
@@ -122,7 +123,7 @@
                             android:layout_weight="1"
                             android:textSize="16sp"
                             android:textColor="?attr/colorOnSurface"
-                            android:text="0" />
+                            android:text="@string/textview_placeholder_zero" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -140,7 +141,7 @@
                             android:layout_weight="9"
                             android:textSize="16sp"
                             android:textColor="?attr/colorOnSurface"
-                            android:text="Not funny memes:" />
+                            android:text="@string/not_funny_memes" />
 
                         <TextView
                             android:id="@+id/tv_not_funny_memes"
@@ -149,7 +150,7 @@
                             android:layout_weight="1"
                             android:textSize="16sp"
                             android:textColor="?attr/colorOnSurface"
-                            android:text="0" />
+                            android:text="@string/textview_placeholder_zero" />
                     </LinearLayout>
 
                     <!-- Buttons -->
@@ -163,19 +164,23 @@
 
                         <Button
                             android:id="@+id/button_save_change"
+                            style="?android:attr/buttonBarButtonStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="72dp"
                             android:backgroundTint="@color/green_500"
-                            android:text="Save" />
+                            android:textColor="?attr/colorSurface"
+                            android:text="@string/button_text_save" />
 
                         <Button
                             android:id="@+id/button_discard_change"
+                            style="?android:attr/buttonBarButtonStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:backgroundTint="@color/red_500"
-                            android:text="Discard" />
+                            android:textColor="?attr/colorSurface"
+                            android:text="@string/button_text_discard" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -190,7 +195,7 @@
                 android:layout_marginTop="8dp"
                 android:clickable="false"
                 android:focusable="false"
-                android:text="Last memes"
+                android:text="@string/last_memes"
                 app:chipIcon="@drawable/baseline_list_24"
                 app:layout_constraintTop_toBottomOf="@+id/cardFriendInfo" />
 
@@ -212,11 +217,12 @@
 
                     <ImageView
                         android:id="@+id/image_view_empty_meme_list"
-                        android:layout_width="256px"
-                        android:layout_height="256px"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="12dp"
-                        android:src="@drawable/baseline_dashboard_customize_24" />
+                        android:src="@drawable/baseline_dashboard_customize_24"
+                        android:contentDescription="@string/no_memes_picture_description_text" />
 
                     <TextView
                         android:id="@+id/text_emptyList"
@@ -252,7 +258,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
-                android:text="Some stats"
+                android:text="@string/some_stats"
                 android:visibility="gone"
                 android:clickable="false"
                 android:focusable="false"
@@ -312,35 +318,37 @@
                             android:padding="16dp"
                             android:paddingVertical="8dp">
 
-                            <View
-                                android:layout_width="0dp"
-                                android:layout_height="0dp"
-                                android:layout_gravity="center"
-                                android:layout_weight="1" />
+<!--                            <View-->
+<!--                                android:layout_width="0dp"-->
+<!--                                android:layout_height="0dp"-->
+<!--                                android:layout_gravity="center"-->
+<!--                                />-->
 
                             <TextView
                                 android:id="@+id/text_view_funny_memes"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:text="3"
+                                android:text="@string/test_number_placeholder"
                                 android:textColor="@color/green_500"
-                                android:textSize="46sp" />
+                                android:textSize="46sp"
+                                />
 
                             <TextView
                                 android:id="@+id/text_view_overall_memes"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:text="10"
+                                android:text="@string/test_number_placeholder"
                                 android:textColor="@color/blue_500"
-                                android:textSize="24sp" />
+                                android:textSize="24sp"
+                                />
 
                             <View
                                 android:layout_width="0dp"
                                 android:layout_height="0dp"
                                 android:layout_gravity="center"
-                                android:layout_weight="1" />
+                                />
 
                         </LinearLayout>
 
@@ -368,11 +376,12 @@
 
                     <ImageView
                         android:id="@+id/image_view_timer"
-                        android:layout_width="256px"
-                        android:layout_height="256px"
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="12dp"
-                        android:src="@drawable/baseline_timer_24" />
+                        android:src="@drawable/baseline_timer_24"
+                        android:contentDescription="@string/more_soon_description_text" />
 
                     <TextView
                         android:id="@+id/text_view_more_stats_soon"

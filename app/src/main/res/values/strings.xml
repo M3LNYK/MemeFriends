@@ -33,4 +33,17 @@
     <string name="warning_friend_del_mes">This friend will be permanently deleted. This action can not be undone.</string>
     <string name="warning_all_memes_del_mes">All memes of this friend will be permanently deleted. This action can not be undone.</string>
     <string name="warning_all_friends_del_mes">All friends will be permanently deleted. This action can not be undone.</string>
+    <string name="friend_info">Friend Info</string>
+    <string name="friend_name">Friend name</string>
+    <string name="total_memes">Total Memes:</string>
+    <string name="some_stats">Some stats</string>
+    <string name="more_soon_description_text">Big timer icon</string>
+    <string name="test_number_placeholder">10</string>
+    <string name="no_memes_picture_description_text">Big icon showing currently there are no memes in list</string>
+    <string name="last_memes">Last memes</string>
+    <string name="button_text_discard">Discard</string>
+    <string name="button_text_save">Save</string>
+    <string name="textview_placeholder_zero">0</string>
+    <string name="funny_memes">Funny memes:</string>
+    <string name="not_funny_memes">Not funny memes:</string>
 </resources>
