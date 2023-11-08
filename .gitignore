@@ -37,7 +37,8 @@ Thumbs.db
 
 .navigation
 captures/
-output.json 
+output-metadata.json
+output.json
     
 #NDK
 obj/
